@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model articles {
+  id     Int      @id @default(autoincrement())
+  title  String   @db.VarChar(255)
+  body   String
+  date   DateTime @db.Date
+  author String   @db.VarChar(50)
+}
+
+model clients {
+  id           Int        @id @default(autoincrement())
+  first_name   String     @db.VarChar(50)
+  last_name    String     @db.VarChar(50)
+  email        String     @db.VarChar(255)
+  password     String     @db.VarChar(255)
+  phone_number String     @db.VarChar(50)
+  address      String     @db.VarChar(100)
+  messages     messages[]
+}
+
+model lawfirms {
+  id                Int      @id @default(autoincrement())
+  name              String   @db.VarChar(50)
+  email             String   @db.VarChar(50)
+  description       String
+  views             Int
+  location          String   @db.VarChar(50)
+  registration_date DateTime @db.Date
+  phone_number      String   @db.VarChar(50)
+  address           String   @db.VarChar(100)
+  rating            Decimal  @db.Decimal(2, 1)
+  profile_pic       String   @db.VarChar(100)
+}
+
+model lawyers {
+  id             Int        @id @default(autoincrement())
+  first_name     String?    @db.VarChar(50)
+  last_name      String?    @db.VarChar(50)
+  email          String?    @db.VarChar(255)
+  description    String?
+  location       String?    @db.VarChar(50)
+  education      String?
+  views          Int?
+  likes          Int?
+  date_certified DateTime?  @db.Date
+  phone_number   String?    @db.VarChar(50)
+  address        String?    @db.VarChar(100)
+  rating         Decimal?   @db.Decimal(2, 1)
+  profile_pic    String?    @db.VarChar(100)
+  messages       messages[]
+}
+
+model messages {
+  id          Int      @id @default(autoincrement())
+  client_id   Int
+  lawyer_id   Int
+  law_firm_id Int
+  body        String
+  date_sent   DateTime @db.Date
+  from_client Boolean?
+  clients     clients  @relation(fields: [client_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  lawyers     lawyers  @relation(fields: [lawyer_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
