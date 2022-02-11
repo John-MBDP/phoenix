@@ -6,7 +6,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "reset": "bash db/schema.bash && bash db/seed.bash"
+    "reset": "bash db/reset.bash"
   },
   "dependencies": {
     "@prisma/client": "^3.9.2",
