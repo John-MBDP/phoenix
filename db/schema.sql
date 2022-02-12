@@ -1,8 +1,11 @@
-
 DROP TABLE IF EXISTS messages CASCADE;
+
 DROP TABLE IF EXISTS articles CASCADE;
+
 DROP TABLE IF EXISTS lawyers CASCADE;
+
 DROP TABLE IF EXISTS lawfirms CASCADE;
+
 DROP TABLE IF EXISTS clients CASCADE;
 
 create table articles (
@@ -10,7 +13,8 @@ create table articles (
 	title VARCHAR(255) NOT NULL,
 	body TEXT NOT NULL,
 	date DATE NOT NULL,
-	author VARCHAR(50) NOT NULL
+	author VARCHAR(50) NOT NULL,
+	image VARCHAR(100)
 );
 
 create table lawyers (
@@ -26,7 +30,7 @@ create table lawyers (
 	date_certified DATE,
 	phone_number VARCHAR(50),
 	address VARCHAR(100),
-	rating DECIMAL(2, 1),
+	rating INT,
 	profile_pic VARCHAR(100)
 );
 
@@ -40,7 +44,7 @@ create table lawfirms (
 	registration_date DATE NOT NULL,
 	phone_number VARCHAR(50) NOT NULL,
 	address VARCHAR(100) NOT NULL,
-	rating DECIMAL(2,1) NOT NULL,
+	rating INT NOT NULL,
 	profile_pic VARCHAR(100) NOT NULL
 );
 
@@ -51,16 +55,15 @@ create table clients (
 	email VARCHAR(255) NOT NULL,
 	password VARCHAR(255) NOT NULL,
 	phone_number VARCHAR(50) NOT NULL,
-	address VARCHAR(100) NOT NULL
+	address VARCHAR(100)
 );
 
 create table messages (
 	id SERIAL PRIMARY KEY,
 	client_id INT NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
-	lawyer_id INT NOT NULL,
-	law_firm_id INT NOT NULL REFERENCES lawfirms(id) ON DELETE CASCADE,
+	lawyer_id INT REFERENCES lawyers(id) ON DELETE CASCADE,
+	law_firm_id INT REFERENCES lawfirms(id) ON DELETE CASCADE,
 	body TEXT NOT NULL,
 	date_sent DATE NOT NULL,
 	from_client BOOLEAN
 );
-
