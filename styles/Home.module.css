@@ -111,7 +111,9 @@
   position: sticky;
   background-color: white;
   bottom: 0;
-  display: flex;
+}
+.navPadding {
+  padding-bottom: 2rem;
 }
 
 @media (max-width: 600px) {
