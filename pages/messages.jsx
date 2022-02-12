@@ -20,7 +20,7 @@ export async function getServerSideProps() {
     },
     orderBy: [
       {
-        date_sent: "desc",
+        date_sent: "asc",
       },
     ],
   });
@@ -85,8 +85,8 @@ const Messages = ({ initialMessages }) => {
             from_client: true,
           };
           try {
-            await saveMessage(message);
-            setMessages([...messages, message]);
+            const newMessage = await saveMessage(message);
+            setMessages([...messages, newMessage]);
             e.target.reset();
           } catch (err) {
             console.log(err);
