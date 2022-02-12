@@ -14,11 +14,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>Hello</h1>
-        <input
-          placeholder="Type something"
-          value={input}
-          onChange={onChangeHandler}
-        />
+        
         <p className={styles.description}>
           Get started by editing{" "}
           <code className={styles.code}>pages/index.js</code>

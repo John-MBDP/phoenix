@@ -51,6 +51,7 @@ const Messages = ({ data }) => {
     setInput(e.target.value);
     socket.emit("input-change", e.target.value);
   };
+
   const messageArray = data.map(item => {
     return (
       <Message
@@ -86,6 +87,8 @@ const Messages = ({ data }) => {
           id="standard-basic"
           label="Type something..."
           variant="standard"
+          value={input}
+          onChange={onChangeHandler}
         />
         <Button>
           <SendIcon />
