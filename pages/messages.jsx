@@ -20,15 +20,21 @@ export async function getServerSideProps() {
         equals: 4,
       },
     },
+    orderBy: [
+      {
+        date_sent: "desc",
+      },
+    ],
   });
   return {
     props: {
-      data: messages,
+      initialMessages: messages,
     },
   };
 }
 
-const Messages = ({ data }) => {
+const Messages = ({ initialMessages }) => {
+  const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
 
   useEffect(() => socketInitializer(), []);
@@ -52,7 +58,7 @@ const Messages = ({ data }) => {
     socket.emit("input-change", e.target.value);
   };
 
-  const messageArray = data.map(item => {
+  const messageArray = messages.map(item => {
     return (
       <Message
         key={item.id}
@@ -87,10 +93,9 @@ const Messages = ({ data }) => {
           id="standard-basic"
           label="Type something..."
           variant="standard"
-          value={input}
-          onChange={onChangeHandler}
+          value=""
         />
-        <Button>
+        <Button type="submit">
           <SendIcon />
         </Button>
       </form>
