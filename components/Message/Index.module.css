@@ -2,11 +2,17 @@
   width: 60%;
   padding: 1rem;
   border-radius: 0.3rem;
-  margin-top: 1rem;
-  box-shadow: 0 0.2rem 1rem #7a7a7a;
+  box-shadow: 0 0.2rem 1rem #a1a1a1;
 }
 .client {
   background-color: #1b4463;
-  color: white;
+  color: rgb(255, 255, 255);
   margin-left: 40%;
+}
+.lawyer {
+  display: inline-block;
+}
+.imageCard {
+  margin-top: 1rem;
+  display: flex;
 }
