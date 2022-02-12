@@ -1,0 +1,12 @@
+.message {
+  width: 60%;
+  padding: 1rem;
+  border-radius: 0.3rem;
+  margin-top: 1rem;
+  box-shadow: 0 0.2rem 1rem #7a7a7a;
+}
+.client {
+  background-color: #1b4463;
+  color: white;
+  margin-left: 40%;
+}
