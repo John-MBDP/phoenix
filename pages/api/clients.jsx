@@ -15,8 +15,8 @@ export default async function handler(req, res) {
         address: "64 potato way"
       }
     });
-
     res.status(200).json(user);
+    return prisma.$disconnect;
   }
   if (req.method === "GET") {
     const users = await prisma.clients.findMany();
