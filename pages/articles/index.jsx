@@ -1,6 +1,6 @@
 import ArticleCard from "../../components/ArticleCard";
-import { PrismaClient } from "@prisma/client";
 import Timeago from "react-timeago";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
