@@ -6,7 +6,10 @@ import styles from "../styles/Home.module.css";
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <Component {...pageProps} className={styles.navPadding} />
+      <Component
+        {...pageProps}
+        className={`${styles.navPadding} ${styles.BottomNav}`}
+      />
       <BottomNav />
     </>
   );
