@@ -1,17 +1,10 @@
 import ArticleCard from "../../components/ArticleCard";
-import { PrismaClient } from "@prisma/client";
 import Timeago from "react-timeago";
 
-const prisma = new PrismaClient();
-
 export const getServerSideProps = async () => {
-  const articles = await prisma.articles.findMany({
-    orderBy: [
-      {
-        date: "desc",
-      },
-    ],
-  });
+  const articles = await fetch(`${process.env.SERVER}/api/articles`).then(res =>
+    res.json()
+  );
   return {
     props: {
       initialArticles: articles,
