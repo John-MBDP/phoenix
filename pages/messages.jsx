@@ -1,3 +1,4 @@
+import { Box, Paper, Typography } from "@material-ui/core";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
@@ -13,21 +14,28 @@ export async function getServerSideProps() {
       }
     }
   });
-  console.log(messages);
   return {
     props: {
-      messages: messages
+      data: messages
     }
   };
 }
 
-const messages = ({ messages }) => {
-  const messageArray = messages.map((item) => (
-    <div key={item.id} className={item.from_client && "from-client"}>
-      {item.body}
-    </div>
-  ));
-  return <div>{messageArray}</div>;
+const messages = ({ data }) => {
+  const messageArray = data.map((item) => {
+    return (
+      <Box
+        key={item.id}
+        sx={{
+          backgroundColor: "red",
+          width: "80%"
+        }}
+      >
+        {item.body}
+      </Box>
+    );
+  });
+  return <Box>{messageArray}</Box>;
 };
 
 export default messages;
