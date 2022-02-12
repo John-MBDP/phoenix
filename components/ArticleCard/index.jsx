@@ -19,15 +19,29 @@ export default function ArticleCard(props) {
         },
       }}
     >
-      <CardMedia component="img" height="140" image="" alt="" />
+      <CardMedia
+        component="img"
+        height="140"
+        image="/images/justice-gd35301419_1920.jpg"
+        alt=""
+      />
       <CardContent>
-        <Typography sx={{ fontWeight: 'bold' }} gutterBottom variant="h5" component="div">
+        <Typography
+          sx={{ fontWeight: "bold" }}
+          gutterBottom
+          variant="h5"
+          component="div"
+        >
           {title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography
+          sx={{ margin: "0.5em 0" }}
+          variant="body2"
+          color="text.secondary"
+        >
           {body}
         </Typography>
-        <Typography variant="subtitle2" component="div">
+        <Typography sx={{ marginBottom: '-0.5em' }} variant="subtitle2" component="div">
           {date} - 5 min read
         </Typography>
       </CardContent>
