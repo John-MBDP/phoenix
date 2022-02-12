@@ -24,10 +24,7 @@ export default function BottomNav() {
           router.push(`/${views[newValue]}`);
         }}
       >
-        <BottomNavigationAction
-          label="Home"
-          icon={<HomeIcon />}
-        ></BottomNavigationAction>
+        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
         <BottomNavigationAction label="Messages" icon={<MessageIcon />} />
         <BottomNavigationAction label="Search" icon={<SearchIcon />} />
         <BottomNavigationAction label="Profile" icon={<AccountCircleIcon />} />
