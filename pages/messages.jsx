@@ -53,6 +53,18 @@ const Messages = ({ initialMessages }) => {
     });
   };
 
+  const saveMessage = async message => {
+    const response = await fetch("/api/messages", {
+      method: "POST",
+      body: JSON.stringify(message),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return await response.json();
+  };
+
   const onChangeHandler = e => {
     setInput(e.target.value);
     socket.emit("input-change", e.target.value);
