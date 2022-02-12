@@ -116,7 +116,6 @@
   box-shadow: 0rem -0.3rem 1.3rem 0.2rem rgba(0, 0, 0, 0.1);
 }
 .navPadding {
-  padding-bottom: 2rem;
 }
 
 @media (max-width: 600px) {
