@@ -64,6 +64,6 @@ create table messages (
 	lawyer_id INT REFERENCES lawyers(id) ON DELETE CASCADE,
 	law_firm_id INT REFERENCES lawfirms(id) ON DELETE CASCADE,
 	body TEXT NOT NULL,
-	date_sent DATE NOT NULL,
+	date_sent TIMESTAMPTZ NOT NULL,
 	from_client BOOLEAN
 );
