@@ -13,14 +13,13 @@ import { ButtonBase } from "@mui/material";
 import { useRouter } from "next/router";
 
 export default function BottomNav() {
-  const views = ["", "messages", "Search", "archive"];
+  const views = ["", "messages", "search", "profile"];
   const router = useRouter();
 
   return (
     <div className={styles.bottomNav}>
       <BottomNavigation
         showLabels
-        sx={{ boxShadow: 3 }}
         onChange={(event, newValue) => {
           router.push(`/${views[newValue]}`);
         }}
@@ -31,7 +30,7 @@ export default function BottomNav() {
         ></BottomNavigationAction>
         <BottomNavigationAction label="Messages" icon={<MessageIcon />} />
         <BottomNavigationAction label="Search" icon={<SearchIcon />} />
-        <BottomNavigationAction label="Archive" icon={<AccountCircleIcon />} />
+        <BottomNavigationAction label="Profile" icon={<AccountCircleIcon />} />
       </BottomNavigation>
     </div>
   );
