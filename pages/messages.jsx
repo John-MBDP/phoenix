@@ -1,5 +1,6 @@
 import { Box, Paper, Typography } from "@material-ui/core";
 import { PrismaClient } from "@prisma/client";
+import Message from "../components/Message";
 
 const prisma = new PrismaClient();
 
@@ -24,18 +25,16 @@ export async function getServerSideProps() {
 const messages = ({ data }) => {
   const messageArray = data.map((item) => {
     return (
-      <Box
+      <Message
         key={item.id}
-        sx={{
-          backgroundColor: "red",
-          width: "80%"
-        }}
+        fromClient={item.from_client}
+        date={item.date_sent}
       >
         {item.body}
-      </Box>
+      </Message>
     );
   });
-  return <Box>{messageArray}</Box>;
+  return <div>{messageArray}</div>;
 };
 
 export default messages;
