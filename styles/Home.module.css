@@ -107,6 +107,12 @@
   height: 1em;
   margin-left: 0.5rem;
 }
+.bottomNav {
+  position: sticky;
+  background-color: white;
+  bottom: 0;
+  display: flex;
+}
 
 @media (max-width: 600px) {
   .grid {
