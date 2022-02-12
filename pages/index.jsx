@@ -1,21 +1,8 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-// import { PrismaClient } from "@prisma/client";
-
-// const prisma = new PrismaClient();
-
-// export const getServerSideProps = async () => {
-//   const articles = await prisma.articles.findMany();
-//   return {
-//     props: {
-//       initialArticles: articles,
-//     },
-//   };
-// };
 
 export default function Home() {
-  
   return (
     <div className={styles.container}>
       <Head>
