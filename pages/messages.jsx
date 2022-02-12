@@ -5,8 +5,6 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import { useEffect, useState } from "react";
-import io from "socket.io-client";
-let socket;
 
 const prisma = new PrismaClient();
 
@@ -37,22 +35,6 @@ const Messages = ({ initialMessages }) => {
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
 
-  useEffect(() => socketInitializer(), []);
-
-  const socketInitializer = async () => {
-    await fetch("/api/socket");
-    socket = io();
-
-    socket.on("connect", () => {
-      console.log("connected");
-    });
-
-    socket.on("update-input", msg => {
-      setInput(msg);
-      console.log("changed");
-    });
-  };
-
   const saveMessage = async message => {
     const response = await fetch("/api/messages", {
       method: "POST",
@@ -67,7 +49,6 @@ const Messages = ({ initialMessages }) => {
 
   const onChangeHandler = e => {
     setInput(e.target.value);
-    socket.emit("input-change", e.target.value);
   };
 
   const messageArray = messages.map(item => {
@@ -92,7 +73,26 @@ const Messages = ({ initialMessages }) => {
         `}</style>
         {messageArray}
       </div>
-      <form className="messages-input">
+      <form
+        className="messages-input"
+        onSubmit={async e => {
+          e.preventDefault();
+          const message = {
+            body: input,
+            client_id: 4,
+            lawyer_id: 2,
+            date_sent: new Date(),
+            from_client: true,
+          };
+          try {
+            await saveMessage(message);
+            setMessages([...messages, message]);
+            e.target.reset();
+          } catch (err) {
+            console.log(err);
+          }
+        }}
+      >
         <style jsx>{`
           .messages-input {
             padding: 1em 1em 0 1em;
@@ -105,7 +105,7 @@ const Messages = ({ initialMessages }) => {
           id="standard-basic"
           label="Type something..."
           variant="standard"
-          value=""
+          onChange={onChangeHandler}
         />
         <Button type="submit">
           <SendIcon />
