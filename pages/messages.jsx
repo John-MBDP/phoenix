@@ -4,7 +4,7 @@ import Message from "../components/Message";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const prisma = new PrismaClient();
 
