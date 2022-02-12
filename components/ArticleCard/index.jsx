@@ -3,13 +3,13 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Link from "@mui/material/Link";
+import Link from "next/link";
 
 export default function ArticleCard(props) {
   const { id, title, body, date } = props;
 
   return (
-    <Link href={`/articles/${id}`} style={{ textDecoration: "none" }}>
+    <Link href={`/articles/${id}`} style={{ textDecoration: "none" }} passHref>
       <Card
         sx={{
           maxWidth: 345,
