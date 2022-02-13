@@ -42,17 +42,25 @@ const timeifyDate = dateObj => {
 
 const MessagesIndex = ({ initialMessages }) => {
   const [messageCards, setMessageCards] = useState(initialMessages);
-  const parsedMessageCards = messageCards.map(message => {
-    return (
-      <MessageCard
-        key={message.id}
-        firstName={message.lawyers.first_name}
-        lastName={message.lawyers.last_name}
-        recentMessage={message.body}
-        dateSent={timeifyDate(message.date_sent)}
-      />
-    );
-  });
+  const parsedMessageCards = messageCards
+    // to just grab the first most recent message
+    .filter((value, index, self) => {
+      return (
+        index ===
+        self.findIndex(message => message.lawyer_id === value.lawyer_id)
+      );
+    })
+    .map(message => {
+      return (
+        <MessageCard
+          key={message.id}
+          firstName={message.lawyers.first_name}
+          lastName={message.lawyers.last_name}
+          recentMessage={message.body}
+          dateSent={timeifyDate(message.date_sent)}
+        />
+      );
+    });
 
   return <section>{parsedMessageCards}</section>;
 };
