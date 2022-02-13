@@ -3,7 +3,7 @@ import Link from "next/link";
 
 const MessageCard = ({ route, id, firstName, lastName, recentMessage, dateSent }) => {
   return (
-    <Link href={`articles/${route}/${id}`} passHref>
+    <Link href={`${route}/${id}`} passHref>
       <Card>
         <Typography gutterBottom variant="h5" component="div">
           {firstName} {lastName}

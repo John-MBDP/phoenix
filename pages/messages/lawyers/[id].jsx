@@ -8,11 +8,11 @@ import { useState } from "react";
 
 const prisma = new PrismaClient();
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   const messages = await prisma.messages.findMany({
     where: {
       lawyer_id: {
-        equals: 2,
+        equals: Number(context.params.id),
       },
       client_id: {
         equals: 4,
