@@ -6,10 +6,9 @@ import styles from "../styles/Home.module.css";
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <Component
-        {...pageProps}
-        className={`${styles.navPadding} ${styles.BottomNav}`}
-      />
+      <div className={styles.view}>
+        <Component {...pageProps} />
+      </div>
       <BottomNav />
     </>
   );
