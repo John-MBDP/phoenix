@@ -1,6 +1,6 @@
 import { Box, Paper, Typography } from "@material-ui/core";
 import { PrismaClient } from "@prisma/client";
-import Message from "../components/Message";
+import Message from "../../components/Message";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
