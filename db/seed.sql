@@ -658,7 +658,7 @@ insert into
 values
 	(
 		5,
-		2,
+		null,
 		4,
 		'Duis at velit eu est congue elementum. In hac habitasse platea dictumst.',
 		'08/28/2021',
@@ -678,7 +678,7 @@ values
 	(
 		4,
 		4,
-		1,
+		null,
 		'Etiam pretium iaculis justo.',
 		'03/05/2021',
 		true
@@ -697,7 +697,7 @@ values
 	(
 		5,
 		1,
-		2,
+		null,
 		'Proin eu mi. Nulla ac enim.',
 		'02/18/2021',
 		false
@@ -716,7 +716,7 @@ values
 	(
 		3,
 		5,
-		4,
+		null,
 		'Suspendisse potenti.',
 		'05/18/2021',
 		false
@@ -735,7 +735,7 @@ values
 	(
 		2,
 		1,
-		2,
+		null,
 		'Vivamus in felis eu sapien cursus vestibulum.',
 		'08/21/2021',
 		true
@@ -753,7 +753,7 @@ insert into
 values
 	(
 		5,
-		4,
+		null,
 		3,
 		'Integer ac neque. Duis bibendum.',
 		'02/22/2021',
@@ -773,7 +773,7 @@ values
 	(
 		2,
 		1,
-		1,
+		null,
 		'Quisque erat eros, viverra eget, congue eget, semper rutrum, nulla. Nunc purus.',
 		'12/27/2021',
 		true
@@ -791,7 +791,7 @@ insert into
 values
 	(
 		2,
-		3,
+		null,
 		2,
 		'Fusce lacus purus, aliquet at, feugiat non, pretium quis, lectus.',
 		'11/20/2021',
@@ -811,7 +811,7 @@ values
 	(
 		4,
 		4,
-		2,
+		null,
 		'Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam vel augue.',
 		'06/12/2021',
 		false
@@ -830,7 +830,7 @@ values
 	(
 		4,
 		4,
-		2,
+		null,
 		'Vivamus vel nulla eget eros elementum pellentesque.',
 		'01/08/2022',
 		false
@@ -867,7 +867,7 @@ insert into
 values
 	(
 		1,
-		4,
+		null,
 		4,
 		'Etiam faucibus cursus urna. Ut tellus.',
 		'08/06/2021',
@@ -887,7 +887,7 @@ values
 	(
 		2,
 		2,
-		1,
+		null,
 		'Cras in purus eu magna vulputate luctus. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.',
 		'09/09/2021',
 		false
@@ -906,7 +906,7 @@ values
 	(
 		4,
 		2,
-		2,
+		null,
 		'Donec quis orci eget orci vehicula condimentum. Curabitur in libero ut massa volutpat convallis.',
 		'03/11/2021',
 		true
@@ -925,7 +925,7 @@ values
 	(
 		1,
 		2,
-		5,
+		null,
 		'Aliquam sit amet diam in magna bibendum imperdiet.',
 		'08/01/2021',
 		false
@@ -944,7 +944,7 @@ values
 	(
 		2,
 		4,
-		1,
+		null,
 		'Pellentesque eget nunc. Donec quis orci eget orci vehicula condimentum.',
 		'11/19/2021',
 		false
@@ -962,7 +962,7 @@ insert into
 values
 	(
 		5,
-		1,
+		null,
 		2,
 		'Duis consequat dui nec nisi volutpat eleifend. Donec ut dolor.',
 		'11/19/2021',
@@ -994,7 +994,7 @@ values
 	(
 		3,
 		5,
-		1,
+		null,
 		'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem.',
 		'04/15/2021',
 		false
@@ -1012,7 +1012,7 @@ insert into
 values
 	(
 		1,
-		4,
+		null,
 		2,
 		'Maecenas tincidunt lacus at velit. Vivamus vel nulla eget eros elementum pellentesque.',
 		'04/26/2021',
@@ -1029,7 +1029,7 @@ insert into
 		from_client
 	)
 values
-	(4, 2, 4, 'Morbi a ipsum.', '12/31/2021', true);
+	(4, 2, null, 'Morbi a ipsum.', '12/31/2021', true);
 
 insert into
 	messages (
@@ -1044,7 +1044,7 @@ values
 	(
 		4,
 		2,
-		4,
+		null,
 		'Mauris lacinia sapien quis libero.',
 		'06/12/2021',
 		false
@@ -1063,7 +1063,7 @@ values
 	(
 		4,
 		2,
-		4,
+		null,
 		'Aliquam quis turpis eget elit sodales scelerisque.',
 		'08/07/2021',
 		true
@@ -1079,7 +1079,7 @@ insert into
 		from_client
 	)
 values
-	(4, 2, 4, 'Integer ac leo.', '03/18/2021', true);
+	(4, 2, null, 'Integer ac leo.', '03/18/2021', true);
 
 insert into
 	messages (
@@ -1091,7 +1091,7 @@ insert into
 		from_client
 	)
 values
-	(4, 2, 4, 'Fusce consequat.', '04/18/2021', false);
+	(4, 2, null, 'Fusce consequat.', '04/18/2021', false);
 
 insert into
 	messages (
@@ -1106,7 +1106,7 @@ values
 	(
 		4,
 		2,
-		4,
+		null,
 		'Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue.',
 		'01/17/2022',
 		true
@@ -1125,7 +1125,7 @@ values
 	(
 		4,
 		2,
-		4,
+		null,
 		'Curabitur convallis.',
 		'10/21/2021',
 		false
@@ -1144,7 +1144,7 @@ values
 	(
 		4,
 		2,
-		4,
+		null,
 		'Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum.',
 		'06/30/2021',
 		false
@@ -1163,7 +1163,7 @@ values
 	(
 		4,
 		2,
-		4,
+		null,
 		'Morbi non quam nec dui luctus rutrum. Nulla tellus.',
 		'03/31/2021',
 		true
@@ -1182,7 +1182,7 @@ values
 	(
 		4,
 		2,
-		4,
+		null,
 		'Nullam orci pede, venenatis non, sodales sed, tincidunt eu, felis.',
 		'02/07/2022',
 		true

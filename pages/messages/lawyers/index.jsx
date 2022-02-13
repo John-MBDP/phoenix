@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { useState } from "react";
 import MessageCard from "../../../components/MessageCard";
+import Timeago from "react-timeago";
 
 const prisma = new PrismaClient();
 
@@ -31,13 +32,16 @@ export const getStaticProps = async () => {
   };
 };
 
-const timeifyDate = (dateObj) => {
-  // turn date into a time - if longer than 24 hours, turn into days
+const timeifyDate = dateObj => {
+  return dateObj.getTime() < Date.now() - 86400000 ? (
+    <Timeago date={dateObj} />
+  ) : (
+    `${(dateObj.getHours() + 24) % 12 || 12}:${dateObj.getMinutes()}`
+  );
 };
 
 const MessagesIndex = ({ initialMessages }) => {
   const [messageCards, setMessageCards] = useState(initialMessages);
-  console.log(messageCards);
   const parsedMessageCards = messageCards.map(message => {
     return (
       <MessageCard
@@ -45,12 +49,11 @@ const MessagesIndex = ({ initialMessages }) => {
         firstName={message.lawyers.first_name}
         lastName={message.lawyers.last_name}
         recentMessage={message.body}
-        dateSent={message.date_sent.toString()}
+        dateSent={timeifyDate(message.date_sent)}
       />
     );
   });
 
-  console.log(parsedMessageCards);
   return <section>{parsedMessageCards}</section>;
 };
 
