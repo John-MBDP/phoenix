@@ -1,34 +1,19 @@
 import Image from "next/image";
 import styles from "./index.module.css";
 
-const RoundedTopContainer = ({ children }) => {
+const RoundedTopContainer = ({ children, image, alt, height }) => {
   return (
-    <RoundedTopContainer.imagePane
-      image={"/images/articles/lib2.jpeg"}
-      alt={"books"}
-    >
-      <div className={styles.roundedTop}>
-        {children}
-        <h1>Potato</h1>
-        <h1>Potato</h1>
-        <h1>Potato</h1>
+    <>
+      <div className={styles.image}>
+        <Image src={image} alt={alt} width={2400} height={3600} />
       </div>
-    </RoundedTopContainer.imagePane>
+      <div className={styles.pane}>
+        <div className={styles.card} style={{ height: `${height}` }}>
+          {children}
+        </div>
+      </div>
+    </>
   );
 };
 
-RoundedTopContainer.imagePane = function ({ children, image, alt }) {
-  return (
-    <div className={styles.pane}>
-      <Image
-        className={styles.image}
-        src={image}
-        alt={alt}
-        layout="fill"
-        objectFit="cover"
-      ></Image>
-      {children}
-    </div>
-  );
-};
 export default RoundedTopContainer;
