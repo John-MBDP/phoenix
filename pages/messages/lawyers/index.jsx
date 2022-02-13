@@ -51,6 +51,8 @@ const MessagesIndex = ({ initialMessages }) => {
       );
     })
     .map(message => {
+      if (message.from_client && !message.body.includes("You: "))
+        message.body = `You: ${message.body}`;
       return (
         <MessageCard
           key={message.id}

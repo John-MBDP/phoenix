@@ -15,7 +15,7 @@ export async function getServerSideProps(context) {
         equals: Number(context.params.id),
       },
       client_id: {
-        equals: 4,
+        equals: 1,
       },
     },
     orderBy: [

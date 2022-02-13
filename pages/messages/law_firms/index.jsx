@@ -9,7 +9,7 @@ export const getStaticProps = async () => {
   const messages = await prisma.messages.findMany({
     where: {
       client_id: {
-        equals: 4,
+        equals: 1,
       },
       lawyer_id: {
         equals: null,
@@ -51,12 +51,14 @@ const MessagesIndex = ({ initialMessages }) => {
       );
     })
     .map(message => {
+      if (message.from_client && !message.body.includes("You: "))
+        message.body = `You: ${message.body}`;
       return (
         <MessageCard
           key={message.id}
           route="law_firms"
           id={message.law_firm_id}
-          firstName={message.law_firms.name}
+          firstName={message.lawfirms.name}
           lastName=""
           recentMessage={message.body}
           dateSent={timeifyDate(message.date_sent)}
