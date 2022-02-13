@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import { useState } from "react";
 import MessageCard from "../../../components/MessageCard";
 import Timeago from "react-timeago";
+import { Tabs, Tab } from "@material-ui/core";
 
 const prisma = new PrismaClient();
 
@@ -42,6 +43,12 @@ const timeifyDate = dateObj => {
 
 const MessagesIndex = ({ initialMessages }) => {
   const [messageCards, setMessageCards] = useState(initialMessages);
+  const [value, setValue] = useState(2);
+
+  const handleChange = (e, value) => {
+    setValue(value);
+  };
+
   const parsedMessageCards = messageCards
     // to just grab the first most recent message
     .filter((value, index, self) => {
@@ -66,7 +73,21 @@ const MessagesIndex = ({ initialMessages }) => {
       );
     });
 
-  return <section>{parsedMessageCards}</section>;
+  return (
+    <section>
+      <Tabs
+        sx={{ fontWeight: "bold" }}
+        value={value}
+        indicatorColor="secondary"
+        textColor="secondary"
+        onChange={handleChange}
+      >
+        <Tab label="Lawyers" />
+        <Tab label="Lawfirms" />
+      </Tabs>
+      {parsedMessageCards}
+    </section>
+  );
 };
 
 export default MessagesIndex;
