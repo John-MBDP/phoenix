@@ -54,6 +54,8 @@ const MessagesIndex = ({ initialMessages }) => {
       return (
         <MessageCard
           key={message.id}
+          route="lawyers"
+          id={message.lawyer_id}
           firstName={message.lawyers.first_name}
           lastName={message.lawyers.last_name}
           recentMessage={message.body}

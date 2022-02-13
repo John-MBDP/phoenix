@@ -1,18 +1,21 @@
 import { Typography, Card } from "@mui/material";
+import Link from "next/link";
 
-const MessageCard = ({ firstName, lastName, recentMessage, dateSent }) => {
+const MessageCard = ({ route, id, firstName, lastName, recentMessage, dateSent }) => {
   return (
-    <Card>
-      <Typography gutterBottom variant="h5" component="div">
-        {firstName} {lastName}
-      </Typography>
-      <Typography gutterBottom variant="h5" component="div">
-        {recentMessage}
-      </Typography>
-      <Typography gutterBottom variant="h5" component="div">
-        {dateSent}
-      </Typography>
-    </Card>
+    <Link href={`articles/${route}/${id}`} passHref>
+      <Card>
+        <Typography gutterBottom variant="h5" component="div">
+          {firstName} {lastName}
+        </Typography>
+        <Typography gutterBottom variant="h5" component="div">
+          {recentMessage}
+        </Typography>
+        <Typography gutterBottom variant="h5" component="div">
+          {dateSent}
+        </Typography>
+      </Card>
+    </Link>
   );
 };
 
