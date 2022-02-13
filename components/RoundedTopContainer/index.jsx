@@ -1,19 +1,34 @@
+import Image from "next/image";
 import styles from "./index.module.css";
 
 const RoundedTopContainer = ({ children }) => {
   return (
-    <RoundedTopContainer.pane>
+    <RoundedTopContainer.imagePane
+      image={"/images/articles/lib2.jpeg"}
+      alt={"books"}
+    >
       <div className={styles.roundedTop}>
         {children}
         <h1>Potato</h1>
         <h1>Potato</h1>
         <h1>Potato</h1>
       </div>
-    </RoundedTopContainer.pane>
+    </RoundedTopContainer.imagePane>
   );
 };
 
-RoundedTopContainer.pane = function ({ children }) {
-  return <div className={styles.pane}>{children}</div>;
+RoundedTopContainer.imagePane = function ({ children, image, alt }) {
+  return (
+    <div className={styles.pane}>
+      <Image
+        className={styles.image}
+        src={image}
+        alt={alt}
+        layout="fill"
+        objectFit="cover"
+      ></Image>
+      {children}
+    </div>
+  );
 };
 export default RoundedTopContainer;
