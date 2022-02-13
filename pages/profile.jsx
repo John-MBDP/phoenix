@@ -12,19 +12,19 @@ const Profile = () => {
   return (
     <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"forest"}>
       <List component="nav">
-        <MenuItem heading="Personal Information">
+        <MenuItem heading="Personal Information" path="/personal-info">
           <FaceIcon sx={{ color: "black" }} />
         </MenuItem>
-        <MenuItem heading="Notifications">
+        <MenuItem heading="Notifications" path="/notifications">
           <NotificationImportantIcon sx={{ color: "black" }} />
         </MenuItem>
-        <MenuItem heading="Payments">
+        <MenuItem heading="Payments" path="/payments">
           <LocalAtmIcon sx={{ color: "black" }} />
         </MenuItem>
-        <MenuItem heading="How does Phoenix Work?">
+        <MenuItem heading="How does Phoenix Work?" path="/about-us">
           <ReportIcon sx={{ color: "black" }} />
         </MenuItem>
-        <MenuItem heading="Log Out">
+        <MenuItem heading="Log Out" path="/logout">
           <LogoutIcon sx={{ color: "black" }} />
         </MenuItem>
       </List>

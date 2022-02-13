@@ -10,17 +10,21 @@ import {
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useRouter } from "next/router";
 import { ListItemButton } from "@mui/material";
-const MenuItem = ({ children, heading }) => {
+
+const MenuItem = ({ children, heading, path }) => {
   const router = useRouter();
 
-  const handleRedirect = (event, page) => {
+  const handleRedirect = (event, path) => {
     console.log(event);
-    console.log(page);
-    router.push(page);
+    console.log(path);
+    router.push(path);
   };
 
   return (
-    <ListItemButton sx={{ width: "100%", borderRadius: "50%" }}>
+    <ListItemButton
+      sx={{ width: "100%", borderRadius: "50%" }}
+      onClick={(e) => handleRedirect(e, path)}
+    >
       <ListItem
         sx={{ pb: 1.8, pt: 2 }}
         divider
