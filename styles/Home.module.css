@@ -107,6 +107,18 @@
   height: 1em;
   margin-left: 0.5rem;
 }
+.bottomNav {
+  position: absolute;
+  background-color: white;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  box-shadow: 0rem -0.3rem 1.3rem 0.2rem rgba(0, 0, 0, 0.1);
+}
+.view {
+  height: calc(100vh - 3.5rem);
+  overflow-x: hidden;
+}
 
 @media (max-width: 600px) {
   .grid {

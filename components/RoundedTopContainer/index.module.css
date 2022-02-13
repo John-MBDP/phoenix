@@ -1,0 +1,33 @@
+.imagePane {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: calc(100vh -33.5rem);
+}
+
+.image {
+  position: absolute;
+  top: 0;
+  z-index: -10;
+  overflow-y: hidden;
+}
+
+.pane {
+  height: 100%;
+  position: relative;
+}
+.card {
+  position: absolute;
+  background-color: white;
+  width: 100%;
+  bottom: 0;
+  margin-top: 1rem;
+  border-radius: 2.6rem 2.6rem 0 0;
+  padding: 2.5rem 2rem 0 2rem;
+}
+.scrollSnap {
+  max-height: 600px;
+  scroll-snap-type: y mandatory;
+}
