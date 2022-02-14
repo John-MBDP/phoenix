@@ -24,6 +24,8 @@ const timeifyDate = date => {
     "Nov.",
     "Dec.",
   ];
+
+  date = typeof new Date() !== typeof date ? new Date(date) : date;
   const time = `${(date.getHours() + 24) % 12 || 12}:${date.getMinutes()}`;
 
   if (date.getTime() < Date.now() - 31536000000) {

@@ -8,7 +8,7 @@ const TopNavBar = ({ header }) => {
   return (
     <div>
       <AppBar
-        position="static"
+        position="fixed"
         sx={{
           backgroundColor: "#1D1F37",
           borderRadius: "0  0 2rem 2rem",

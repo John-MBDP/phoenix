@@ -4,7 +4,7 @@ import Message from "../../../components/Message";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import timeifyDate from "../../../helpers/timeifyDate";
 import styles from "./index.module.scss";
 import io from "socket.io-client";
@@ -45,6 +45,10 @@ const Messages = ({ initialMessages, setHeader }) => {
     socketInitializer();
   }, []);
 
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
   const socketInitializer = async () => {
     await fetch("/api/socket");
     socket = io();
@@ -57,6 +61,7 @@ const Messages = ({ initialMessages, setHeader }) => {
       setTypingIndicator(bool);
     });
   };
+
 
   const saveMessage = async message => {
     const response = await fetch("/api/messages", {
@@ -77,7 +82,14 @@ const Messages = ({ initialMessages, setHeader }) => {
       : socket.emit("input-change", false);
   };
 
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
+  };
+
   const messageArray = messages.map(item => {
+    console.log(item.date_sent);
     return (
       <Message
         key={item.id}
@@ -89,14 +101,8 @@ const Messages = ({ initialMessages, setHeader }) => {
     );
   });
   return (
-    <section>
-      <div className="messages-container">
-        <style jsx>{`
-          .messages-container {
-            height: 500px;
-            overflow: scroll;
-          }
-        `}</style>
+    <>
+      <div className={styles.messages_container}>
         {messageArray}
         {typingIndicator && (
           <Message>
@@ -108,8 +114,9 @@ const Messages = ({ initialMessages, setHeader }) => {
           </Message>
         )}
       </div>
+      <div ref={messagesEndRef} />
       <form
-        className="messages-input"
+        className={styles.messages_input}
         onSubmit={async e => {
           e.preventDefault();
           const message = {
@@ -128,14 +135,6 @@ const Messages = ({ initialMessages, setHeader }) => {
           }
         }}
       >
-        <style jsx>{`
-          .messages-input {
-            padding: 1em 1em 0 1em;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-          }
-        `}</style>
         <TextField
           id="standard-basic"
           label="Type something..."
@@ -146,7 +145,7 @@ const Messages = ({ initialMessages, setHeader }) => {
           <SendIcon />
         </Button>
       </form>
-    </section>
+    </>
   );
 };
 

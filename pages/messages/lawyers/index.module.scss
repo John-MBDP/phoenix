@@ -1,3 +1,19 @@
+.messages_container {
+  margin: 6em 1em;
+}
+
+.messages_input {
+  padding: 0.5em 1em 1.5em 1em;
+  position: fixed;
+  width: 100%;
+  bottom: 6%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+  z-index: 1;
+}
+
 .typing_indicator {
   $ti-color-bg: #e6e7ed;
   background-color: $ti-color-bg;
