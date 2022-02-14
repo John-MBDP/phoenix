@@ -1,8 +1,15 @@
-const Payments = () => {
+import RoundedTopContainer from "../components/RoundedTopContainer";
+import UserStatsCard from "../components/UserStatsCard";
+import { useEffect } from "react";
+
+const Payments = ({ setHeader }) => {
+  useEffect(() => setHeader({ heading: "", hidden: true }), []);
+
   return (
-    <div>
-      <h1> Payments </h1>
-    </div>
+    <RoundedTopContainer image="/images/paint.jpeg" alt="paint" height="600px">
+      <UserStatsCard />
+      <RoundedTopContainer.Header text="Choose Payment Option" />
+    </RoundedTopContainer>
   );
 };
 
