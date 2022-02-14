@@ -1,21 +1,21 @@
 import { Box, Paper, Typography } from "@material-ui/core";
 import { PrismaClient } from "@prisma/client";
-import Message from "../components/Message";
+import Message from "../../../components/Message";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 const prisma = new PrismaClient();
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   const messages = await prisma.messages.findMany({
     where: {
-      lawyer_id: {
-        equals: 2,
+      law_firm_id: {
+        equals: Number(context.params.id),
       },
       client_id: {
-        equals: 4,
+        equals: 1,
       },
     },
     orderBy: [
@@ -31,15 +31,11 @@ export async function getServerSideProps() {
   };
 }
 
-const Messages = ({ initialMessages, setHeader }) => {
+const Messages = ({ initialMessages }) => {
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
 
-  useEffect(() => {
-    setHeader({ header: "MESSAGES", hidden: false });
-  }, []);
-
-  const saveMessage = async (message) => {
+  const saveMessage = async message => {
     const response = await fetch("/api/messages", {
       method: "POST",
       body: JSON.stringify(message),
@@ -51,13 +47,17 @@ const Messages = ({ initialMessages, setHeader }) => {
     return await response.json();
   };
 
-  const onChangeHandler = (e) => {
+  const onChangeHandler = e => {
     setInput(e.target.value);
   };
 
-  const messageArray = messages.map((item) => {
+  const messageArray = messages.map(item => {
     return (
-      <Message key={item.id} fromClient={item.from_client} date={item.date_sent}>
+      <Message
+        key={item.id}
+        fromClient={item.from_client}
+        date={item.date_sent}
+      >
         {item.body}
       </Message>
     );
@@ -75,7 +75,7 @@ const Messages = ({ initialMessages, setHeader }) => {
       </div>
       <form
         className="messages-input"
-        onSubmit={async (e) => {
+        onSubmit={async e => {
           e.preventDefault();
           const message = {
             body: input,
