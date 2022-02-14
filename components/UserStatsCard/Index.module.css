@@ -1,0 +1,15 @@
+.image {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -80%);
+  background-color: white;
+  border-radius: 50%;
+}
+.container {
+  position: relative;
+  padding-bottom: 2rem;
+}
+.username {
+  padding-top: 2.1rem;
+}
