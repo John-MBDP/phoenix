@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import { useState, useEffect } from "react";
+import timeifyDate from "../../../helpers/timeifyDate";
 import styles from "./index.module.scss";
 import io from "socket.io-client";
 let socket;
@@ -81,7 +82,7 @@ const Messages = ({ initialMessages, setHeader }) => {
       <Message
         key={item.id}
         fromClient={item.from_client}
-        date={item.date_sent}
+        date={timeifyDate(item.date_sent)}
       >
         {item.body}
       </Message>
