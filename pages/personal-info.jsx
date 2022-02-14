@@ -1,16 +1,8 @@
 import RoundedTopContainer from "../components/RoundedTopContainer";
-import MenuItem from "../components/MenuItem";
-import List from "@mui/material/List";
-import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
-import FaceIcon from "@mui/icons-material/Face";
-import LocalAtmIcon from "@mui/icons-material/LocalAtm";
-import ReportIcon from "@mui/icons-material/Report";
-import LogoutIcon from "@mui/icons-material/Logout";
 import UserStatCard from "../components/UserStatsCard";
-import { Typography, Box, TextField } from "@material-ui/core";
-import { FormControl, Input, InputLabel } from "@mui/material";
+import { Typography, TextField } from "@material-ui/core";
 import { useState } from "react";
-import { Label } from "@mui/icons-material";
+import Button from "../components/Button";
 
 const PersonalInfo = () => {
   const [formInput, setFormInput] = useState({
@@ -22,10 +14,13 @@ const PersonalInfo = () => {
   });
 
   const handleInput = (e) => {
-    console.log(formInput);
     setFormInput((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
   };
 
   return (
@@ -38,7 +33,7 @@ const PersonalInfo = () => {
         </Typography>
       </div>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <TextField
           fullWidth
           label="First Name"
@@ -81,6 +76,7 @@ const PersonalInfo = () => {
           onChange={(e) => handleInput(e)}
           margin="normal"
         />
+        <Button type="submit">Update</Button>
       </form>
     </RoundedTopContainer>
   );
