@@ -2,14 +2,20 @@ import BottomNav from "../components/BottomNavigation";
 import "../styles/globals.css";
 import styles from "../styles/Home.module.css";
 import TopNavBar from "../components/TopNavBar";
+import { useState } from "react";
 
 // eslint-disable-next-line func-style
 function MyApp({ Component, pageProps }) {
+  const [header, setHeader] = useState({
+    header: "NEWS FEED",
+    hidden: false,
+  });
+
   return (
     <>
-      <TopNavBar />
+      <TopNavBar header={header} />
       <div className={styles.view}>
-        <Component {...pageProps} />
+        <Component {...pageProps} setHeader={setHeader} />
       </div>
       <BottomNav />
     </>

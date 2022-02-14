@@ -4,7 +4,7 @@ import Message from "../components/Message";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const prisma = new PrismaClient();
 
@@ -31,11 +31,15 @@ export async function getServerSideProps() {
   };
 }
 
-const Messages = ({ initialMessages }) => {
+const Messages = ({ initialMessages, setHeader }) => {
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
 
-  const saveMessage = async message => {
+  useEffect(() => {
+    setHeader({ header: "MESSAGES", hidden: false });
+  });
+
+  const saveMessage = async (message) => {
     const response = await fetch("/api/messages", {
       method: "POST",
       body: JSON.stringify(message),
@@ -47,17 +51,13 @@ const Messages = ({ initialMessages }) => {
     return await response.json();
   };
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setInput(e.target.value);
   };
 
-  const messageArray = messages.map(item => {
+  const messageArray = messages.map((item) => {
     return (
-      <Message
-        key={item.id}
-        fromClient={item.from_client}
-        date={item.date_sent}
-      >
+      <Message key={item.id} fromClient={item.from_client} date={item.date_sent}>
         {item.body}
       </Message>
     );
@@ -75,7 +75,7 @@ const Messages = ({ initialMessages }) => {
       </div>
       <form
         className="messages-input"
-        onSubmit={async e => {
+        onSubmit={async (e) => {
           e.preventDefault();
           const message = {
             body: input,

@@ -7,8 +7,10 @@ import FaceIcon from "@mui/icons-material/Face";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import ReportIcon from "@mui/icons-material/Report";
 import LogoutIcon from "@mui/icons-material/Logout";
+import { useEffect } from "react";
 
-const Profile = () => {
+const Profile = ({ setHeader }) => {
+  useEffect(() => setHeader({ header: "", hidden: true }));
   return (
     <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"forest"}>
       <List component="nav">
