@@ -1,7 +1,7 @@
 import { Avatar, Typography } from "@material-ui/core";
 import styles from "./Index.module.css";
 
-const UserStatCard = ({ children }) => {
+const UserStatCard = ({ children, name }) => {
   return (
     <div className={styles.container}>
       <div className={styles.image}>
@@ -17,7 +17,8 @@ const UserStatCard = ({ children }) => {
         variant="h5"
         component="h1"
       >
-        <strong>Amy Doe</strong>
+        {name ? <strong>{name}</strong> : null}
+        {children}
       </Typography>
       {children}
     </div>
