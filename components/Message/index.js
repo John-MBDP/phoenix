@@ -5,6 +5,7 @@ import styles from "./Index.module.css";
 const Message = ({ children, fromClient, date }) => {
   return (
     <>
+    <div className={styles.date}>{date}</div>
       <div className={styles.imageCard}>
         {!fromClient && (
           <Avatar
