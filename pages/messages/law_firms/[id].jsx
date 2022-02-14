@@ -47,7 +47,7 @@ const Messages = ({ initialMessages, setHeader }) => {
 
   useEffect(() => {
     scrollToBottom();
-  }, [messages]);
+  }, [messages, typingIndicator]);
 
   const socketInitializer = async () => {
     await fetch("/api/socket");

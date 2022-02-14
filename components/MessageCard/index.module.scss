@@ -1,29 +1,29 @@
 .message_card {
   display: flex;
   align-items: center;
-  padding: 1em 0;
+  padding: 0.8em 1em;
 }
 
 .message_card_info {
   display: flex;
   align-items: baseline;
+  justify-content: space-between;
 }
 
 .name_and_body {
-  width: 62vw;
+  width: 210px;
+  margin-left: 0.2em;
 }
 
 .time_and_ping {
-  width: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 20vw;
+  width: 80px;
 }
 
 .messages_ping {
   color: white;
-  text-align: center;
   font-size: 0.8rem;
   background-color: rgb(55, 152, 190);
   width: 19px;

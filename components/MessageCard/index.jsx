@@ -35,7 +35,7 @@ const MessageCard = ({
           </div>
           <div className={styles.time_and_ping}>
             <Typography
-              sx={{ fontWeight: "bold", textAlign: 'right' }}
+              sx={{ fontWeight: "bold" }}
               gutterBottom
               variant="body2"
               component="div"
