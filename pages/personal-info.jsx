@@ -31,12 +31,7 @@ const PersonalInfo = ({ setHeader }) => {
       height="600px"
     >
       <UserStatCard />
-
-      <div sx={{ pl: "1rem" }}>
-        <Typography component="h1" variant="h6" sx={{ color: "pink" }}>
-          Personal Information
-        </Typography>
-      </div>
+      <RoundedTopContainer.Header text="Personal Information" />
 
       <form onSubmit={handleSubmit}>
         <TextField
