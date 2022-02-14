@@ -15,8 +15,6 @@ const MenuItem = ({ children, heading, path }) => {
   const router = useRouter();
 
   const handleRedirect = (event, path) => {
-    console.log(event);
-    console.log(path);
     router.push(path);
   };
 
