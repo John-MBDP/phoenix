@@ -10,13 +10,7 @@ const Notifications = ({ setHeader }) => {
   return (
     <RoundedTopContainer image="/images/waves.jpeg" alt="waves" height="600px">
       <UserStatCard />
-      <div style={{ paddingTop: "1rem" }}>
-        <Typography
-          component="h1"
-          variant="h6"
-          style={{ marginLeft: "1.5rem" }}
-        ></Typography>
-      </div>
+      <RoundedTopContainer.Header text="Notifications" />
       <List component="nav">
         <Notification />
       </List>
