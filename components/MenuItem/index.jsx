@@ -33,7 +33,9 @@ const MenuItem = ({ children, heading, path }) => {
         }
       >
         <ListItemAvatar>
-          <Avatar>{children}</Avatar>
+          <Avatar style={{ backgroundColor: "rgba(0,0,0,0)" }}>
+            {children}
+          </Avatar>
         </ListItemAvatar>
         <ListItemText primary={heading} />
       </ListItem>
