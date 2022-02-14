@@ -7,10 +7,20 @@ import FaceIcon from "@mui/icons-material/Face";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import ReportIcon from "@mui/icons-material/Report";
 import LogoutIcon from "@mui/icons-material/Logout";
+import UserStatCard from "../components/UserStatsCard";
+import { Typography, Box } from "@material-ui/core";
 
 const Profile = () => {
   return (
     <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"forest"}>
+      <UserStatCard />
+
+      <Box sx={{ pl: "1rem" }}>
+        <Typography component="h1" variant="h6" sx={{ color: "pink" }}>
+          Account Settings
+        </Typography>
+      </Box>
+
       <List component="nav">
         <MenuItem heading="Personal Information" path="/personal-info">
           <FaceIcon sx={{ color: "black" }} />
