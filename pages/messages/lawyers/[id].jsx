@@ -41,7 +41,7 @@ const Messages = ({ initialMessages, setHeader }) => {
   const [typingIndicator, setTypingIndicator] = useState(false);
 
   useEffect(() => {
-    setHeader({ header: "MESSAGES", hidden: false });
+    setHeader({ header: "MESSAGES", hidden: false, fixed: true });
     socketInitializer();
   }, []);
 
@@ -61,7 +61,6 @@ const Messages = ({ initialMessages, setHeader }) => {
       setTypingIndicator(bool);
     });
   };
-
 
   const saveMessage = async message => {
     const response = await fetch("/api/messages", {
@@ -89,7 +88,6 @@ const Messages = ({ initialMessages, setHeader }) => {
   };
 
   const messageArray = messages.map(item => {
-    console.log(item.date_sent);
     return (
       <Message
         key={item.id}

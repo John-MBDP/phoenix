@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MessageCard from "../../components/MessageCard";
 import { Tabs, Tab } from "@material-ui/core";
 import timeifyDate from "../../helpers/timeifyDate";
@@ -52,9 +52,13 @@ export const getStaticProps = async () => {
   };
 };
 
-const MessagesIndex = ({ lawyerMessages, lawfirmMessages }) => {
+const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader }) => {
   const [messageCards, setMessageCards] = useState(lawyerMessages);
   const [value, setValue] = useState(0);
+
+  useEffect(() => {
+    setHeader({ header: "MESSAGES", hidden: false, fixed: false });
+  }, []);
 
   const handleChange = (e, value) => {
     setValue(value);
