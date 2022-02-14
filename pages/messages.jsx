@@ -37,7 +37,7 @@ const Messages = ({ initialMessages, setHeader }) => {
 
   useEffect(() => {
     setHeader({ header: "MESSAGES", hidden: false });
-  });
+  }, []);
 
   const saveMessage = async (message) => {
     const response = await fetch("/api/messages", {

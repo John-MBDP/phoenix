@@ -3,7 +3,7 @@ import { Tab } from "@mui/material";
 import { useEffect } from "react";
 
 const Search = ({ setHeader }) => {
-  useEffect(() => setHeader({ header: "LAWYERS", hidden: false }));
+  useEffect(() => setHeader({ header: "LAWYERS", hidden: false }), []);
   return (
     <ScrollableMenu>
       <Tab label="Item One" />

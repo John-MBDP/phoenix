@@ -10,7 +10,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import { useEffect } from "react";
 
 const Profile = ({ setHeader }) => {
-  useEffect(() => setHeader({ header: "", hidden: true }));
+  useEffect(() => setHeader({ header: "", hidden: true }), []);
   return (
     <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"forest"}>
       <List component="nav">
