@@ -13,11 +13,19 @@ import { useEffect } from "react";
 const Profile = ({ setHeader }) => {
   useEffect(() => setHeader({ header: "", hidden: true }), []);
   return (
-    <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"forest"}>
+    <RoundedTopContainer
+      image={"/images/articles/forest.jpeg"}
+      alt={"forest"}
+      height="600px"
+    >
       <UserStatCard name="Hu Tao" />
 
       <div style={{ paddingTop: "1rem" }}>
-        <Typography component="h1" variant="h6" sx={{ color: "pink" }}>
+        <Typography
+          component="h1"
+          variant="h6"
+          style={{ marginLeft: "1.5rem" }}
+        >
           Account Settings
         </Typography>
       </div>
