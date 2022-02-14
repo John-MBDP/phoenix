@@ -1,8 +1,22 @@
-import { ListItem, ListItemAvatar, Avatar, ListItemText } from "@mui/material";
+import {
+  ListItem,
+  ListItemAvatar,
+  Avatar,
+  ListItemText,
+  IconButton
+} from "@mui/material";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 const Notification = () => {
   return (
-    <ListItem sx={{ p: 0 }}>
+    <ListItem
+      sx={{ p: 0 }}
+      secondaryAction={
+        <IconButton edge="end" aria-label="delete">
+          <ArrowForwardIosIcon fontSize="small" />
+        </IconButton>
+      }
+    >
       <ListItemAvatar>
         <Avatar
           style={{ backgroundColor: "white" }}
