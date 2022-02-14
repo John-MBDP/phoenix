@@ -8,8 +8,10 @@ import ReportIcon from "@mui/icons-material/Report";
 import LogoutIcon from "@mui/icons-material/Logout";
 import UserStatCard from "../components/UserStatsCard";
 import { Typography, Box } from "@material-ui/core";
+import { useEffect } from "react";
 
-const Profile = () => {
+const Profile = ({ setHeader }) => {
+  useEffect(() => setHeader({ header: "", hidden: true }), []);
   return (
     <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"forest"}>
       <UserStatCard name="Hu Tao" />
