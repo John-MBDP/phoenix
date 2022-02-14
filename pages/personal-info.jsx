@@ -1,10 +1,11 @@
 import RoundedTopContainer from "../components/RoundedTopContainer";
 import UserStatCard from "../components/UserStatsCard";
 import { Typography, TextField } from "@material-ui/core";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "../components/Button";
 
-const PersonalInfo = () => {
+const PersonalInfo = ({ setHeader }) => {
+  useEffect(() => setHeader({ header: "", hidden: true }), []);
   const [formInput, setFormInput] = useState({
     firstName: "",
     lastName: "",
@@ -24,7 +25,11 @@ const PersonalInfo = () => {
   };
 
   return (
-    <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"forest"}>
+    <RoundedTopContainer
+      image={"/images/articles/forest.jpeg"}
+      alt={"forest"}
+      height="600px"
+    >
       <UserStatCard />
 
       <div sx={{ pl: "1rem" }}>
