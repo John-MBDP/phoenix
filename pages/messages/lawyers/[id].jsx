@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from "@material-ui/core";
+import { Box, InputAdornment, Paper, Typography } from "@material-ui/core";
 import { PrismaClient } from "@prisma/client";
 import Message from "../../../components/Message";
 import TextField from "@mui/material/TextField";
@@ -8,9 +8,8 @@ import { useState, useEffect, useRef } from "react";
 import timeifyDate from "../../../helpers/timeifyDate";
 import styles from "./index.module.scss";
 import io from "socket.io-client";
-let socket;
-
 const prisma = new PrismaClient();
+let socket;
 
 export async function getServerSideProps(context) {
   const messages = await prisma.messages.findMany({
@@ -43,6 +42,11 @@ const Messages = ({ initialMessages, setHeader }) => {
   useEffect(() => {
     setHeader(() => ({ header: "Messages", hidden: false }));
     socketInitializer();
+    const closeSocket = () => {
+      socket.disconnect();
+      console.log("Socket closed");
+    };
+    return closeSocket;
   }, []);
 
   useEffect(() => {
@@ -75,6 +79,7 @@ const Messages = ({ initialMessages, setHeader }) => {
   };
 
   const onChangeHandler = (e) => {
+    console.log(socket.disconnected);
     setInput(e.target.value);
     e.target.value
       ? socket.emit("input-change", true)

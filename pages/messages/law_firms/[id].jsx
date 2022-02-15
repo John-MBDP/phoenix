@@ -43,6 +43,11 @@ const Messages = ({ initialMessages, setHeader }) => {
   useEffect(() => {
     setHeader({ header: "MESSAGES", hidden: false });
     socketInitializer();
+    const closeSocket = () => {
+      socket.disconnect();
+      console.log("Socket closed");
+    };
+    return closeSocket;
   }, []);
 
   useEffect(() => {
@@ -138,7 +143,7 @@ const Messages = ({ initialMessages, setHeader }) => {
           label="Type something..."
           variant="standard"
           onChange={onChangeHandler}
-          autoComplete={false}
+          autoComplete="off"
           value={input}
           fullWidth
         />
