@@ -4,11 +4,12 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
+import { padding } from "@mui/system";
 const TopNavBar = ({ header }) => {
   return (
     <div>
       <AppBar
-        position={header.fixed ? "fixed" : "static"}
+        position={"fixed"}
         sx={{
           backgroundColor: "#1D1F37",
           borderRadius: "0  0 2rem 2rem",

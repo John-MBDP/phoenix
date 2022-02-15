@@ -57,7 +57,7 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader }) => {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    setHeader({ header: "MESSAGES", hidden: false, fixed: false });
+    setHeader({ header: "MESSAGES", hidden: false });
   }, []);
 
   const handleChange = (e, value) => {
@@ -113,6 +113,7 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader }) => {
         indicatorColor="secondary"
         textColor="secondary"
         onChange={handleChange}
+        style={{ marginTop: "6rem" }}
       >
         <Tab label="Lawyers" onClick={() => setMessageCards(lawyerMessages)} />
         <Tab

@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import timeifyDate from "../../../helpers/timeifyDate";
-import styles from '../lawyers/index.module.scss';
+import styles from "../lawyers/index.module.scss";
 import { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 let socket;
@@ -16,22 +16,22 @@ export async function getServerSideProps(context) {
   const messages = await prisma.messages.findMany({
     where: {
       law_firm_id: {
-        equals: Number(context.params.id),
+        equals: Number(context.params.id)
       },
       client_id: {
-        equals: 1,
-      },
+        equals: 1
+      }
     },
     orderBy: [
       {
-        date_sent: "asc",
-      },
-    ],
+        date_sent: "asc"
+      }
+    ]
   });
   return {
     props: {
-      initialMessages: messages,
-    },
+      initialMessages: messages
+    }
   };
 }
 
@@ -41,7 +41,7 @@ const Messages = ({ initialMessages, setHeader }) => {
   const [typingIndicator, setTypingIndicator] = useState(false);
 
   useEffect(() => {
-    setHeader({ header: "MESSAGES", hidden: false, fixed: true });
+    setHeader({ header: "MESSAGES", hidden: false });
     socketInitializer();
   }, []);
 
@@ -57,15 +57,15 @@ const Messages = ({ initialMessages, setHeader }) => {
       console.log("connected");
     });
 
-    socket.on("update-input", bool => {
+    socket.on("update-input", (bool) => {
       setTypingIndicator(bool);
     });
   };
 
-  const saveMessage = async message => {
+  const saveMessage = async (message) => {
     const response = await fetch("/api/messages", {
       method: "POST",
-      body: JSON.stringify(message),
+      body: JSON.stringify(message)
     });
 
     if (!response.ok) {
@@ -74,7 +74,7 @@ const Messages = ({ initialMessages, setHeader }) => {
     return await response.json();
   };
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setInput(e.target.value);
     e.target.value
       ? socket.emit("input-change", true)
@@ -87,7 +87,7 @@ const Messages = ({ initialMessages, setHeader }) => {
     messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
   };
 
-  const messageArray = messages.map(item => {
+  const messageArray = messages.map((item) => {
     return (
       <Message
         key={item.id}
@@ -115,14 +115,14 @@ const Messages = ({ initialMessages, setHeader }) => {
       <div ref={messagesEndRef} />
       <form
         className={styles.messages_input}
-        onSubmit={async e => {
+        onSubmit={async (e) => {
           e.preventDefault();
           const message = {
             body: input,
             client_id: 4,
             lawyer_id: 2,
             date_sent: new Date(),
-            from_client: true,
+            from_client: true
           };
           try {
             const newMessage = await saveMessage(message);
