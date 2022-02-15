@@ -1,14 +1,14 @@
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
 import { Box, Typography } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import PhoneIcon from "@mui/icons-material/Phone";
 
-const SearchCard = ({ name, location, phone, certified }) => {
+const SearchCard = ({ fullName, location, phone, certified }) => {
   return (
     <Card
       sx={{
-        mt: "40px",
+        mt: "0.5rem",
         p: "0.7rem",
         borderRadius: 1,
         display: "flex",
@@ -37,16 +37,21 @@ const SearchCard = ({ name, location, phone, certified }) => {
         }}
       >
         <Typography variant="body1">
-          <strong>John Doe</strong>
+          <strong>{fullName}</strong>
         </Typography>
         <br />
-        <Box>
-          <Typography variant="body2">New York</Typography>
-        </Box>
-        <Typography variant="body2">(647) 555 5555</Typography>
-        <Typography variant="body2" noWrap>
-          <LocationOnIcon fontSize="small" />
-          <strong>Recognised Since: 2012</strong>
+
+        <Typography variant="body2">
+          <LocationOnIcon fontSize="16px" />
+          {location}
+        </Typography>
+
+        <Typography variant="body2">
+          <PhoneIcon fontSize="16px" />
+          {phone}
+        </Typography>
+        <Typography variant="body2">
+          <strong>Recognised Since: {certified}</strong>
         </Typography>
       </Box>
     </Card>
