@@ -20,7 +20,7 @@ const signup = ({ setHeader }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   useEffect(() => setHeader({ header: "", hidden: true }), []);
   return (
-    <RoundedTopContainer image={"/images/signup.png"} alt={"signup-image"} height="400px">
+    <RoundedTopContainer image={"/images/signup.png"} alt={"signup-image"}>
       <Typography variant="h4" component="h1">
         Signup
       </Typography>
