@@ -21,7 +21,7 @@ export default function ArticleCard(props) {
           }
         }}
       >
-        <CardMedia component="img" height="140" image={image} alt="{image}" />
+        <CardMedia component="img" height="140" image={image} alt={image} />
         <CardContent>
           <Typography
             sx={{ fontWeight: "bold" }}
