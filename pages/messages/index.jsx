@@ -57,7 +57,7 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader }) => {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    setHeader({ header: "MESSAGES", hidden: true, fixed: false });
+    setHeader({ header: "MESSAGES", hidden: false, fixed: false });
   }, []);
 
   const handleChange = (e, value) => {

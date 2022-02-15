@@ -12,9 +12,7 @@ const TopNavBar = ({ header }) => {
         sx={{
           backgroundColor: "#1D1F37",
           borderRadius: "0  0 2rem 2rem",
-          display: header.hidden ? "none" : "block",
-          zIndex: "10",
-          position: "relative"
+          display: header.hidden ? "none" : "block"
         }}
       >
         <Toolbar
