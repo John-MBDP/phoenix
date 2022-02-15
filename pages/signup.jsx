@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import RoundedTopContainer from "../components/RoundedTopContainer";
 import Typography from "@mui/material/Typography";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
@@ -11,20 +12,91 @@ import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Stack from "@mui/material/Stack";
+import { Router } from "@mui/icons-material";
 
 const btnMain = {
   alignItems: "right",
 };
 
-const signup = ({ setHeader }) => {
+const Signup = ({ setHeader }) => {
+  const router = useRouter();
+  const [formInput, setFormInput] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    checked: false
+  });
+  const [errorMsg, setErrorMsg] = useState("");
+
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   useEffect(() => setHeader({ header: "", hidden: true }), []);
+
+  const onEmailChangeHandler = e => {
+    setFormInput(prev => {
+      return {
+        ...prev,
+        email: e.target.value,
+      };
+    });
+  };
+
+  const onPasswordChangeHandler = e => {
+    setFormInput(prev => {
+      return {
+        ...prev,
+        password: e.target.value,
+      };
+    });
+  };
+
+  const onNameChangeHandler = e => {
+    const firstName = e.target.value.split(" ")[0];
+    const lastName = e.target.value.split(" ")[1];
+    setFormInput(prev => {
+      return {
+        ...prev,
+        firstName,
+        lastName,
+      };
+    });
+  };
+
+  const onCheckboxChangeHandler = e => {
+    setFormInput(prev => {
+      return {
+        ...prev,
+        checked: e.target.checked,
+      };
+    });
+  };
+
+  const handleSubmit = async inputValues => {
+    if (!inputValues.checked) {
+      setErrorMsg('Please accept Terms and Conditions');
+      return;
+    }
+    try {
+      await fetch("/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify(inputValues),
+      });
+      return router.push("/");
+    } catch (error) {
+      setErrorMsg(error.data.message);
+    }
+  };
+
   return (
-    <RoundedTopContainer image={"/images/signup.png"} alt={"signup-image"} height="400px">
+    <RoundedTopContainer
+      image={"/images/signup.png"}
+      alt={"signup-image"}
+      height="400px"
+    >
       <Typography variant="h4" component="h1">
         Signup
       </Typography>
-      {/* <TextField id="standard-basic" label="Full Name" variant="standard" fullWidth /> */}
+      {errorMsg && <p>{errorMsg}</p>}
       <TextField
         sx={{ mb: 2 }}
         id="input-with-icon-textfield"
@@ -38,6 +110,7 @@ const signup = ({ setHeader }) => {
         }}
         fullWidth
         variant="standard"
+        onChange={onNameChangeHandler}
       />
       <TextField
         sx={{ mb: 2 }}
@@ -52,6 +125,7 @@ const signup = ({ setHeader }) => {
         }}
         fullWidth
         variant="standard"
+        onChange={onEmailChangeHandler}
       />
       <TextField
         sx={{ mb: 2 }}
@@ -66,20 +140,35 @@ const signup = ({ setHeader }) => {
         }}
         variant="standard"
         fullWidth
+        onChange={onPasswordChangeHandler}
       />
       <Stack
         direction="row"
         spacing={2}
         sx={{ mb: 2, display: "flex", justifyContent: "space-between" }}
       >
-        <Checkbox {...label} />
+        <Checkbox {...label} onChange={onCheckboxChangeHandler}/>
         Terms and Conditions
       </Stack>
       <Stack sx={{ mb: 2, spacing: 2 }}>
-        <Button variant="contained" endIcon={<ArrowRightAltIcon />}>
-          SIGN UP
-        </Button>
-        <Typography sx={{ display: "flex", justifyContent: "flex-end" }} variant="h7">
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+            handleSubmit(formInput);
+          }}
+        >
+          <Button
+            type="submit"
+            variant="contained"
+            endIcon={<ArrowRightAltIcon />}
+          >
+            SIGN UP
+          </Button>
+        </form>
+        <Typography
+          sx={{ display: "flex", justifyContent: "flex-end" }}
+          variant="h7"
+        >
           LOG IN
         </Typography>
 
@@ -92,4 +181,4 @@ const signup = ({ setHeader }) => {
   );
 };
 
-export default signup;
+export default Signup;
