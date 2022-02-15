@@ -16,18 +16,33 @@ export const getServerSideProps = async () => {
 };
 
 const Search = ({ setHeader, lawyers }) => {
-  useEffect(() => setHeader({ header: "LAWYERS", hidden: false }), []);
+  console.log(lawyers);
+  useEffect(() => {
+    setHeader({ header: "LAWYERS", hidden: false });
+  }, []);
+
+  const lawyersArray = lawyers.map((lawyer) => {
+    return (
+      <SearchCard
+        key={lawyer.id}
+        fullName={`${lawyer.first_name} ${lawyer.last_name}`}
+        location={lawyer.location}
+        certified={lawyer.date_certified.getFullYear()}
+        phone={lawyer.phone_number}
+      />
+    );
+  });
 
   return (
-    <Box sx={{ px: "2rem" }}>
+    <Box sx={{ px: "2rem", mt: "5rem" }}>
       <ScrollableMenu>
-        <Tab label="Item One" />
-        <Tab label="Item One" />
-        <Tab label="Item One" />
-        <Tab label="Item One" />
-        <Tab label="Item One" />
+        <Tab label="Injury" />
+        <Tab label="Immigration" />
+        <Tab label="Criminal" />
+        <Tab label="Legal Aid" />
+        <Tab label="NTF's" />
       </ScrollableMenu>
-      <SearchCard />
+      {lawyersArray}
     </Box>
   );
 };
