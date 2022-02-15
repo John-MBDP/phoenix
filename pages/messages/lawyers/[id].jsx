@@ -41,7 +41,7 @@ const Messages = ({ initialMessages, setHeader }) => {
   const [typingIndicator, setTypingIndicator] = useState(false);
 
   useEffect(() => {
-    setHeader((prev) => ({ ...prev, fixed: true }));
+    setHeader(() => ({ heading: "Messages", hidden: false, fixed: true }));
     socketInitializer();
   }, []);
 

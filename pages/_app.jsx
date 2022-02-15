@@ -9,7 +9,7 @@ function MyApp({ Component, pageProps }) {
   const [header, setHeader] = useState({
     header: "NEWS FEED",
     hidden: false,
-    fixed: false,
+    fixed: false
   });
 
   return (
