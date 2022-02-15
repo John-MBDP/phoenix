@@ -27,7 +27,6 @@ export const getServerSideProps = async () => {
 
 export default function Home({ setHeader, initialArticles }) {
   const parsedArticleCards = initialArticles.map((article) => {
-    console.log(article);
     return (
       <ArticleCard
         key={article.id}
