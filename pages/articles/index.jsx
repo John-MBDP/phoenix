@@ -8,19 +8,19 @@ export const getServerSideProps = async () => {
   const articles = await prisma.articles.findMany({
     orderBy: [
       {
-        date: "desc",
-      },
-    ],
+        date: "desc"
+      }
+    ]
   });
   return {
     props: {
-      initialArticles: articles,
-    },
+      initialArticles: articles
+    }
   };
 };
 
 const ArticleCardList = ({ initialArticles }) => {
-  const parsedArticleCards = initialArticles.map(article => {
+  const parsedArticleCards = initialArticles.map((article) => {
     return (
       <ArticleCard
         key={article.id}
