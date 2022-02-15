@@ -1,7 +1,30 @@
+import { useState } from "react";
 import LoginCard from "../components/LoginCard";
+import useUser from "../hooks/useUser";
 
 const Login = ({ setHeader }) => {
-  return ( <LoginCard setHeader={setHeader} /> );
-}
- 
+  const { mutateUser } = useUser({
+    redirectTo: "/",
+    redirectIfFound: true,
+  });
+
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const handleSubmit = async inputValues => {
+    try {
+      mutateUser(
+        await fetch('api/auth/login', {
+          method: 'POST',
+          body: JSON.stringify(inputValues),
+        })
+      );
+    } catch (error) {
+      console.error('An unexpected error happened:', error);
+      setErrorMsg(error.data.message);
+    }
+  }
+
+  return <LoginCard setHeader={setHeader} errorMessage={errorMsg} handleSubmit={handleSubmit} />;
+};
+
 export default Login;

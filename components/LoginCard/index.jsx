@@ -45,8 +45,13 @@ const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
       <Typography variant="h4" component="h1">
         Login
       </Typography>
-      {/* <TextField id="standard-basic" label="Full Name" variant="standard" fullWidth /> */}
-      <form onSubmit={() => handleSubmit(formInput)}>
+      {errorMessage && <p>{errorMessage}</p>}
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          handleSubmit(formInput);
+        }}
+      >
         <TextField
           sx={{ mb: 2 }}
           id="input-with-icon-textfield"
