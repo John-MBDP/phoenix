@@ -1,13 +1,15 @@
 import { Typography } from "@material-ui/core";
 import Image from "next/image";
 import styles from "./index.module.css";
+import Card from "@mui/material/Card";
+import CardMedia from "@mui/material/CardMedia";
 
-const RoundedTopContainer = ({ children, image, alt, height, header }) => {
+const RoundedTopContainer = ({ children, image, alt, height }) => {
   return (
     <>
-      <div className={styles.image}>
-        <Image src={image} alt={alt} width={2400} height={3600} />
-      </div>
+      <Card className={styles.image}>
+        <CardMedia component="img" width="390" image={image} alt={alt} />
+      </Card>
       <div className={styles.pane}>
         <div
           className={styles.card}
