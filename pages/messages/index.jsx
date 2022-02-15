@@ -107,13 +107,12 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader }) => {
   };
 
   return (
-    <section>
+    <section style={{ marginTop: "6rem" }}>
       <Tabs
         value={value}
         indicatorColor="secondary"
         textColor="secondary"
         onChange={handleChange}
-        style={{ marginTop: "6rem" }}
       >
         <Tab label="Lawyers" onClick={() => setMessageCards(lawyerMessages)} />
         <Tab
