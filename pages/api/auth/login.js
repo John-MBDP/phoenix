@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import withSession from "../../lib/session";
+import withSession from "../../../lib/session";
 import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
