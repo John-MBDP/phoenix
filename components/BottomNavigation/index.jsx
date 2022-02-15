@@ -1,8 +1,4 @@
-import {
-  BottomNavigation,
-  BottomNavigationAction,
-  Link
-} from "@material-ui/core";
+import { BottomNavigation, BottomNavigationAction, Link } from "@material-ui/core";
 import HomeIcon from "@mui/icons-material/Home";
 import MessageIcon from "@mui/icons-material/Message";
 import SearchIcon from "@mui/icons-material/Search";
@@ -24,10 +20,13 @@ export default function BottomNav() {
           router.push(`/${views[newValue]}`);
         }}
       >
-        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-        <BottomNavigationAction label="Messages" icon={<MessageIcon />} />
-        <BottomNavigationAction label="Search" icon={<SearchIcon />} />
-        <BottomNavigationAction label="Profile" icon={<AccountCircleIcon />} />
+        <BottomNavigationAction label="Home" icon={<HomeIcon sx={{ color: "black" }} />} />
+        <BottomNavigationAction label="Messages" icon={<MessageIcon sx={{ color: "black" }} />} />
+        <BottomNavigationAction label="Search" icon={<SearchIcon sx={{ color: "black" }} />} />
+        <BottomNavigationAction
+          label="Profile"
+          icon={<AccountCircleIcon sx={{ color: "black" }} />}
+        />
       </BottomNavigation>
     </div>
   );
