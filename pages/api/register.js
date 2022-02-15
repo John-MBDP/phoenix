@@ -19,13 +19,13 @@ export default withSession(async (req, res) => {
       }
       // create user
       const hashPassword = await bcrypt.hash(password, 10);
-      const savedClient = await prisma.clients.create({
+      const user = await prisma.clients.create({
         firstName,
         lastName,
         email,
         password: hashPassword,
       });
-      req.session.set("client", { id: savedClient.id, email: savedClient.email });
+      req.session.set("user", { id: user.id, email: user.email });
       await req.session.save();
       return res.status(200).end();
     }
