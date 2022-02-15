@@ -4,7 +4,7 @@ import { Box, Typography } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 
-const SearchCard = ({ fullName, location, phone, certified }) => {
+const SearchCard = ({ fullName, location, phone, certified, image }) => {
   return (
     <Card
       sx={{
@@ -23,7 +23,7 @@ const SearchCard = ({ fullName, location, phone, certified }) => {
             objectFit: "cover",
             borderRadius: 1
           }}
-          image="/images/user1.jpeg"
+          image={image}
           alt="user-icon"
         />
       </Box>
