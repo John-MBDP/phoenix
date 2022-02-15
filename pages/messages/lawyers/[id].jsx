@@ -1,18 +1,22 @@
 import { Box, Paper, Typography } from "@material-ui/core";
 import { PrismaClient } from "@prisma/client";
-import Message from "../components/Message";
+import Message from "../../../components/Message";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import timeifyDate from "../../../helpers/timeifyDate";
+import styles from "./index.module.scss";
+import io from "socket.io-client";
+let socket;
 
 const prisma = new PrismaClient();
 
-export async function getServerSideProps() {
+export async function getServerSideProps(context) {
   const messages = await prisma.messages.findMany({
     where: {
       lawyer_id: {
-        equals: 2,
+        equals: Number(context.params.id),
       },
       client_id: {
         equals: 4,
@@ -34,10 +38,29 @@ export async function getServerSideProps() {
 const Messages = ({ initialMessages, setHeader }) => {
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
+  const [typingIndicator, setTypingIndicator] = useState(false);
 
   useEffect(() => {
-    setHeader({ header: "MESSAGES", hidden: false });
+    setHeader({ header: "MESSAGES", hidden: false, fixed: true });
+    socketInitializer();
   }, []);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, typingIndicator]);
+
+  const socketInitializer = async () => {
+    await fetch("/api/socket");
+    socket = io();
+
+    socket.on("connect", () => {
+      console.log("connected");
+    });
+
+    socket.on("update-input", (bool) => {
+      setTypingIndicator(bool);
+    });
+  };
 
   const saveMessage = async (message) => {
     const response = await fetch("/api/messages", {
@@ -53,28 +76,39 @@ const Messages = ({ initialMessages, setHeader }) => {
 
   const onChangeHandler = (e) => {
     setInput(e.target.value);
+    e.target.value ? socket.emit("input-change", true) : socket.emit("input-change", false);
+  };
+
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
   };
 
   const messageArray = messages.map((item) => {
     return (
-      <Message key={item.id} fromClient={item.from_client} date={item.date_sent}>
+      <Message key={item.id} fromClient={item.from_client} date={timeifyDate(item.date_sent)}>
         {item.body}
       </Message>
     );
   });
   return (
-    <section>
-      <div className="messages-container">
-        <style jsx>{`
-          .messages-container {
-            height: 500px;
-            overflow: scroll;
-          }
-        `}</style>
+    <>
+      <div className={styles.messages_container}>
         {messageArray}
+        {typingIndicator && (
+          <Message>
+            <div className={styles.typing_indicator}>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </Message>
+        )}
       </div>
+      <div ref={messagesEndRef} />
       <form
-        className="messages-input"
+        className={styles.messages_input}
         onSubmit={async (e) => {
           e.preventDefault();
           const message = {
@@ -93,14 +127,6 @@ const Messages = ({ initialMessages, setHeader }) => {
           }
         }}
       >
-        <style jsx>{`
-          .messages-input {
-            padding: 1em 1em 0 1em;
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-          }
-        `}</style>
         <TextField
           id="standard-basic"
           label="Type something..."
@@ -111,7 +137,7 @@ const Messages = ({ initialMessages, setHeader }) => {
           <SendIcon />
         </Button>
       </form>
-    </section>
+    </>
   );
 };
 
