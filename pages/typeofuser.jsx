@@ -7,7 +7,7 @@ const typeofuser = ({ setHeader }) => {
   useEffect(() => setHeader({ header: "", hidden: true }), []);
   //uwu
   return (
-    <RoundedTopContainer image={"/images/signup.png"} alt={"signup-image"} height="400px">
+    <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"signup-image"}>
       <Typography
         variant="h6"
         fontWeight
