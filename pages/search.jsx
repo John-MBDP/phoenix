@@ -29,6 +29,7 @@ const Search = ({ setHeader, lawyers }) => {
         location={lawyer.location}
         certified={lawyer.date_certified.getFullYear()}
         phone={lawyer.phone_number}
+        image={lawyer.profile_pic}
       />
     );
   });
