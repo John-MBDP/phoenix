@@ -236,7 +236,7 @@ values
 		'Ontario''s Doug Ford government recently tabled a budget imposing substantial cuts to the Southern Ontario Library Service (SOLS) and Ontario Library Service North (OLSN). These provincial agencies provide numerous services to local libraries including training, technical support and inter-library loans.  SOLS exists so “the public has equitable access to library services thus supporting a dynamic cultural environment, economic vitality and quality of life.” And OLSN says:  “In the North there are approximately 121 public libraries representing cities, towns, townships, local service boards, First Nation communities and fly-in communities over a vast geographic area. We endeavour to assist and provide services to encourage library development in some of Northern Ontario''s most remote locations.”  Under Ford''s budget, SOLS'' allocation is cut in half and OLSN''s will also be cut. Consequently, both agencies have suspended their inter-library loans services. These changes will have an immediate impact on library patrons, especially those in rural and remote areas.  Get your news from people who know what they''re talking about.  Sign up for newsletter  Tibollo is seen in this October 2015 photo. THE CANADIAN PRESS',
 		'09/10/2021',
 		'Genovera MacCumiskey',
-		'/images/home-library.jpeg'
+		'/images/articles/home-library.jpeg'
 	);
 
 insert into
@@ -269,7 +269,7 @@ values
 		'As a new spring semester begins in Canada, all-online teaching continues. In the wake of the COVID-19 outbreak, universities and colleges replaced classroom instruction with online teaching. UNESCO estimates that more than 1.5 billion students in 165 countries are affected by a move to online learning.  With campus libraries still closed, instructors have had to place more course materials online.   In-person classes are still cancelled at universities. Here, the University of Ottawa campus is quiet on April 22, 2020. THE CANADIAN PRESS',
 		'08/27/2021',
 		'Saunders Driffield',
-		'/images/articles/proffiting-off-your-content.jpeg'
+		'/images/articles/profitting-off-your-content.jpeg'
 	);
 
 insert into
@@ -280,7 +280,7 @@ values
 		'Nulla mollis molestie lorem. Quisque ut erat. Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat. Nulla nisl. Nunc nisl.',
 		'07/25/2019',
 		'Dicky Andrasch',
-		'reading-the-fine-print.jpeg'
+		'images/articles/reading-the-fine-print.jpeg'
 	);
 
 insert into
@@ -302,7 +302,7 @@ values
 		'Morbi odio odio, elementum eu, interdum eu, tincidunt in, leo. Maecenas pulvinar lobortis est. Phasellus sit amet erat. Nulla tempus. Vivamus in felis eu sapien cursus vestibulum. Proin eu mi. Nulla ac enim. In tempor, turpis nec euismod scelerisque, quam turpis adipiscing lorem, vitae mattis nibh ligula nec sem. Duis aliquam convallis nunc. Proin at turpis a pede posuere nonummy. Integer non velit. Donec diam neque, vestibulum eget, vulputate ut, ultrices vel, augue. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec pharetra, magna vestibulum aliquet ultrices, erat tortor sollicitudin mi, sit amet lobortis sapien sapien non mi. Integer ac neque.',
 		'06/28/2019',
 		'Kaela Kiellor',
-		'tech-startup.jpeg'
+		'/images/articles/tech-startup.jpeg'
 	);
 
 insert into
@@ -313,7 +313,7 @@ values
 		'Curabitur gravida nisi at nibh. In hac habitasse platea dictumst. Aliquam augue quam, sollicitudin vitae, consectetuer eget, rutrum at, lorem. Integer tincidunt ante vel ipsum. Praesent blandit lacinia erat. Vestibulum sed magna at nunc commodo placerat. Praesent blandit. Nam nulla. Integer pede justo, lacinia eget, tincidunt eget, tempus vel, pede. Morbi porttitor lorem id ligula. Suspendisse ornare consequat lectus. In est risus, auctor sed, tristique in, tempus sit amet, sem. Fusce consequat. Nulla nisl. Nunc nisl. Duis bibendum, felis sed interdum venenatis, turpis enim blandit mi, in porttitor pede justo eu massa. Donec dapibus. Duis at velit eu est congue elementum. In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros. Suspendisse accumsan tortor quis turpis. Sed ante. Vivamus tortor. Duis mattis egestas metus. Aenean fermentum. Donec ut mauris eget massa tempor convallis. Nulla neque libero, convallis eget, eleifend luctus, ultricies eu, nibh.',
 		'05/21/2019',
 		'Titos Mordaunt',
-		'hupcoming-law-startup.jpeg'
+		'/images/articles/upcoming-law-startup.jpeg'
 	);
 
 insert into
@@ -1079,7 +1079,14 @@ insert into
 		from_client
 	)
 values
-	(4, 2, null, 'Integer ac leo.', '03/18/2021', true);
+	(
+		4,
+		2,
+		null,
+		'Integer ac leo.',
+		'03/18/2021',
+		true
+	);
 
 insert into
 	messages (
@@ -1091,7 +1098,14 @@ insert into
 		from_client
 	)
 values
-	(4, 2, null, 'Fusce consequat.', '04/18/2021', false);
+	(
+		4,
+		2,
+		null,
+		'Fusce consequat.',
+		'04/18/2021',
+		false
+	);
 
 insert into
 	messages (

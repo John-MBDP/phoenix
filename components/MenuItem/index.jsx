@@ -15,8 +15,6 @@ const MenuItem = ({ children, heading, path }) => {
   const router = useRouter();
 
   const handleRedirect = (event, path) => {
-    console.log(event);
-    console.log(path);
     router.push(path);
   };
 
@@ -35,7 +33,9 @@ const MenuItem = ({ children, heading, path }) => {
         }
       >
         <ListItemAvatar>
-          <Avatar>{children}</Avatar>
+          <Avatar style={{ backgroundColor: "rgba(0,0,0,0)" }}>
+            {children}
+          </Avatar>
         </ListItemAvatar>
         <ListItemText primary={heading} />
       </ListItem>

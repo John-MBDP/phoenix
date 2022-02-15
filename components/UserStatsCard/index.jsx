@@ -7,7 +7,7 @@ const UserStatCard = ({ children, name }) => {
       <div className={styles.image}>
         <Avatar
           alt="Remy Sharp"
-          src="/images/hutao.png"
+          src="/images/huTao.png"
           style={{ height: "130px", width: "130px" }}
         />
       </div>
