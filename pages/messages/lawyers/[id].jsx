@@ -138,6 +138,9 @@ const Messages = ({ initialMessages, setHeader }) => {
           label="Type something..."
           variant="standard"
           onChange={onChangeHandler}
+          value={input}
+          fullWidth
+          autoComplete="off"
         />
         <Button type="submit">
           <SendIcon />
