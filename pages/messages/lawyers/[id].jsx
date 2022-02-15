@@ -57,12 +57,12 @@ const Messages = ({ initialMessages, setHeader }) => {
       console.log("connected");
     });
 
-    socket.on("update-input", bool => {
+    socket.on("update-input", (bool) => {
       setTypingIndicator(bool);
     });
   };
 
-  const saveMessage = async message => {
+  const saveMessage = async (message) => {
     const response = await fetch("/api/messages", {
       method: "POST",
       body: JSON.stringify(message),
@@ -74,11 +74,9 @@ const Messages = ({ initialMessages, setHeader }) => {
     return await response.json();
   };
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     setInput(e.target.value);
-    e.target.value
-      ? socket.emit("input-change", true)
-      : socket.emit("input-change", false);
+    e.target.value ? socket.emit("input-change", true) : socket.emit("input-change", false);
   };
 
   const messagesEndRef = useRef(null);
@@ -87,13 +85,9 @@ const Messages = ({ initialMessages, setHeader }) => {
     messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
   };
 
-  const messageArray = messages.map(item => {
+  const messageArray = messages.map((item) => {
     return (
-      <Message
-        key={item.id}
-        fromClient={item.from_client}
-        date={timeifyDate(item.date_sent)}
-      >
+      <Message key={item.id} fromClient={item.from_client} date={timeifyDate(item.date_sent)}>
         {item.body}
       </Message>
     );
@@ -115,7 +109,7 @@ const Messages = ({ initialMessages, setHeader }) => {
       <div ref={messagesEndRef} />
       <form
         className={styles.messages_input}
-        onSubmit={async e => {
+        onSubmit={async (e) => {
           e.preventDefault();
           const message = {
             body: input,
