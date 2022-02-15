@@ -5,6 +5,7 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 const typeofuser = ({ setHeader }) => {
   useEffect(() => setHeader({ header: "", hidden: true }), []);
+  //uwu
   return (
     <RoundedTopContainer image={"/images/signup.png"} alt={"signup-image"} height="400px">
       <Typography
