@@ -16,22 +16,22 @@ export async function getServerSideProps(context) {
   const messages = await prisma.messages.findMany({
     where: {
       lawyer_id: {
-        equals: Number(context.params.id),
+        equals: Number(context.params.id)
       },
       client_id: {
-        equals: 4,
-      },
+        equals: 4
+      }
     },
     orderBy: [
       {
-        date_sent: "asc",
-      },
-    ],
+        date_sent: "asc"
+      }
+    ]
   });
   return {
     props: {
-      initialMessages: messages,
-    },
+      initialMessages: messages
+    }
   };
 }
 
@@ -41,7 +41,7 @@ const Messages = ({ initialMessages, setHeader }) => {
   const [typingIndicator, setTypingIndicator] = useState(false);
 
   useEffect(() => {
-    setHeader({ header: "MESSAGES", hidden: false, fixed: true });
+    setHeader((prev) => ({ ...prev, fixed: true }));
     socketInitializer();
   }, []);
 
@@ -65,7 +65,7 @@ const Messages = ({ initialMessages, setHeader }) => {
   const saveMessage = async (message) => {
     const response = await fetch("/api/messages", {
       method: "POST",
-      body: JSON.stringify(message),
+      body: JSON.stringify(message)
     });
 
     if (!response.ok) {
@@ -76,7 +76,9 @@ const Messages = ({ initialMessages, setHeader }) => {
 
   const onChangeHandler = (e) => {
     setInput(e.target.value);
-    e.target.value ? socket.emit("input-change", true) : socket.emit("input-change", false);
+    e.target.value
+      ? socket.emit("input-change", true)
+      : socket.emit("input-change", false);
   };
 
   const messagesEndRef = useRef(null);
@@ -87,7 +89,11 @@ const Messages = ({ initialMessages, setHeader }) => {
 
   const messageArray = messages.map((item) => {
     return (
-      <Message key={item.id} fromClient={item.from_client} date={timeifyDate(item.date_sent)}>
+      <Message
+        key={item.id}
+        fromClient={item.from_client}
+        date={timeifyDate(item.date_sent)}
+      >
         {item.body}
       </Message>
     );
@@ -116,7 +122,7 @@ const Messages = ({ initialMessages, setHeader }) => {
             client_id: 4,
             lawyer_id: 2,
             date_sent: new Date(),
-            from_client: true,
+            from_client: true
           };
           try {
             const newMessage = await saveMessage(message);
