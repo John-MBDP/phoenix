@@ -5,10 +5,11 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 export default withSession(async (req, res) => {
-  const { email, password } = await req.body;
+  const data = await req.body;
+  const { email, password } = JSON.parse(data);
 
   try {
-    const user = await prisma.clients.findUnique({
+    const user = await prisma.clients.findFirst({
       where: { email: email.toLowerCase() },
     });
     if (!user) {
