@@ -12,19 +12,17 @@ export default withSession(async (req, res) => {
       where: { email: email.toLowerCase() },
     });
     if (!user) {
-      return res
-        .status(401)
-        .json({ message: "User does not exist" });
+      return res.status(401).json({ message: "User does not exist" });
     }
 
     const valid = await bcrypt.compare(password, user.password);
 
     if (valid) {
-      req.session.set('user', { id: user._id, email: user.email });
+      req.session.set("user", { id: user.id, email: user.email });
       await req.session.save();
       return res.json(user);
     } else {
-      return res.status(401).json({ message: 'Invalid Password'});
+      return res.status(401).json({ message: "Invalid Password" });
     }
   } catch (error) {
     console.log(error);
