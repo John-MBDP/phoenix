@@ -27,7 +27,7 @@ const ArticleShow = ({ article }) => {
       <Card className={styles.image}>
         <CardMedia
           component="img"
-          width="390"
+          height="390"
           image={article.image}
           alt={article.image}
         />
