@@ -5,11 +5,12 @@ import withSession from "../../../lib/session";
 const prisma = new PrismaClient();
 
 export default withSession(async (req, res) => {
-  const { firstName, lastName, email, password } = await req.body;
+  const data = await req.body;
+  const { firstName, lastName, email, password } = JSON.parse(data);
 
   try {
     if (req.method === "POST") {
-      const userCheck = await prisma.clients.findUnique({
+      const userCheck = await prisma.clients.findFirst({
         where: { email: email.toLowerCase() },
       });
       if (userCheck) {
@@ -20,10 +21,12 @@ export default withSession(async (req, res) => {
       // create user
       const hashPassword = await bcrypt.hash(password, 10);
       const user = await prisma.clients.create({
-        firstName,
-        lastName,
-        email,
-        password: hashPassword,
+        data: {
+          first_name: firstName,
+          last_name: lastName,
+          email,
+          password: hashPassword,
+        }
       });
       req.session.set("user", { id: user.id, email: user.email });
       await req.session.save();
