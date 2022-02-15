@@ -1,25 +1,41 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import RoundedTopContainer from "/components/RoundedTopContainer";
-import Typography from "@mui/material/Typography";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import Link from "next/link";
 
+import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
 import MailIcon from "@mui/icons-material/Mail";
 import LockIcon from "@mui/icons-material/Lock";
 import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
 import Button from "@mui/material/Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Stack from "@mui/material/Stack";
 
-const btnMain = {
-  alignItems: "right",
-};
+const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
+  const [formInput, setFormInput] = useState({ email: "", password: "" });
 
-const LoginCard = ({ setHeader }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
+
   useEffect(() => setHeader({ header: "", hidden: true }), []);
+
+  const onEmailChangeHandler = e => {
+    setFormInput(prev => {
+      return {
+        ...prev,
+        email: e.target.value,
+      };
+    });
+  };
+
+  const onPasswordChangeHandler = e => {
+    setFormInput(prev => {
+      return {
+        ...prev,
+        password: e.target.value,
+      };
+    });
+  };
+
   return (
     <RoundedTopContainer
       image={"/images/signup.png"}
@@ -27,24 +43,10 @@ const LoginCard = ({ setHeader }) => {
       height="400px"
     >
       <Typography variant="h4" component="h1">
-        Signup
+        Login
       </Typography>
       {/* <TextField id="standard-basic" label="Full Name" variant="standard" fullWidth /> */}
-      <form>
-        <TextField
-          sx={{ mb: 2 }}
-          id="input-with-icon-textfield"
-          label="Full Name"
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <AccountBoxIcon sx={{ color: "black" }} />
-              </InputAdornment>
-            ),
-          }}
-          fullWidth
-          variant="standard"
-        />
+      <form onSubmit={() => handleSubmit(formInput)}>
         <TextField
           sx={{ mb: 2 }}
           id="input-with-icon-textfield"
@@ -58,6 +60,7 @@ const LoginCard = ({ setHeader }) => {
           }}
           fullWidth
           variant="standard"
+          onChange={onEmailChangeHandler}
         />
         <TextField
           sx={{ mb: 2 }}
@@ -72,15 +75,8 @@ const LoginCard = ({ setHeader }) => {
           }}
           variant="standard"
           fullWidth
+          onChange={onPasswordChangeHandler}
         />
-        <Stack
-          direction="row"
-          spacing={2}
-          sx={{ mb: 2, display: "flex", justifyContent: "space-between" }}
-        >
-          <Checkbox {...label} />
-          Terms and Conditions
-        </Stack>
         <Stack sx={{ mb: 2, spacing: 2 }}>
           <Button
             type="submit"
