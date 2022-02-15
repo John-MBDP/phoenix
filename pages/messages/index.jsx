@@ -10,45 +10,45 @@ export const getStaticProps = async () => {
   const lawyerMessages = await prisma.messages.findMany({
     where: {
       client_id: {
-        equals: 4,
+        equals: 4
       },
       law_firm_id: {
-        equals: null,
-      },
+        equals: null
+      }
     },
     include: {
-      lawyers: true,
+      lawyers: true
     },
     orderBy: [
       {
-        date_sent: "desc",
-      },
-    ],
+        date_sent: "desc"
+      }
+    ]
   });
   const lawfirmMessages = await prisma.messages.findMany({
     where: {
       client_id: {
-        equals: 1,
+        equals: 1
       },
       lawyer_id: {
-        equals: null,
-      },
+        equals: null
+      }
     },
     include: {
-      lawfirms: true,
+      lawfirms: true
     },
     orderBy: [
       {
-        date_sent: "desc",
-      },
-    ],
+        date_sent: "desc"
+      }
+    ]
   });
   return {
     props: {
       lawyerMessages,
-      lawfirmMessages,
+      lawfirmMessages
     },
-    revalidate: 10,
+    revalidate: 10
   };
 };
 
@@ -57,24 +57,24 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader }) => {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    setHeader({ header: "MESSAGES", hidden: false, fixed: false });
+    setHeader({ header: "MESSAGES", hidden: false });
   }, []);
 
   const handleChange = (e, value) => {
     setValue(value);
   };
 
-  const parseMessageCards = messageCards => {
+  const parseMessageCards = (messageCards) => {
     return (
       messageCards
         // to just grab the first most recent message
         .filter((value, index, self) => {
           return (
             index ===
-            self.findIndex(message => message.lawyer_id === value.lawyer_id)
+            self.findIndex((message) => message.lawyer_id === value.lawyer_id)
           );
         })
-        .map(message => {
+        .map((message) => {
           if (message.from_client && !message.body.includes("You: "))
             message.body = `You: ${message.body}`;
           if (message.lawyers) {
@@ -107,7 +107,7 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader }) => {
   };
 
   return (
-    <section>
+    <section style={{ marginTop: "6rem" }}>
       <Tabs
         value={value}
         indicatorColor="secondary"

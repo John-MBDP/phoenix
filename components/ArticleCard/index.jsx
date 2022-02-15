@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
 export default function ArticleCard(props) {
-  const { id, title, body, date } = props;
+  const { id, title, body, date, image } = props;
 
   return (
     <Link href={`/articles/${id}`} style={{ textDecoration: "none" }} passHref>
@@ -17,16 +17,11 @@ export default function ArticleCard(props) {
           boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;",
           "&:hover": {
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px;",
-            cursor: "pointer",
-          },
+            cursor: "pointer"
+          }
         }}
       >
-        <CardMedia
-          component="img"
-          height="140"
-          image="/images/justice-gd35301419_1920.jpg"
-          alt=""
-        />
+        <CardMedia component="img" height="140" image={image} alt={image} />
         <CardContent>
           <Typography
             sx={{ fontWeight: "bold" }}
