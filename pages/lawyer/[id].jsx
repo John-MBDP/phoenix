@@ -6,6 +6,8 @@ import UserStatsCard from "../../components/UserStatsCard";
 import { Box, Typography } from "@material-ui/core";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
+import Button from "../../components/Button";
+import AnnouncementIcon from "@mui/icons-material/Announcement";
 
 export const getServerSideProps = async (context) => {
   const id = Number(context.params.id);
@@ -42,7 +44,18 @@ const Lawyer = ({ setHeader, lawyer }) => {
       height="600px"
       alt="forest"
     >
-      <UserStatsCard>hi</UserStatsCard>
+      <UserStatsCard name={`${first_name} ${last_name}`}></UserStatsCard>
+      <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
+        <Button
+          justifyContent="center"
+          color="#00589B"
+          padding="0.5rem 1rem"
+          icon={<AnnouncementIcon />}
+          onClick={() => console.log("button")}
+        >
+          message
+        </Button>
+      </Box>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <Typography variant="body2">
           <LocationOnIcon fontSize="16px" />
@@ -54,14 +67,8 @@ const Lawyer = ({ setHeader, lawyer }) => {
           {phone_number}
         </Typography>
         <Typography variant="body2">
-          <strong>Recognised Since: {date_certified.getFullYear()}</strong>
+          <strong>Recognized Since: {date_certified.getFullYear()}</strong>
         </Typography>
-        {/* <style jsx>{`
-            .container {
-              display: flex;
-              flex-direction: column;
-            }
-          `}</style> */}
       </Box>
     </RoundedTopContainer>
   );
