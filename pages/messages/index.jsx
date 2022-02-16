@@ -3,11 +3,12 @@ import { useState, useEffect } from "react";
 import MessageCard from "../../components/MessageCard";
 import { Tabs, Tab } from "@material-ui/core";
 import timeifyDate from "../../helpers/timeifyDate";
-import { sessionOptions } from "../../lib/session";
+import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 
 const prisma = new PrismaClient();
 
+// COOKIE GRAB EXAMPLE
 export const getServerSideProps = withIronSessionSsr(async ({req, res}) => {
   const user = req.session.user;
   const lawyerMessages = await prisma.messages.findMany({
@@ -50,12 +51,11 @@ export const getServerSideProps = withIronSessionSsr(async ({req, res}) => {
     props: {
       lawyerMessages,
       lawfirmMessages,
-      user
     },
   }
 }, sessionOptions);
 
-const MessagesIndex = ({ lawyerMessages, lawfirmMessages, user, setHeader }) => {
+const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader }) => {
   const [messageCards, setMessageCards] = useState(lawyerMessages);
   const [value, setValue] = useState(0);
 
@@ -66,8 +66,6 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, user, setHeader }) => 
   const handleChange = (e, value) => {
     setValue(value);
   };
-
-  console.log(user);
 
   const parseMessageCards = messageCards => {
     return (
