@@ -1,12 +1,13 @@
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import io from "socket.io-client";
 let socket;
 import ArticleCard from "../components/ArticleCard";
 import Timeago from "react-timeago";
 import { PrismaClient } from "@prisma/client";
+import { BottomNavigationContext } from "../Contexts/BottomNavigationContext";
 
 const prisma = new PrismaClient();
 
@@ -14,18 +15,19 @@ export const getServerSideProps = async () => {
   const articles = await prisma.articles.findMany({
     orderBy: [
       {
-        date: "desc"
-      }
-    ]
+        date: "desc",
+      },
+    ],
   });
   return {
     props: {
-      initialArticles: articles
-    }
+      initialArticles: articles,
+    },
   };
 };
 
 export default function Home({ setHeader, initialArticles }) {
+  const { setActive } = useContext(BottomNavigationContext);
   const parsedArticleCards = initialArticles.map((article) => {
     return (
       <ArticleCard
@@ -41,6 +43,7 @@ export default function Home({ setHeader, initialArticles }) {
 
   useEffect(() => {
     setHeader({ header: "NEWS FEED", hidden: false });
+    setActive(true);
   }, []);
 
   // useEffect(() => socketInitializer(), []);
