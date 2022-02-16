@@ -5,10 +5,13 @@ import { useRouter } from "next/router";
 import Stack from "@mui/material/Stack";
 import Button from "../components/Button";
 
-const GetStarted = ({ setHeader }) => {
+const GetStarted = ({ setHeader, setNavbar }) => {
   const router = useRouter();
 
-  useEffect(() => setHeader({ header: "", hidden: true }), []);
+  // useEffect(() => setHeader({ header: "", hidden: true }), []);
+  useEffect(() => {
+    setHeader({ header: "", hidden: true });
+  }, []);
   return (
     <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"signup-image"} height="400px">
       <Stack spacing={2} sx={{ mb: 10 }}>
