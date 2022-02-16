@@ -13,14 +13,18 @@ import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Stack from "@mui/material/Stack";
 
 const btnMain = {
-  alignItems: "right",
+  alignItems: "right"
 };
 
 const signup = ({ setHeader }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   useEffect(() => setHeader({ header: "", hidden: true }), []);
   return (
-    <RoundedTopContainer image={"/images/signup.png"} alt={"signup-image"} height="400px">
+    <RoundedTopContainer
+      image={"/images/signup.png"}
+      alt={"signup-image"}
+      height="400px"
+    >
       <Typography variant="h4" component="h1">
         Signup
       </Typography>
@@ -34,7 +38,7 @@ const signup = ({ setHeader }) => {
             <InputAdornment position="end">
               <AccountBoxIcon sx={{ color: "black" }} />
             </InputAdornment>
-          ),
+          )
         }}
         fullWidth
         variant="standard"
@@ -48,7 +52,7 @@ const signup = ({ setHeader }) => {
             <InputAdornment position="end">
               <MailIcon sx={{ color: "black" }} />
             </InputAdornment>
-          ),
+          )
         }}
         fullWidth
         variant="standard"
@@ -62,7 +66,7 @@ const signup = ({ setHeader }) => {
             <InputAdornment position="end">
               <LockIcon sx={{ color: "black" }} />
             </InputAdornment>
-          ),
+          )
         }}
         variant="standard"
         fullWidth
@@ -79,7 +83,10 @@ const signup = ({ setHeader }) => {
         <Button variant="contained" endIcon={<ArrowRightAltIcon />}>
           SIGN UP
         </Button>
-        <Typography sx={{ display: "flex", justifyContent: "flex-end" }} variant="h7">
+        <Typography
+          sx={{ display: "flex", justifyContent: "flex-end" }}
+          variant="h7"
+        >
           LOG IN
         </Typography>
 
