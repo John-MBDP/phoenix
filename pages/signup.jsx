@@ -17,7 +17,7 @@ const btnMain = {
   alignItems: "right",
 };
 
-const Signup = ({ setHeader }) => {
+const Signup = ({ setHeader, setNavbar }) => {
   const router = useRouter();
   const [formInput, setFormInput] = useState({
     firstName: "",
@@ -29,10 +29,13 @@ const Signup = ({ setHeader }) => {
   const [errorMsg, setErrorMsg] = useState("");
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  useEffect(() => setHeader({ header: "", hidden: true }), []);
+  useEffect(() => {
+    setHeader({ header: "", hidden: true });
+    setNavbar({ navbar: "", hidden: false });
+  }, []);
 
-  const onEmailChangeHandler = e => {
-    setFormInput(prev => {
+  const onEmailChangeHandler = (e) => {
+    setFormInput((prev) => {
       return {
         ...prev,
         email: e.target.value,
@@ -40,8 +43,8 @@ const Signup = ({ setHeader }) => {
     });
   };
 
-  const onPasswordChangeHandler = e => {
-    setFormInput(prev => {
+  const onPasswordChangeHandler = (e) => {
+    setFormInput((prev) => {
       return {
         ...prev,
         password: e.target.value,
@@ -49,10 +52,10 @@ const Signup = ({ setHeader }) => {
     });
   };
 
-  const onNameChangeHandler = e => {
+  const onNameChangeHandler = (e) => {
     const firstName = e.target.value.split(" ")[0];
     const lastName = e.target.value.split(" ")[1];
-    setFormInput(prev => {
+    setFormInput((prev) => {
       return {
         ...prev,
         firstName,
@@ -61,8 +64,8 @@ const Signup = ({ setHeader }) => {
     });
   };
 
-  const onCheckboxChangeHandler = e => {
-    setFormInput(prev => {
+  const onCheckboxChangeHandler = (e) => {
+    setFormInput((prev) => {
       return {
         ...prev,
         checked: e.target.checked,
@@ -70,7 +73,7 @@ const Signup = ({ setHeader }) => {
     });
   };
 
-  const handleSubmit = async inputValues => {
+  const handleSubmit = async (inputValues) => {
     if (
       !inputValues.firstName ||
       !inputValues.lastName ||
@@ -161,7 +164,7 @@ const Signup = ({ setHeader }) => {
       </Stack>
       <Stack sx={{ mb: 2, spacing: 2 }}>
         <form
-          onSubmit={e => {
+          onSubmit={(e) => {
             e.preventDefault();
             handleSubmit(formInput);
           }}
