@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import RoundedTopContainer from "../components/RoundedTopContainer";
 import Typography from "@mui/material/Typography";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
@@ -16,14 +17,88 @@ const btnMain = {
 };
 
 const Signup = ({ setHeader }) => {
+  const router = useRouter();
+  const [formInput, setFormInput] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    checked: false,
+  });
+  const [errorMsg, setErrorMsg] = useState("");
+
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   useEffect(() => setHeader({ header: "", hidden: true }), []);
+
+  const onEmailChangeHandler = e => {
+    setFormInput(prev => {
+      return {
+        ...prev,
+        email: e.target.value,
+      };
+    });
+  };
+
+  const onPasswordChangeHandler = e => {
+    setFormInput(prev => {
+      return {
+        ...prev,
+        password: e.target.value,
+      };
+    });
+  };
+
+  const onNameChangeHandler = e => {
+    const firstName = e.target.value.split(" ")[0];
+    const lastName = e.target.value.split(" ")[1];
+    setFormInput(prev => {
+      return {
+        ...prev,
+        firstName,
+        lastName,
+      };
+    });
+  };
+
+  const onCheckboxChangeHandler = e => {
+    setFormInput(prev => {
+      return {
+        ...prev,
+        checked: e.target.checked,
+      };
+    });
+  };
+
+  const handleSubmit = async inputValues => {
+    if (
+      !inputValues.firstName ||
+      !inputValues.lastName ||
+      !inputValues.email ||
+      !inputValues.password
+    ) {
+      setErrorMsg("Please fill out all fields");
+      return;
+    } else if (!inputValues.checked) {
+      setErrorMsg("Please accept Terms and Conditions");
+      return;
+    }
+    try {
+      await fetch("/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify(inputValues),
+      });
+      return router.push("/");
+    } catch (error) {
+      setErrorMsg(error.data.message);
+    }
+  };
+
   return (
     <RoundedTopContainer image={"/images/signup.png"} alt={"signup-image"}>
       <Typography variant="h4" component="h1">
         Signup
       </Typography>
-      {/* <TextField id="standard-basic" label="Full Name" variant="standard" fullWidth /> */}
+      {errorMsg && <p>{errorMsg}</p>}
       <TextField
         sx={{ mb: 2 }}
         id="input-with-icon-textfield"
@@ -37,6 +112,7 @@ const Signup = ({ setHeader }) => {
         }}
         fullWidth
         variant="standard"
+        onChange={onNameChangeHandler}
       />
       <TextField
         sx={{ mb: 2 }}
@@ -51,6 +127,7 @@ const Signup = ({ setHeader }) => {
         }}
         fullWidth
         variant="standard"
+        onChange={onEmailChangeHandler}
       />
       <TextField
         sx={{ mb: 2 }}
@@ -65,21 +142,33 @@ const Signup = ({ setHeader }) => {
         }}
         variant="standard"
         fullWidth
+        onChange={onPasswordChangeHandler}
       />
       <Stack
         direction="row"
         spacing={2}
         sx={{ mb: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}
       >
-        <Checkbox {...label} />
-        <Typography fontWeight sx={{ color: "#ff0056" }} variant="h7">
+        <Checkbox {...label} onChange={onCheckboxChangeHandler} />
+        <Typography
+          fontWeight
+          sx={{ display: "flex", justifyContent: "flex-end", color: "#ff0056" }}
+          variant="h7"
+        >
           Terms and Conditions
         </Typography>
       </Stack>
       <Stack sx={{ mb: 2, spacing: 2 }}>
-        <Button>
-          SIGN UP <ArrowRightAltIcon />
-        </Button>
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+            handleSubmit(formInput);
+          }}
+        >
+          <Button type="submit">
+            SIGN UP <ArrowRightAltIcon />
+          </Button>
+        </form>
         <Typography
           sx={{
             display: "flex",

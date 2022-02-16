@@ -28,11 +28,11 @@ export const getServerSideProps = async () => {
 
 export default function Home({ setHeader, initialArticles }) {
   const { setActive } = useContext(BottomNavigationContext);
-  const parsedArticleCards = initialArticles.map((article) => {
+  const parsedArticleCards = initialArticles.map(article => {
     return (
       <ArticleCard
         key={article.id}
-        id={article.id}
+        articleId={article.id}
         title={article.title}
         body={article.body.slice(0, 100) + "..."}
         date={<Timeago date={article.date} />}
