@@ -3,8 +3,11 @@ import { useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "../components/Button";
-const typeofuser = ({ setHeader }) => {
+import { useRouter } from "next/router";
+const TypeofUser = ({ setHeader }) => {
   useEffect(() => setHeader({ header: "", hidden: true }), []);
+
+  const router = useRouter();
   //uwu
   return (
     <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"signup-image"}>
@@ -17,10 +20,12 @@ const typeofuser = ({ setHeader }) => {
       </Typography>
 
       <Button expanded={true}>Lawyer</Button>
-      <Button expanded={true}>Client</Button>
+      <Button expanded={true} onClick={() => router.push("/signup")}>
+        Client
+      </Button>
       <Button expanded={true}>Law Firm</Button>
     </RoundedTopContainer>
   );
 };
 
-export default typeofuser;
+export default TypeofUser;

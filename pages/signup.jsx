@@ -16,7 +16,7 @@ const btnMain = {
   alignItems: "right",
 };
 
-const signup = ({ setHeader }) => {
+const Signup = ({ setHeader }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   useEffect(() => setHeader({ header: "", hidden: true }), []);
   return (
@@ -107,4 +107,4 @@ const signup = ({ setHeader }) => {
   );
 };
 
-export default signup;
+export default Signup;
