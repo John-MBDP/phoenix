@@ -34,12 +34,12 @@ const Lawyer = ({ setHeader, lawyer }) => {
     phone_number,
     location,
     email,
-    profile_pic
+    profile_pic,
+    education
   } = lawyer;
   useEffect(() => {
     setHeader((prev) => ({ ...prev, hidden: true }));
   }, []);
-  console.log(lawyer);
   return (
     <RoundedTopContainer
       image="/images/articles/forest.jpeg"
@@ -52,14 +52,25 @@ const Lawyer = ({ setHeader, lawyer }) => {
         image={profile_pic}
       ></UserStatsCard>
       <div>
-        <Button
-          color="#00589B"
-          padding="0.5rem 1rem"
-          icon={<AnnouncementIcon />}
-          onClick={() => console.log("button")}
-        >
-          message
-        </Button>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            color="#00589B"
+            padding="0.5rem 1rem"
+            icon={<AnnouncementIcon />}
+            onClick={() => console.log("button")}
+          >
+            connect
+          </Button>
+          <div style={{ width: "0.2rem" }}></div>
+          <Button
+            background="#00589B"
+            padding="0.5rem 1rem"
+            icon={<AnnouncementIcon />}
+            onClick={() => console.log("button")}
+          >
+            message
+          </Button>
+        </div>
       </div>
       <div>
         <Typography variant="body2">
@@ -108,7 +119,7 @@ const Lawyer = ({ setHeader, lawyer }) => {
       >
         <div>
           <Typography variant="button">
-            <strong>ONE TIME SERVICE FEE</strong>
+            <strong>Monthly Fee</strong>
           </Typography>
           <Typography variant="caption">click to see more</Typography>
           <style jsx>{`
@@ -159,7 +170,7 @@ const Lawyer = ({ setHeader, lawyer }) => {
       >
         <div>
           <Typography variant="body2">Education:</Typography>
-          <Typography variant="caption">University of Toronto</Typography>
+          <Typography variant="caption">{education}</Typography>
           <style jsx>{`
             display: flex;
             flex-direction: column;
