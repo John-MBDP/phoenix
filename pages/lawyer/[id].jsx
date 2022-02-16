@@ -45,6 +45,7 @@ const Lawyer = ({ setHeader, lawyer }) => {
       image="/images/articles/forest.jpeg"
       height="600px"
       alt="forest"
+      padBottom
     >
       <UserStatsCard
         name={`${first_name} ${last_name}`}
@@ -90,7 +91,7 @@ const Lawyer = ({ setHeader, lawyer }) => {
           <Typography variant="button">
             <strong>ONE TIME SERVICE FEE</strong>
           </Typography>
-          <Typography variant="body2">click to see more</Typography>
+          <Typography variant="caption">click to see more</Typography>
           <style jsx>{`
             display: flex;
             flex-direction: column;
@@ -109,7 +110,7 @@ const Lawyer = ({ setHeader, lawyer }) => {
           <Typography variant="button">
             <strong>ONE TIME SERVICE FEE</strong>
           </Typography>
-          <Typography variant="body2">click to see more</Typography>
+          <Typography variant="caption">click to see more</Typography>
           <style jsx>{`
             display: flex;
             flex-direction: column;
@@ -132,13 +133,16 @@ const Lawyer = ({ setHeader, lawyer }) => {
       </Widebutton>
       <Widebutton
         color="white"
-        padding="1rem 0"
+        padding="0.4rem 0"
         strong
         backgroundColor="#1B4463"
         textAlign="left"
       >
         <div>
           <Typography variant="body2">Expertise:</Typography>
+          <Typography variant="caption">
+            Mining, Criminal, Administrative
+          </Typography>
           <style jsx>{`
             display: flex;
             flex-direction: column;
@@ -147,43 +151,15 @@ const Lawyer = ({ setHeader, lawyer }) => {
       </Widebutton>
       <Widebutton
         color="white"
-        padding="1rem 0"
+        padding="0.4rem 0"
         strong
         backgroundColor="#1B4463"
         textAlign="left"
+        onClick={(e) => console.log("potato")}
       >
         <div>
-          <Typography variant="body2">Expertise:</Typography>
-          <style jsx>{`
-            display: flex;
-            flex-direction: column;
-          `}</style>
-        </div>
-      </Widebutton>
-      <Widebutton
-        color="white"
-        padding="1rem 0"
-        strong
-        backgroundColor="#1B4463"
-        textAlign="left"
-      >
-        <div>
-          <Typography variant="body2">Expertise:</Typography>
-          <style jsx>{`
-            display: flex;
-            flex-direction: column;
-          `}</style>
-        </div>
-      </Widebutton>
-      <Widebutton
-        color="white"
-        padding="1rem 0"
-        strong
-        backgroundColor="#1B4463"
-        textAlign="left"
-      >
-        <div>
-          <Typography variant="body2">Expertise:</Typography>
+          <Typography variant="body2">Education:</Typography>
+          <Typography variant="caption">University of Toronto</Typography>
           <style jsx>{`
             display: flex;
             flex-direction: column;
