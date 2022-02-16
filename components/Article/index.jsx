@@ -2,15 +2,17 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import styles from "./index.module.scss";
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useState } from "react";
+
+
 
 const saveFavourite = () => {};
 
 const destroyFavourite = () => {};
 
-const Article = ({ id, title, author, body, date }) => {
+const Article = ({ articleId, title, author, body, date, user }) => {
   const [favourited, setFavourited] = useState(false);
 
   return (
@@ -22,10 +24,24 @@ const Article = ({ id, title, author, body, date }) => {
             color="text.secondary"
             className={styles.popular}
           >
-            #{id} in Popular
+            #{articleId} in Popular
           </Typography>
-          {favourited && <FavoriteIcon/>}
-          {!favourited && <FavoriteBorderIcon/>}
+          {favourited && (
+            <FavoriteIcon
+              sx={{ color: 'salmon' }}
+              onClick={() => {
+                setFavourited(false);
+              }}
+            />
+          )}
+          {!favourited && (
+            <FavoriteBorderIcon
+              sx={{ color: 'salmon' }}
+              onClick={() => {
+                setFavourited(true);
+              }}
+            />
+          )}
         </header>
         <Typography
           sx={{ fontWeight: "bold", color: "salmon", margin: "0.5em 0" }}

@@ -45,7 +45,7 @@ const ArticleShow = ({ article }) => {
           }
         `}</style>
         <Article
-          id={article.id}
+          articleId={article.id}
           title={article.title}
           author={article.author}
           body={article.body}
