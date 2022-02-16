@@ -12,6 +12,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Stack from "@mui/material/Stack";
 import Button from "../components/Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import Link from "next/link";
 
 const btnMain = {
   alignItems: "right",
@@ -173,19 +174,20 @@ const Signup = ({ setHeader, setNavbar }) => {
             SIGN UP <ArrowRightAltIcon />
           </Button>
         </form>
-        <Typography
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            color: "#ff0056",
-            mb: 4,
-            fontWeight: "500",
-          }}
-          variant="h7"
-        >
-          LOG IN
-        </Typography>
-
+        <Link href="/login">
+          <Typography
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              color: "#ff0056",
+              mb: 4,
+              fontWeight: "500",
+            }}
+            variant="h7"
+          >
+            LOG IN
+          </Typography>
+        </Link>
         {/* 
         <Button variant="contained" endIcon={<ArrowRightAltIcon />}>
           LOG IN

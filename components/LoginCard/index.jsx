@@ -7,7 +7,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import MailIcon from "@mui/icons-material/Mail";
 import LockIcon from "@mui/icons-material/Lock";
 import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import Button from "../Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Stack from "@mui/material/Stack";
 
@@ -18,8 +18,8 @@ const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
 
   useEffect(() => setHeader({ header: "", hidden: true }), []);
 
-  const onEmailChangeHandler = e => {
-    setFormInput(prev => {
+  const onEmailChangeHandler = (e) => {
+    setFormInput((prev) => {
       return {
         ...prev,
         email: e.target.value,
@@ -27,8 +27,8 @@ const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
     });
   };
 
-  const onPasswordChangeHandler = e => {
-    setFormInput(prev => {
+  const onPasswordChangeHandler = (e) => {
+    setFormInput((prev) => {
       return {
         ...prev,
         password: e.target.value,
@@ -37,17 +37,13 @@ const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
   };
 
   return (
-    <RoundedTopContainer
-      image={"/images/signup.png"}
-      alt={"signup-image"}
-      height="400px"
-    >
+    <RoundedTopContainer image={"/images/signup.png"} alt={"signup-image"} height="400px">
       <Typography variant="h4" component="h1">
         Login
       </Typography>
       {errorMessage && <p>{errorMessage}</p>}
       <form
-        onSubmit={e => {
+        onSubmit={(e) => {
           e.preventDefault();
           handleSubmit(formInput);
         }}
@@ -83,16 +79,28 @@ const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
           onChange={onPasswordChangeHandler}
         />
         <Stack sx={{ mb: 2, spacing: 2 }}>
-          <Button
+          {/* <Button
             type="submit"
             variant="contained"
             endIcon={<ArrowRightAltIcon />}
           >
             LOG IN
+          </Button> */}
+          <Button type="submit">
+            LOG IN <ArrowRightAltIcon />
           </Button>
           <Link href="/signup">
+            {/* <Typography sx={{ display: "flex", justifyContent: "flex-end" }} variant="h7">
+              SIGN UP
+            </Typography> */}
             <Typography
-              sx={{ display: "flex", justifyContent: "flex-end" }}
+              sx={{
+                display: "flex",
+                justifyContent: "flex-end",
+                color: "#ff0056",
+                mb: 4,
+                fontWeight: "500",
+              }}
               variant="h7"
             >
               SIGN UP
