@@ -9,16 +9,20 @@ import MailIcon from "@mui/icons-material/Mail";
 import LockIcon from "@mui/icons-material/Lock";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
-import Button from "@mui/material/Button";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Stack from "@mui/material/Stack";
+<<<<<<< HEAD
 import { Router } from "@mui/icons-material";
+=======
+import Button from "../components/Button";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+>>>>>>> main
 
 const btnMain = {
   alignItems: "right",
 };
 
 const Signup = ({ setHeader }) => {
+<<<<<<< HEAD
   const router = useRouter();
   const [formInput, setFormInput] = useState({
     firstName: "",
@@ -29,6 +33,8 @@ const Signup = ({ setHeader }) => {
   });
   const [errorMsg, setErrorMsg] = useState("");
 
+=======
+>>>>>>> main
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   useEffect(() => setHeader({ header: "", hidden: true }), []);
 
@@ -88,11 +94,7 @@ const Signup = ({ setHeader }) => {
   };
 
   return (
-    <RoundedTopContainer
-      image={"/images/signup.png"}
-      alt={"signup-image"}
-      height="400px"
-    >
+    <RoundedTopContainer image={"/images/signup.png"} alt={"signup-image"}>
       <Typography variant="h4" component="h1">
         Signup
       </Typography>
@@ -147,26 +149,34 @@ const Signup = ({ setHeader }) => {
         spacing={2}
         sx={{ mb: 2, display: "flex", justifyContent: "space-between" }}
       >
-        <Checkbox {...label} onChange={onCheckboxChangeHandler}/>
-        Terms and Conditions
+        <Checkbox {...label} />
+        <Typography
+          fontWeight
+          sx={{ display: "flex", justifyContent: "flex-end", color: "#ff0056" }}
+          variant="h7"
+        >
+          Terms and Conditions
+        </Typography>
       </Stack>
       <Stack sx={{ mb: 2, spacing: 2 }}>
-        <form
+      <form
           onSubmit={e => {
             e.preventDefault();
             handleSubmit(formInput);
           }}
         >
-          <Button
-            type="submit"
-            variant="contained"
-            endIcon={<ArrowRightAltIcon />}
-          >
-            SIGN UP
-          </Button>
+        <Button>
+          SIGN UP <ArrowRightAltIcon />
+        </Button>
         </form>
         <Typography
-          sx={{ display: "flex", justifyContent: "flex-end" }}
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            color: "#ff0056",
+            mb: 4,
+            fontWeight: "500",
+          }}
           variant="h7"
         >
           LOG IN

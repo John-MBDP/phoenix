@@ -11,10 +11,7 @@ const RoundedTopContainer = ({ children, image, alt, height }) => {
         <CardMedia component="img" width="390" image={image} alt={alt} />
       </Card>
       <div className={styles.pane}>
-        <div
-          className={styles.card}
-          style={{ height: height ? `${height}` : null }}
-        >
+        <div className={styles.card} style={{ height: height ? `${height}` : null }}>
           <div className={styles.scrollSnap}> {children}</div>
         </div>
       </div>

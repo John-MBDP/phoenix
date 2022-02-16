@@ -110,7 +110,7 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader }) => {
   };
 
   return (
-    <section style={{ marginTop: "6rem" }}>
+    <div style={{ marginTop: "5rem" }}>
       <Tabs
         value={value}
         indicatorColor="secondary"
@@ -126,7 +126,7 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader }) => {
         />
       </Tabs>
       {parseMessageCards(messageCards)}
-    </section>
+    </div>
   );
 };
 

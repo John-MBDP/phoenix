@@ -7,9 +7,8 @@ import NotificationImportantIcon from "@mui/icons-material/NotificationImportant
 import { padding } from "@mui/system";
 const TopNavBar = ({ header }) => {
   return (
-    <div>
+    <div style={{ position: "fixed", zIndex: "10" }}>
       <AppBar
-        position={"fixed"}
         sx={{
           backgroundColor: "#1D1F37",
           borderRadius: "0  0 2rem 2rem",
