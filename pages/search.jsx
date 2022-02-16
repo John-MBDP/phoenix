@@ -16,7 +16,6 @@ export const getServerSideProps = async () => {
 };
 
 const Search = ({ setHeader, lawyers }) => {
-  console.log(lawyers);
   useEffect(() => {
     setHeader({ header: "LAWYERS", hidden: false });
   }, []);
@@ -30,6 +29,7 @@ const Search = ({ setHeader, lawyers }) => {
         certified={lawyer.date_certified.getFullYear()}
         phone={lawyer.phone_number}
         image={lawyer.profile_pic}
+        id={lawyer.id}
       />
     );
   });

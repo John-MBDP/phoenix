@@ -5,6 +5,8 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
 import { padding } from "@mui/system";
+import Link from "next/link";
+
 const TopNavBar = ({ header }) => {
   return (
     <div style={{ position: "fixed", zIndex: "10" }}>

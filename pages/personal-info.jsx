@@ -76,7 +76,9 @@ const PersonalInfo = ({ setHeader }) => {
           onChange={(e) => handleInput(e)}
           margin="normal"
         />
-        <Button type="submit">Update</Button>
+        <Button type="submit" onClick={() => console.log("update")}>
+          Update
+        </Button>
       </form>
     </RoundedTopContainer>
   );

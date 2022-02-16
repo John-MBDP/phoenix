@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import RoundedTopContainer from "../components/RoundedTopContainer";
 import Typography from "@mui/material/Typography";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-
 import InputAdornment from "@mui/material/InputAdornment";
 import MailIcon from "@mui/icons-material/Mail";
 import LockIcon from "@mui/icons-material/Lock";
@@ -14,7 +13,7 @@ import Button from "../components/Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
 const btnMain = {
-  alignItems: "right",
+  alignItems: "right"
 };
 
 const Signup = ({ setHeader }) => {
@@ -109,7 +108,7 @@ const Signup = ({ setHeader }) => {
             <InputAdornment position="end">
               <AccountBoxIcon sx={{ color: "black" }} />
             </InputAdornment>
-          ),
+          )
         }}
         fullWidth
         variant="standard"
@@ -124,7 +123,7 @@ const Signup = ({ setHeader }) => {
             <InputAdornment position="end">
               <MailIcon sx={{ color: "black" }} />
             </InputAdornment>
-          ),
+          )
         }}
         fullWidth
         variant="standard"
@@ -139,7 +138,7 @@ const Signup = ({ setHeader }) => {
             <InputAdornment position="end">
               <LockIcon sx={{ color: "black" }} />
             </InputAdornment>
-          ),
+          )
         }}
         variant="standard"
         fullWidth
@@ -176,7 +175,7 @@ const Signup = ({ setHeader }) => {
             justifyContent: "flex-end",
             color: "#ff0056",
             mb: 4,
-            fontWeight: "500",
+            fontWeight: "500"
           }}
           variant="h7"
         >
