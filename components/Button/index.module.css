@@ -2,13 +2,19 @@
   color: white;
   background-color: #ff0056;
   border: none;
-  margin-bottom: 2rem;
-  padding: 1rem 1.5rem;
+  margin-bottom: 0.5rem;
+  padding: 0.8rem 1.5rem;
   border-radius: 0.3rem;
   text-transform: uppercase;
   font-weight: 800;
+  display: flex;
+  justify-content: space-between;
 }
 
+.expanded {
+  flex: 1;
+  justify-content: center;
+}
 .container {
   display: flex;
   justify-content: flex-end;

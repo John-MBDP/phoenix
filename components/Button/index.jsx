@@ -1,19 +1,18 @@
-const StyledButton = ({
-  children,
-  color,
-  onClick,
-  justifyContent,
-  icon,
-  padding,
-  ...restprops
-}) => {
+import styles from "./index.module.css";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+
+const StyledButton = ({ children, expanded = false, ...restprops }) => {
   return (
-    <div className="container">
-      <button {...restprops} className="button" onClick={() => onClick()}>
-        <div className="innerContainer">
-          <div className="icon">{icon}</div>
-          <div className="message">{children}</div>
-        </div>
+    <div className={styles.container}>
+      <button
+        {...restprops}
+        variant="contained"
+        size="large"
+        className={
+          expanded ? `${styles.button} ${styles.expanded}` : styles.button
+        }
+      >
+        {children}
       </button>
 
       <style jsx>{`
@@ -27,11 +26,11 @@ const StyledButton = ({
           align-items: center;
         }
         .button {
-          background-color: ${color ? color : "#ff0056"};
+          background-color: "#ff0056";
           color: white;
           border: none;
           margin-bottom: 2rem;
-          padding: ${padding || "1rem 1.5rem"};
+          padding: "1rem 1.5rem";
           border-radius: 0.3rem;
           text-transform: uppercase;
           font-weight: 800;
@@ -44,7 +43,7 @@ const StyledButton = ({
         .container {
           display: flex;
           position: relative;
-          justify-content: ${justifyContent ? justifyContent : "flex-end"};
+          justify-content: "flex-end";
         }
       `}</style>
     </div>

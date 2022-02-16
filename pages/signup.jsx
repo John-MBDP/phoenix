@@ -2,29 +2,24 @@ import { useEffect } from "react";
 import RoundedTopContainer from "../components/RoundedTopContainer";
 import Typography from "@mui/material/Typography";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-
 import InputAdornment from "@mui/material/InputAdornment";
 import MailIcon from "@mui/icons-material/Mail";
 import LockIcon from "@mui/icons-material/Lock";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
-import Button from "@mui/material/Button";
-import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Stack from "@mui/material/Stack";
+import Button from "../components/Button";
+import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 
 const btnMain = {
   alignItems: "right"
 };
 
-const signup = ({ setHeader }) => {
+const Signup = ({ setHeader }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   useEffect(() => setHeader({ header: "", hidden: true }), []);
   return (
-    <RoundedTopContainer
-      image={"/images/signup.png"}
-      alt={"signup-image"}
-      height="400px"
-    >
+    <RoundedTopContainer image={"/images/signup.png"} alt={"signup-image"}>
       <Typography variant="h4" component="h1">
         Signup
       </Typography>
@@ -77,14 +72,26 @@ const signup = ({ setHeader }) => {
         sx={{ mb: 2, display: "flex", justifyContent: "space-between" }}
       >
         <Checkbox {...label} />
-        Terms and Conditions
+        <Typography
+          fontWeight
+          sx={{ display: "flex", justifyContent: "flex-end", color: "#ff0056" }}
+          variant="h7"
+        >
+          Terms and Conditions
+        </Typography>
       </Stack>
       <Stack sx={{ mb: 2, spacing: 2 }}>
-        <Button variant="contained" endIcon={<ArrowRightAltIcon />}>
-          SIGN UP
+        <Button>
+          SIGN UP <ArrowRightAltIcon />
         </Button>
         <Typography
-          sx={{ display: "flex", justifyContent: "flex-end" }}
+          sx={{
+            display: "flex",
+            justifyContent: "flex-end",
+            color: "#ff0056",
+            mb: 4,
+            fontWeight: "500"
+          }}
           variant="h7"
         >
           LOG IN
@@ -99,4 +106,4 @@ const signup = ({ setHeader }) => {
   );
 };
 
-export default signup;
+export default Signup;
