@@ -1,11 +1,13 @@
 import "../styles/globals.css";
+import styles from "../styles/Home.module.css";
 import TopNavBar from "../components/TopNavBar";
+import BottomNav from "../components/BottomNavigation";
 import { useState, useEffect } from "react";
-import { BottomNavigationProvider } from "../Contexts/BottomNavigationContext";
+// import { BottomNavigationProvider } from "../Contexts/BottomNavigationContext";
 import { withIronSessionSsr } from "iron-session/next";
 import sessionOptions from "../lib/session";
-import { useRouter } from "next/router";
-import useUser from "../hooks/useUser";
+// import { useRouter } from "next/router";
+// import useUser from "../hooks/useUser";
 
 export const getInitalProps = withIronSessionSsr(async ({ req, res }) => {
   const user = req.session.user;
@@ -18,7 +20,7 @@ export const getInitalProps = withIronSessionSsr(async ({ req, res }) => {
 
 // eslint-disable-next-line func-style
 function MyApp({ Component, pageProps, user }) {
-  const router = useRouter();
+  // const router = useRouter();
 
   // useEffect(() => {
   //   if (!user && !router.pathname === "/login") {
@@ -28,15 +30,16 @@ function MyApp({ Component, pageProps, user }) {
 
   const [header, setHeader] = useState({
     header: "NEWS FEED",
-    hidden: false
+    hidden: false,
   });
 
   return (
     <>
       <TopNavBar header={header} />
-      <BottomNavigationProvider>
+      <div className={styles.view}>
         <Component {...pageProps} setHeader={setHeader} />
-      </BottomNavigationProvider>
+      </div>
+      <BottomNav />
     </>
   );
 }
