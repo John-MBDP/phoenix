@@ -5,6 +5,8 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
 import { padding } from "@mui/system";
+import Link from "next/link";
+
 const TopNavBar = ({ header }) => {
   return (
     <div style={{ position: "fixed", zIndex: "10" }}>
@@ -34,6 +36,7 @@ const TopNavBar = ({ header }) => {
             {header.header}
           </Typography>
           <NotificationImportantIcon />
+          <Link href="/">index</Link>
         </Toolbar>
       </AppBar>
     </div>
