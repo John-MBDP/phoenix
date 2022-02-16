@@ -13,24 +13,26 @@ const Article = ({ articleId, title, author, body, date, userId }) => {
   const saveFavourite = async favourite => {
     const response = await fetch("/api/favourites/articles/create", {
       method: "POST",
-      body: JSON.stringify(),
+      body: JSON.stringify(favourite),
     });
 
     if (!response.ok) {
       throw new Error(response.statusText);
     }
+    console.log("saved!");
     return await response.json();
   };
 
   const destroyFavourite = async favourite => {
     const response = await fetch("/api/favourites/articles/delete", {
       method: "POST",
-      body: JSON.stringify(),
+      body: JSON.stringify(favourite),
     });
 
     if (!response.ok) {
       throw new Error(response.statusText);
     }
+    console.log("destroyed!");
     return await response.json();
   };
 
@@ -49,8 +51,12 @@ const Article = ({ articleId, title, author, body, date, userId }) => {
             <FavoriteIcon
               sx={{ color: "salmon" }}
               onClick={async () => {
-                await destroyFavourite(favourite);
-                setFavourited(false);
+                try {
+                  await destroyFavourite(favourite);
+                  setFavourited(false);
+                } catch (err) {
+                  console.log(err);
+                }
               }}
             />
           )}
@@ -58,8 +64,12 @@ const Article = ({ articleId, title, author, body, date, userId }) => {
             <FavoriteBorderIcon
               sx={{ color: "salmon" }}
               onClick={async () => {
-                await saveFavourite(favourite);
-                setFavourited(true);
+                try {
+                  await saveFavourite(favourite);
+                  setFavourited(true);
+                } catch (err) {
+                  console.log(err);
+                }
               }}
             />
           )}
