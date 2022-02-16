@@ -22,7 +22,7 @@ const SmsVerification = ({ setHeader }) => {
       </Button> */}
 
       <TextField
-        sx={{ mb: 2, borderBottom: "1px solid rgba(0, 0, 0, 0.42)" }}
+        sx={{ mb: 2 }}
         id="standard-basic"
         label="Your Phone Number"
         value="+0123456789"
