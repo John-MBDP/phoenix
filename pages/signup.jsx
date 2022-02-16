@@ -10,19 +10,14 @@ import LockIcon from "@mui/icons-material/Lock";
 import TextField from "@mui/material/TextField";
 import Checkbox from "@mui/material/Checkbox";
 import Stack from "@mui/material/Stack";
-<<<<<<< HEAD
-import { Router } from "@mui/icons-material";
-=======
 import Button from "../components/Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
->>>>>>> main
 
 const btnMain = {
   alignItems: "right",
 };
 
 const Signup = ({ setHeader }) => {
-<<<<<<< HEAD
   const router = useRouter();
   const [formInput, setFormInput] = useState({
     firstName: "",
@@ -33,8 +28,6 @@ const Signup = ({ setHeader }) => {
   });
   const [errorMsg, setErrorMsg] = useState("");
 
-=======
->>>>>>> main
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   useEffect(() => setHeader({ header: "", hidden: true }), []);
 
