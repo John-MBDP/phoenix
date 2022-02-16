@@ -11,7 +11,7 @@ const Widebutton = ({
 }) => {
   return (
     <div className="container">
-      <button onClick={() => onClick()}>
+      <button onClick={onClick}>
         <div className="dollarAccent">{ammount}</div>
         <div className="text">{children}</div>
       </button>
