@@ -69,14 +69,10 @@ const Signup = ({ setHeader }) => {
       <Stack
         direction="row"
         spacing={2}
-        sx={{ mb: 2, display: "flex", justifyContent: "space-between" }}
+        sx={{ mb: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}
       >
         <Checkbox {...label} />
-        <Typography
-          fontWeight
-          sx={{ display: "flex", justifyContent: "flex-end", color: "#ff0056" }}
-          variant="h7"
-        >
+        <Typography fontWeight sx={{ color: "#ff0056" }} variant="h7">
           Terms and Conditions
         </Typography>
       </Stack>
