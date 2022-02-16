@@ -7,11 +7,14 @@ import CardMedia from "@mui/material/CardMedia";
 const RoundedTopContainer = ({ children, image, alt, height }) => {
   return (
     <>
-      <Card className={styles.image}>
+      <Card className={styles.image} sx={{ boxShadow: "none" }}>
         <CardMedia component="img" width="390" image={image} alt={alt} />
       </Card>
       <div className={styles.pane}>
-        <div className={styles.card} style={{ height: height ? `${height}` : null }}>
+        <div
+          className={styles.card}
+          style={{ height: height ? `${height}` : null }}
+        >
           <div className={styles.scrollSnap}> {children}</div>
         </div>
       </div>
