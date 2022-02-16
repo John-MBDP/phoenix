@@ -142,7 +142,7 @@ const Signup = ({ setHeader }) => {
         spacing={2}
         sx={{ mb: 2, display: "flex", justifyContent: "space-between" }}
       >
-        <Checkbox {...label} />
+        <Checkbox {...label} onChange={onCheckboxChangeHandler} />
         <Typography
           fontWeight
           sx={{ display: "flex", justifyContent: "flex-end", color: "#ff0056" }}
@@ -158,7 +158,7 @@ const Signup = ({ setHeader }) => {
             handleSubmit(formInput);
           }}
         >
-        <Button>
+        <Button type="submit">
           SIGN UP <ArrowRightAltIcon />
         </Button>
         </form>

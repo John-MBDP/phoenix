@@ -55,7 +55,7 @@ export const getServerSideProps = withIronSessionSsr(async ({req, res}) => {
   }
 }, sessionOptions);
 
-const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader }) => {
+const MessagesIndex = ({ lawyerMessages, lawfirmMessages, user, setHeader }) => {
   const [messageCards, setMessageCards] = useState(lawyerMessages);
   const [value, setValue] = useState(0);
 
@@ -66,6 +66,8 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader }) => {
   const handleChange = (e, value) => {
     setValue(value);
   };
+
+  console.log(user);
 
   const parseMessageCards = messageCards => {
     return (

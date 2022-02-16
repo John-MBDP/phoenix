@@ -4,7 +4,7 @@ import { withIronSessionApiRoute } from "iron-session/next";
 export default withIronSessionApiRoute(userRoute, sessionOptions);
 
 const userRoute = async (req, res) => {
-  const user = req.session.get("user");
+  const user = req.session.user;
   if (user) {
     res.json({
       isLoggedIn: true,
