@@ -51,7 +51,7 @@ const SearchCard = ({ fullName, location, phone, certified, image }) => {
           {phone}
         </Typography>
         <Typography variant="body2">
-          <strong>Recognised Since: {certified}</strong>
+          <strong>Recognized Since: {certified}</strong>
         </Typography>
       </Box>
     </Card>
