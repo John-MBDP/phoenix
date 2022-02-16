@@ -9,23 +9,32 @@ import { withIronSessionSsr } from "iron-session/next";
 
 const prisma = new PrismaClient();
 
-export const getServerSideProps = withIronSessionSsr(async ({ req, res, params }) => {
-  const user = req.session.user;
-  const id = Number(params.id);
-  const article = await prisma.articles.findUnique({
-    where: {
-      id,
-    },
-  });
-  return {
-    props: {
-      user,
-      article,
-    },
-  };
-}, sessionOptions);
+export const getServerSideProps = withIronSessionSsr(
+  async ({ req, res, params }) => {
+    const user = req.session.user;
+    const id = Number(params.id);
+    const article = await prisma.articles.findUnique({
+      where: {
+        id,
+      },
+    });
+    const articleFavourite = await prisma.article_favourites.findFirst({
+      where: {
+        article_id: id,
+      },
+    });
+    return {
+      props: {
+        user,
+        article,
+        articleFavourite
+      },
+    };
+  },
+  sessionOptions
+);
 
-const ArticleShow = ({ article, user }) => {
+const ArticleShow = ({ article, user, articleFavourite }) => {
   return (
     <>
       <Card className={styles.image}>
@@ -50,6 +59,7 @@ const ArticleShow = ({ article, user }) => {
         `}</style>
         <Article
           userId={user.id}
+          articleFavourite={articleFavourite}
           articleId={article.id}
           title={article.title}
           author={article.author}

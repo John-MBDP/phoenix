@@ -6,8 +6,16 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useState } from "react";
 
-const Article = ({ articleId, title, author, body, date, userId }) => {
-  const [favourited, setFavourited] = useState(false);
+const Article = ({
+  articleId,
+  title,
+  author,
+  body,
+  date,
+  userId,
+  articleFavourite,
+}) => {
+  const [favourited, setFavourited] = useState(articleFavourite ? true : false);
   const favourite = { client_id: userId, article_id: articleId };
 
   const saveFavourite = async favourite => {
