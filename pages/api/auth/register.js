@@ -1,10 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcrypt";
-import withSession from "../../../lib/session";
+import { withIronSessionApiRoute } from "iron-session/next";
+import sessionOptions from "../../../lib/session";
 
 const prisma = new PrismaClient();
 
-export default withSession(async (req, res) => {
+export default withIronSessionApiRoute(async (req, res) => {
   const data = await req.body;
   const { firstName, lastName, email, password } = JSON.parse(data);
 
@@ -28,7 +29,7 @@ export default withSession(async (req, res) => {
           password: hashPassword,
         }
       });
-      req.session.set("user", { id: user.id, email: user.email });
+      req.session.user = { id: user.id, email: user.email };
       await req.session.save();
       return res.status(200).end();
     }
@@ -38,4 +39,4 @@ export default withSession(async (req, res) => {
     const { response: fetchResponse } = error;
     res.status(fetchResponse?.status || 500).json(error.message);
   }
-});
+}, sessionOptions);

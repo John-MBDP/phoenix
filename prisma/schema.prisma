@@ -22,7 +22,7 @@ model clients {
   last_name    String     @db.VarChar(50)
   email        String     @db.VarChar(255)
   password     String     @db.VarChar(255)
-  phone_number String     @db.VarChar(50)
+  phone_number String?    @db.VarChar(50)
   address      String?    @db.VarChar(100)
   messages     messages[]
 }

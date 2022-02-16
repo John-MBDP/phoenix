@@ -1,10 +1,11 @@
 import { PrismaClient } from "@prisma/client";
-import withSession from "../../../lib/session";
+import sessionOptions from "../../../lib/session";
 import bcrypt from "bcrypt";
+import { withIronSessionApiRoute } from "iron-session/next";
 
 const prisma = new PrismaClient();
 
-export default withSession(async (req, res) => {
+export default withIronSessionApiRoute(async (req, res) => {
   const data = await req.body;
   const { email, password } = JSON.parse(data);
 
@@ -19,7 +20,7 @@ export default withSession(async (req, res) => {
     const valid = await bcrypt.compare(password, user.password);
 
     if (valid) {
-      req.session.set("user", { id: user.id, email: user.email });
+      req.session.user = { id: user.id, email: user.email };
       await req.session.save();
       return res.json(user);
     } else {
@@ -29,4 +30,4 @@ export default withSession(async (req, res) => {
     console.log(error);
     res.status(500).json({ message: error.message });
   }
-});
+}, sessionOptions);
