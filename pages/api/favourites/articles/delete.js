@@ -12,6 +12,9 @@ export default async function handler(req, res) {
         article_id: {
           equals: favourite.article_id,
         },
+        client_id: {
+          equals: favourite.client_id,
+        },
       },
     });
     res.status(200).json(destroyedFavourite);

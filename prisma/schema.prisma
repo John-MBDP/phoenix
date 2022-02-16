@@ -74,6 +74,7 @@ model messages {
   body        String
   date_sent   DateTime  @db.Timestamptz(6)
   from_client Boolean?
+  seen_client Boolean?  @default(false)
   clients     clients   @relation(fields: [client_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   lawfirms    lawfirms? @relation(fields: [law_firm_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
   lawyers     lawyers?  @relation(fields: [lawyer_id], references: [id], onDelete: Cascade, onUpdate: NoAction)
