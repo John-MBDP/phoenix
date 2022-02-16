@@ -36,7 +36,6 @@ const TopNavBar = ({ header }) => {
             {header.header}
           </Typography>
           <NotificationImportantIcon />
-          <Link href="/">index</Link>
         </Toolbar>
       </AppBar>
     </div>
