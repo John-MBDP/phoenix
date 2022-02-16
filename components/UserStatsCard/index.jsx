@@ -18,7 +18,6 @@ const UserStatCard = ({ children, name }) => {
         component="h1"
       >
         {name ? <strong>{name}</strong> : null}
-        {children}
       </Typography>
       {children}
     </div>
