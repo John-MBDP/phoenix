@@ -6,18 +6,9 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useState } from "react";
 
-export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
-  const user = req.session.user;
-  return {
-    props: {
-      user,
-    },
-  };
-});
-
-const Article = ({ articleId, title, author, body, date, user }) => {
+const Article = ({ articleId, title, author, body, date, userId }) => {
   const [favourited, setFavourited] = useState(false);
-  const favourite = { client_id: user.id, article_id: articleId };
+  const favourite = { client_id: userId, article_id: articleId };
 
   const saveFavourite = async favourite => {
     const response = await fetch("/api/favourites/articles/create", {

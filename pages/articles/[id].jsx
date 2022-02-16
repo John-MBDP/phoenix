@@ -4,24 +4,28 @@ import Article from "../../components/Article";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import styles from "./index";
+import sessionOptions from "../../lib/session";
+import { withIronSessionSsr } from "iron-session/next";
 
 const prisma = new PrismaClient();
 
-export const getServerSideProps = async (context) => {
-  const id = Number(context.params.id);
+export const getServerSideProps = withIronSessionSsr(async ({ req, res, params }) => {
+  const user = req.session.user;
+  const id = Number(params.id);
   const article = await prisma.articles.findUnique({
     where: {
-      id
-    }
+      id,
+    },
   });
   return {
     props: {
-      article
-    }
+      user,
+      article,
+    },
   };
-};
+}, sessionOptions);
 
-const ArticleShow = ({ article }) => {
+const ArticleShow = ({ article, user }) => {
   return (
     <>
       <Card className={styles.image}>
@@ -45,6 +49,7 @@ const ArticleShow = ({ article }) => {
           }
         `}</style>
         <Article
+          userId={user.id}
           articleId={article.id}
           title={article.title}
           author={article.author}
