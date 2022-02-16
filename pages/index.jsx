@@ -28,7 +28,7 @@ export const getServerSideProps = async () => {
 
 export default function Home({ setHeader, initialArticles }) {
   const { setActive } = useContext(BottomNavigationContext);
-  const parsedArticleCards = initialArticles.map((article) => {
+  const parsedArticleCards = initialArticles.map(article => {
     return (
       <ArticleCard
         key={article.id}
