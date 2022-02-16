@@ -32,6 +32,7 @@ const Article = ({
   };
 
   const destroyFavourite = async favourite => {
+    console.log(favourite);
     const response = await fetch("/api/favourites/articles/delete", {
       method: "POST",
       body: JSON.stringify(favourite),

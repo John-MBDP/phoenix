@@ -7,8 +7,12 @@ export default async function handler(req, res) {
 
   try {
     const favourite = JSON.parse(req.body);
-    const destroyedFavourite = await prisma.article_favourites.delete({
-      where: { article_id: favourite.article_id },
+    const destroyedFavourite = await prisma.article_favourites.deleteMany({
+      where: {
+        article_id: {
+          equals: favourite.article_id,
+        },
+      },
     });
     res.status(200).json(destroyedFavourite);
   } catch {
