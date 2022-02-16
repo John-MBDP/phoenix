@@ -6,14 +6,42 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useState } from "react";
 
-
-
-const saveFavourite = () => {};
-
-const destroyFavourite = () => {};
+export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
+  const user = req.session.user;
+  return {
+    props: {
+      user,
+    },
+  };
+});
 
 const Article = ({ articleId, title, author, body, date, user }) => {
   const [favourited, setFavourited] = useState(false);
+  const favourite = { client_id: user.id, article_id: articleId };
+
+  const saveFavourite = async favourite => {
+    const response = await fetch("/api/favourites/articles/create", {
+      method: "POST",
+      body: JSON.stringify(),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return await response.json();
+  };
+
+  const destroyFavourite = async favourite => {
+    const response = await fetch("/api/favourites/articles/delete", {
+      method: "POST",
+      body: JSON.stringify(),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return await response.json();
+  };
 
   return (
     <Card sx={{ padding: "1em" }}>
@@ -28,16 +56,18 @@ const Article = ({ articleId, title, author, body, date, user }) => {
           </Typography>
           {favourited && (
             <FavoriteIcon
-              sx={{ color: 'salmon' }}
-              onClick={() => {
+              sx={{ color: "salmon" }}
+              onClick={async () => {
+                await destroyFavourite(favourite);
                 setFavourited(false);
               }}
             />
           )}
           {!favourited && (
             <FavoriteBorderIcon
-              sx={{ color: 'salmon' }}
-              onClick={() => {
+              sx={{ color: "salmon" }}
+              onClick={async () => {
+                await saveFavourite(favourite);
                 setFavourited(true);
               }}
             />
