@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 import { useEffect } from "react";
 import RoundedTopContainer from "../../components/RoundedTopContainer";
 import UserStatsCard from "../../components/UserStatsCard";
-import { Box, Typography } from "@material-ui/core";
+import { Box as div, Typography } from "@material-ui/core";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Button from "../../components/Button";
@@ -12,13 +12,12 @@ import EmailIcon from "@mui/icons-material/Email";
 import Widebutton from "../../components/WideButton";
 export const getServerSideProps = async (context) => {
   const id = Number(context.params.id);
-  console.log(id);
   const lawyer = await prisma.lawyers.findUnique({
     where: {
       id: id
     }
   });
-  console.log(lawyer);
+
   return {
     props: {
       lawyer
@@ -34,7 +33,8 @@ const Lawyer = ({ setHeader, lawyer }) => {
     date_certified,
     phone_number,
     location,
-    email
+    email,
+    profile_pic
   } = lawyer;
   useEffect(() => {
     setHeader((prev) => ({ ...prev, hidden: true }));
@@ -46,10 +46,12 @@ const Lawyer = ({ setHeader, lawyer }) => {
       height="600px"
       alt="forest"
     >
-      <UserStatsCard name={`${first_name} ${last_name}`}></UserStatsCard>
-      <Box sx={{ display: "flex", justifyContent: "space-evenly" }}>
+      <UserStatsCard
+        name={`${first_name} ${last_name}`}
+        image={profile_pic}
+      ></UserStatsCard>
+      <div>
         <Button
-          justifyContent="center"
           color="#00589B"
           padding="0.5rem 1rem"
           icon={<AnnouncementIcon />}
@@ -57,36 +59,131 @@ const Lawyer = ({ setHeader, lawyer }) => {
         >
           message
         </Button>
-      </Box>
-      <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <Typography variant="body1">
+      </div>
+      <div>
+        <Typography variant="body2">
           <LocationOnIcon fontSize="20" sx={{ mr: " 0.3rem" }} />
           {`${address}, ${location}`}
         </Typography>
 
-        <Typography variant="body1">
+        <Typography variant="body2">
           <PhoneIcon fontSize="20px" sx={{ mr: " 0.3rem" }} />
           {phone_number}
         </Typography>
-        <Typography variant="body1">
+        <Typography variant="body2">
           <EmailIcon fontSize="16px" sx={{ mr: " 0.3rem" }} />
           {email}
         </Typography>
-        <Typography variant="body1">
+        <Typography variant="body2">
           <strong>Recognized Since: {date_certified.getFullYear()}</strong>
         </Typography>
-      </Box>
+      </div>
       <Widebutton
         color="black"
         outLineColor="#1B4463"
-        padding="0.5rem 0"
+        padding=" 0.3rem 0"
         outline
         strong
         ammount="$550"
       >
         <div>
-          <Typography variant="button">ONE TIME SERVICE FEE</Typography>
-          <Typography variant="subtitle">click to see more</Typography>
+          <Typography variant="button">
+            <strong>ONE TIME SERVICE FEE</strong>
+          </Typography>
+          <Typography variant="body2">click to see more</Typography>
+          <style jsx>{`
+            display: flex;
+            flex-direction: column;
+          `}</style>
+        </div>
+      </Widebutton>
+      <Widebutton
+        color="black"
+        outLineColor="#00589B"
+        padding="0.3rem 0"
+        outline
+        strong
+        ammount="$550"
+      >
+        <div>
+          <Typography variant="button">
+            <strong>ONE TIME SERVICE FEE</strong>
+          </Typography>
+          <Typography variant="body2">click to see more</Typography>
+          <style jsx>{`
+            display: flex;
+            flex-direction: column;
+          `}</style>
+        </div>
+      </Widebutton>
+      <Widebutton
+        color="white"
+        padding="1rem 0"
+        strong
+        backgroundColor="#1B4463"
+      >
+        <div>
+          <Typography variant="button">Firm Affiliation</Typography>
+          <style jsx>{`
+            display: flex;
+            flex-direction: column;
+          `}</style>
+        </div>
+      </Widebutton>
+      <Widebutton
+        color="white"
+        padding="1rem 0"
+        strong
+        backgroundColor="#1B4463"
+        textAlign="left"
+      >
+        <div>
+          <Typography variant="body2">Expertise:</Typography>
+          <style jsx>{`
+            display: flex;
+            flex-direction: column;
+          `}</style>
+        </div>
+      </Widebutton>
+      <Widebutton
+        color="white"
+        padding="1rem 0"
+        strong
+        backgroundColor="#1B4463"
+        textAlign="left"
+      >
+        <div>
+          <Typography variant="body2">Expertise:</Typography>
+          <style jsx>{`
+            display: flex;
+            flex-direction: column;
+          `}</style>
+        </div>
+      </Widebutton>
+      <Widebutton
+        color="white"
+        padding="1rem 0"
+        strong
+        backgroundColor="#1B4463"
+        textAlign="left"
+      >
+        <div>
+          <Typography variant="body2">Expertise:</Typography>
+          <style jsx>{`
+            display: flex;
+            flex-direction: column;
+          `}</style>
+        </div>
+      </Widebutton>
+      <Widebutton
+        color="white"
+        padding="1rem 0"
+        strong
+        backgroundColor="#1B4463"
+        textAlign="left"
+      >
+        <div>
+          <Typography variant="body2">Expertise:</Typography>
           <style jsx>{`
             display: flex;
             flex-direction: column;
