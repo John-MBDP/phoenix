@@ -4,7 +4,7 @@ import styles from "./index.module.css";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 
-const RoundedTopContainer = ({ children, image, alt, height }) => {
+const RoundedTopContainer = ({ children, image, alt, height, padBottom }) => {
   return (
     <>
       <Card className={styles.image} sx={{ boxShadow: "none" }}>
@@ -15,7 +15,13 @@ const RoundedTopContainer = ({ children, image, alt, height }) => {
           className={styles.card}
           style={{ height: height ? `${height}` : null }}
         >
-          <div className={styles.scrollSnap}> {children}</div>
+          <div
+            className={styles.scrollSnap}
+            style={{ paddingBottom: `${padBottom && "5rem"}` }}
+          >
+            {" "}
+            {children}
+          </div>
         </div>
       </div>
     </>
