@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
   try {
     const favourite = JSON.parse(req.body);
-    const savedFavourite = await prisma.messages.create({ data: favourite });
+    const savedFavourite = await prisma.article_favourites.create({ data: favourite });
     res.status(200).json(savedFavourite);
   } catch {
     res.status(400).json({ error: "failed to load data" });
