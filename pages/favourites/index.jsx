@@ -21,6 +21,11 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
     include: {
       articles: true,
     },
+    orderBy: [
+      {
+        date_created: "desc",
+      },
+    ],
   });
   const lawyerFavourites = await prisma.lawyer_favourites.findMany({
     where: {
@@ -31,6 +36,11 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
     include: {
       lawyers: true,
     },
+    orderBy: [
+      {
+        date_created: "desc",
+      },
+    ],
   });
   const lawfirmFavourites = await prisma.lawfirm_favourites.findMany({
     where: {
@@ -41,6 +51,11 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
     include: {
       lawfirms: true,
     },
+    orderBy: [
+      {
+        date_created: "desc",
+      },
+    ],
   });
   return {
     props: {

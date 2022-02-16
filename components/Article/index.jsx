@@ -21,7 +21,7 @@ const Article = ({
   const saveFavourite = async favourite => {
     const response = await fetch("/api/favourites/articles/create", {
       method: "POST",
-      body: JSON.stringify(favourite),
+      body: JSON.stringify({ ...favourite, date_created: new Date() }),
     });
 
     if (!response.ok) {
@@ -32,7 +32,6 @@ const Article = ({
   };
 
   const destroyFavourite = async favourite => {
-    console.log(favourite);
     const response = await fetch("/api/favourites/articles/delete", {
       method: "POST",
       body: JSON.stringify(favourite),
