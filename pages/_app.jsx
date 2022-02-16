@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { withIronSessionSsr } from "iron-session/next";
 import sessionOptions from "../lib/session";
 // import { useRouter } from "next/router";
-import useUser from "../hooks/useUser";
+// import useUser from "../hooks/useUser";
 
 export const getInitalProps = withIronSessionSsr(async ({ req, res }) => {
   const user = req.session.user;
@@ -35,7 +35,7 @@ function MyApp({ Component, pageProps, user }) {
 
   const [navbar, setNavbar] = useState({
     navbar: "",
-    hidden: false,
+    hidden: true,
   });
 
   return (
