@@ -16,7 +16,6 @@ export const getServerSideProps = async () => {
 };
 
 const Search = ({ setHeader, lawyers }) => {
-  console.log(lawyers);
   useEffect(() => {
     setHeader({ header: "LAWYERS", hidden: false });
   }, []);
