@@ -14,7 +14,7 @@ export default withIronSessionApiRoute(async (req, res) => {
       where: { email: email.toLowerCase() },
     });
     if (!user) {
-      res.status(401).json({ message: "User does not exist" });
+      return res.status(401).json({ message: "User does not exist" });
     }
 
     const valid = await bcrypt.compare(password, user.password);
@@ -22,9 +22,9 @@ export default withIronSessionApiRoute(async (req, res) => {
     if (valid) {
       req.session.user = { id: user.id, email: user.email };
       await req.session.save();
-      res.json(user);
+      return res.json(user);
     } else {
-      res.status(401).json({ message: "Invalid Password" });
+      return res.status(401).json({ message: "Invalid Password" });
     }
   } catch (error) {
     console.log(error);

@@ -1,8 +1,11 @@
 import { useState } from "react";
 import LoginCard from "../components/LoginCard";
 import useUser from "../hooks/useUser";
+import { useRouter } from "next/router";
 
 const Login = ({ setHeader }) => {
+  const router = useRouter();
+
   const { mutateUser } = useUser({
     redirectTo: "/",
     redirectIfFound: true,
@@ -22,6 +25,7 @@ const Login = ({ setHeader }) => {
           body: JSON.stringify(inputValues),
         })
       );
+      router.push("/");
     } catch (error) {
       console.error("An unexpected error happened:", error);
       setErrorMsg(error.data.message);

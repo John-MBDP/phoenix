@@ -24,7 +24,7 @@ const Signup = ({ setHeader }) => {
     lastName: "",
     email: "",
     password: "",
-    checked: false
+    checked: false,
   });
   const [errorMsg, setErrorMsg] = useState("");
 
@@ -71,8 +71,16 @@ const Signup = ({ setHeader }) => {
   };
 
   const handleSubmit = async inputValues => {
-    if (!inputValues.checked) {
-      setErrorMsg('Please accept Terms and Conditions');
+    if (
+      !inputValues.firstName ||
+      !inputValues.lastName ||
+      !inputValues.email ||
+      !inputValues.password
+    ) {
+      setErrorMsg("Please fill out all fields");
+      return;
+    } else if (!inputValues.checked) {
+      setErrorMsg("Please accept Terms and Conditions");
       return;
     }
     try {
@@ -152,15 +160,15 @@ const Signup = ({ setHeader }) => {
         </Typography>
       </Stack>
       <Stack sx={{ mb: 2, spacing: 2 }}>
-      <form
+        <form
           onSubmit={e => {
             e.preventDefault();
             handleSubmit(formInput);
           }}
         >
-        <Button type="submit">
-          SIGN UP <ArrowRightAltIcon />
-        </Button>
+          <Button type="submit">
+            SIGN UP <ArrowRightAltIcon />
+          </Button>
         </form>
         <Typography
           sx={{
