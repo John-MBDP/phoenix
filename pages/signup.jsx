@@ -74,7 +74,7 @@ const Signup = ({ setHeader }) => {
       >
         <Checkbox {...label} />
         <Typography
-          fontWeeight
+          fontWeight
           sx={{ display: "flex", justifyContent: "flex-end", color: "#ff0056" }}
           variant="h7"
         >
