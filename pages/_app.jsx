@@ -1,6 +1,4 @@
-import BottomNav from "../components/BottomNavigation";
 import "../styles/globals.css";
-import styles from "../styles/Home.module.css";
 import TopNavBar from "../components/TopNavBar";
 import { useState, useEffect } from "react";
 import { BottomNavigationProvider } from "../Contexts/BottomNavigationContext";
@@ -30,19 +28,16 @@ function MyApp({ Component, pageProps, user }) {
 
   const [header, setHeader] = useState({
     header: "NEWS FEED",
-    hidden: false,
+    hidden: false
   });
 
   return (
     <>
       <TopNavBar header={header} />
-      <div className={styles.view}>
-        <BottomNavigationProvider>
-          <Component {...pageProps} setHeader={setHeader} />
-        </BottomNavigationProvider>
-      </div>
+      <BottomNavigationProvider>
+        <Component {...pageProps} setHeader={setHeader} />
+      </BottomNavigationProvider>
     </>
   );
 }
-
 export default MyApp;

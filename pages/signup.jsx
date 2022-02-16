@@ -148,7 +148,7 @@ const Signup = ({ setHeader }) => {
       <Stack
         direction="row"
         spacing={2}
-        sx={{ mb: 2, display: "flex", justifyContent: "space-between" }}
+        sx={{ mb: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}
       >
         <Checkbox {...label} onChange={onCheckboxChangeHandler} />
         <Typography

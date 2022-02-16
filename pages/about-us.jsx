@@ -15,7 +15,7 @@ const AboutUs = ({ setHeader }) => {
         <Typography variant="body1" component="h3">
           <strong>Benefits</strong>
         </Typography>
-        <Typography variant="body1" gutterBottom component="body1">
+        <Typography variant="body1" gutterBottom component="h3">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
           saepe fuga at omnis! Consequuntur necessitatibus iusto cum non totam
           reiciendis soluta iste dolorem ipsum, animi cumque rem quaerat.
@@ -24,10 +24,10 @@ const AboutUs = ({ setHeader }) => {
       </div>
       <br />
       <div>
-        <Typography variant="body1" component="h3">
+        <Typography variant="body1" component="body1">
           <strong>Why Join Our Platform?</strong>
         </Typography>
-        <Typography variant="body1" component="body1">
+        <Typography variant="body1" component="h3">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
           saepe fuga at omnis! Consequuntur necessitatibus iusto cum non totam
           reiciendis soluta iste dolorem ipsum, animi cumque rem quaerat.
