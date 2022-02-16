@@ -3,8 +3,6 @@ import { useState, useEffect } from "react";
 import MessageCard from "../../components/MessageCard";
 import { Tabs, Tab } from "@material-ui/core";
 import timeifyDate from "../../helpers/timeifyDate";
-import useUser from "../../hooks/useUser";
-import useSWR from "swr";
 import { sessionOptions } from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 
