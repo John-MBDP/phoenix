@@ -9,7 +9,8 @@ import Stack from "@mui/material/Stack";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "../components/Button";
-import { createTheme } from "@mui/material/styles";
+// import { createTheme } from "@mui/material/styles";
+import { inputLabelClasses } from "@mui/material/InputLabel";
 const SmsVerification = ({ setHeader, setNavbar }) => {
   // useEffect(() => setHeader({ header: "", hidden: true }), []);
 
@@ -18,15 +19,15 @@ const SmsVerification = ({ setHeader, setNavbar }) => {
     setNavbar({ navbar: "", hidden: false });
   }, []);
 
-  const theme = createTheme({
-    overrides: {
-      MuiInput: {
-        root: {
-          borderBottom: "1px solid rgba(0, 0, 0, 0.42)",
-        },
-      },
-    },
-  });
+  // const theme = createTheme({
+  //   overrides: {
+  //     MuiInput: {
+  //       root: {
+  //         borderBottom: "1px solid rgba(0, 0, 0, 0.42)",
+  //       },
+  //     },
+  //   },
+  // });
   return (
     <RoundedTopContainer image={"/sms-2.png"} alt={"signup-image"} height="350px">
       <Typography variant="h5" sx={{ fontWeight: "800px", mb: 4 }}>
@@ -38,23 +39,28 @@ const SmsVerification = ({ setHeader, setNavbar }) => {
       </Button> */}
 
       <TextField
-        theme={theme}
-        sx={{ mb: 2, inputRoot: "1px solid rgba(0, 0, 0, 0.42)" }}
+        sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
         id="standard-basic"
         label="Your Phone Number"
-        value="+0123456789"
+        // value="+0123456789"
+        InputLabelProps={{
+          sx: {
+            color: "black",
+            [`&.${inputLabelClasses.shrink}`]: {
+              color: "black",
+            },
+          },
+        }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              {/* <KeyboardArrowDownIcon sx={{ color: "black" }} /> */}
-              <PublicIcon sx={{ color: "black" }}></PublicIcon>
+              <PublicIcon sx={{ color: "black" }} />
               <KeyboardArrowDownIcon sx={{ color: "black" }} />
             </InputAdornment>
           ),
         }}
         variant="standard"
         fullWidth
-        theme={theme}
       />
       <Typography paragraph={true} sx={{ fontWeight: "800px", mb: 4, color: "#FF0056" }}>
         Please check your messages for the verification code.
