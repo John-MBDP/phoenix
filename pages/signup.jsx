@@ -13,26 +13,13 @@ import Stack from "@mui/material/Stack";
 import Button from "../components/Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Link from "next/link";
-import { withStyles } from "@material-ui/core/styles";
+import { inputLabelClasses } from "@mui/material/InputLabel";
 
 const btnMain = {
   alignItems: "right",
 };
 
-const styles = (theme) => ({
-  underline: {
-    "&::after": {
-      border: "1px solid rgba(0, 0, 0, 0.72)",
-    },
-  },
-  MuiInputLabel: {
-    root: {
-      color: "black",
-    },
-  },
-});
-
-const Signup = ({ setHeader, setNavbar, classes }) => {
+const Signup = ({ setHeader, setNavbar }) => {
   // const classes = useStyles();
   const router = useRouter();
   const [formInput, setFormInput] = useState({
@@ -120,33 +107,43 @@ const Signup = ({ setHeader, setNavbar, classes }) => {
       </Typography>
       {errorMsg && <p>{errorMsg}</p>}
       <TextField
-        sx={{ mb: 2 }}
+        sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
         id="input-with-icon-textfield"
         label="Full Name"
+        InputLabelProps={{
+          sx: {
+            [`&.${inputLabelClasses.shrink}`]: {
+              color: "#FF0056",
+            },
+          },
+        }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
               <AccountBoxIcon sx={{ color: "black" }} />
             </InputAdornment>
           ),
-          classes: {
-            underline: classes.underline,
-            MuiInputLabel: classes.MuiInputLabel,
-          },
         }}
         fullWidth
         variant="standard"
         onChange={onNameChangeHandler}
       />
       <TextField
-        sx={{ mb: 2 }}
+        sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
         id="input-with-icon-textfield"
         label="Email Address"
+        InputLabelProps={{
+          sx: {
+            [`&.${inputLabelClasses.shrink}`]: {
+              color: "#FF0056",
+            },
+          },
+        }}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end">
-              <MailIcon sx={{ color: "black" }} />
-            </InputAdornment>
+            <MailIcon position="end">
+              <AccountBoxIcon sx={{ color: "black" }} />
+            </MailIcon>
           ),
         }}
         fullWidth
@@ -154,18 +151,28 @@ const Signup = ({ setHeader, setNavbar, classes }) => {
         onChange={onEmailChangeHandler}
       />
       <TextField
-        sx={{ mb: 2 }}
+        sx={{
+          mb: 2,
+          "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" },
+        }}
         id="input-with-icon-textfield"
         label="Password"
+        InputLabelProps={{
+          sx: {
+            [`&.${inputLabelClasses.shrink}`]: {
+              color: "#FF0056",
+            },
+          },
+        }}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end">
-              <LockIcon sx={{ color: "black" }} />
-            </InputAdornment>
+            <LockIcon position="end">
+              <AccountBoxIcon sx={{ color: "black" }} />
+            </LockIcon>
           ),
         }}
-        variant="standard"
         fullWidth
+        variant="standard"
         onChange={onPasswordChangeHandler}
       />
       <Stack
@@ -216,4 +223,4 @@ const Signup = ({ setHeader, setNavbar, classes }) => {
   );
 };
 
-export default withStyles(styles)(Signup);
+export default Signup;
