@@ -24,7 +24,7 @@ const ArticleCardList = ({ initialArticles }) => {
     return (
       <ArticleCard
         key={article.id}
-        id={article.id}
+        articleId={article.id}
         title={article.title}
         body={article.body.slice(0, 100) + "..."}
         date={<Timeago date={article.date} />}

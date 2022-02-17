@@ -1,18 +1,87 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import styles from "./index.module.scss";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useState } from "react";
 
-const Article = ({ id, title, author, body, date }) => {
+const Article = ({
+  articleId,
+  title,
+  author,
+  body,
+  date,
+  userId,
+  articleFavourite,
+}) => {
+  const [favourited, setFavourited] = useState(articleFavourite ? true : false);
+  const favourite = { client_id: userId, article_id: articleId };
+
+  const saveFavourite = async favourite => {
+    const response = await fetch("/api/favourites/articles/create", {
+      method: "POST",
+      body: JSON.stringify({ ...favourite, date_created: new Date() }),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    console.log("saved!");
+    return await response.json();
+  };
+
+  const destroyFavourite = async favourite => {
+    const response = await fetch("/api/favourites/articles/delete", {
+      method: "POST",
+      body: JSON.stringify(favourite),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    console.log("destroyed!");
+    return await response.json();
+  };
+
   return (
     <Card sx={{ padding: "1em" }}>
       <CardContent>
-        <Typography
-          sx={{ fontSize: 14, fontWeight: "bold", textAlign: "right" }}
-          color="text.secondary"
-          gutterBottom
-        >
-          #{id} in Popular
-        </Typography>
+        <header className={styles.header}>
+          <Typography
+            sx={{ fontSize: 14, fontWeight: "bold" }}
+            color="text.secondary"
+            className={styles.popular}
+          >
+            #{articleId} in Popular
+          </Typography>
+          {favourited && (
+            <FavoriteIcon
+              sx={{ color: "salmon" }}
+              onClick={async () => {
+                try {
+                  await destroyFavourite(favourite);
+                  setFavourited(false);
+                } catch (err) {
+                  console.log(err);
+                }
+              }}
+            />
+          )}
+          {!favourited && (
+            <FavoriteBorderIcon
+              sx={{ color: "salmon" }}
+              onClick={async () => {
+                try {
+                  await saveFavourite(favourite);
+                  setFavourited(true);
+                } catch (err) {
+                  console.log(err);
+                }
+              }}
+            />
+          )}
+        </header>
         <Typography
           sx={{ fontWeight: "bold", color: "salmon", margin: "0.5em 0" }}
           variant="h5"

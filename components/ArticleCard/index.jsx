@@ -6,10 +6,10 @@ import Typography from "@mui/material/Typography";
 import Link from "next/link";
 
 export default function ArticleCard(props) {
-  const { id, title, body, date, image } = props;
+  const { articleId, title, body, date, image } = props;
 
   return (
-    <Link href={`/articles/${id}`} style={{ textDecoration: "none" }} passHref>
+    <Link href={`/articles/${articleId}`} style={{ textDecoration: "none" }} passHref>
       <Card
         sx={{
           maxWidth: 345,
