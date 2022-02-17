@@ -6,8 +6,7 @@ import { withIronSessionApiRoute } from "iron-session/next";
 const prisma = new PrismaClient();
 
 export default withIronSessionApiRoute(async (req, res) => {
-  const data = await req.body;
-  const { email, password } = JSON.parse(data);
+  const { email, password } = await req.body;
 
   try {
     const user = await prisma.clients.findFirst({
@@ -33,6 +32,7 @@ export default withIronSessionApiRoute(async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    res.status(500).json({ message: error.message });
+    const { response: fetchResponse } = error;
+    res.status(fetchResponse?.status || 500).json(error.data);
   }
 }, sessionOptions);

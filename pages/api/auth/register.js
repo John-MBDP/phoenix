@@ -6,8 +6,7 @@ import sessionOptions from "../../../lib/session";
 const prisma = new PrismaClient();
 
 export default withIronSessionApiRoute(async (req, res) => {
-  const data = await req.body;
-  const { firstName, lastName, email, password } = JSON.parse(data);
+  const { firstName, lastName, email, password } = await req.body;
 
   try {
     if (req.method === "POST") {

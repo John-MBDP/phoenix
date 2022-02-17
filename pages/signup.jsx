@@ -11,6 +11,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Stack from "@mui/material/Stack";
 import Button from "../components/Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import fetchJson from "../lib/fetchJson";
 
 const btnMain = {
   alignItems: "right"
@@ -83,8 +84,9 @@ const Signup = ({ setHeader }) => {
       return;
     }
     try {
-      await fetch("/api/auth/register", {
+      await fetchJson("/api/auth/register", {
         method: "POST",
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(inputValues),
       });
       return router.push("/");
