@@ -18,14 +18,11 @@ import Avatar from "@mui/material/Avatar";
 import MessageIcon from "@mui/icons-material/Message";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
-import useUser from "../../hooks/useUser";
 
-const TopNavBar = ({ header }) => {
+const TopNavBar = ({ header, user }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const drawerHeight = 240;
-
-  const { user } = useUser();
 
   const DrawerHeader = styled("div")(({ theme }) => ({
     display: "flex",
@@ -116,9 +113,6 @@ const TopNavBar = ({ header }) => {
         open={open}
       >
         <DrawerHeader>
-          {/* <IconButton component="a" href="/profile" onClick={() => setOpen(false)}>
-            <Avatar sx={{ marginTop: 2, marginRight: 1 }}/>
-          </IconButton> */}
           <Typography
             variant="body"
             component="div"
@@ -140,6 +134,9 @@ const TopNavBar = ({ header }) => {
           >
             Logout
           </Typography>
+          <IconButton component="a" href="/profile" onClick={() => setOpen(false)}>
+            <Avatar sx={{ marginTop: 2, marginRight: 1 }}/>
+          </IconButton>
         </DrawerHeader>
         <List>
           <ListItem button component="a" href="/" onClick={() => setOpen(false)}>

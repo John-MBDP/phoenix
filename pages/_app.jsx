@@ -2,8 +2,6 @@ import "../styles/globals.css";
 import TopNavBar from "../components/TopNavBar";
 import { useState, useEffect } from "react";
 import { BottomNavigationProvider } from "../Contexts/BottomNavigationContext";
-import { withIronSessionSsr } from "iron-session/next";
-import sessionOptions from "../lib/session";
 import { SWRConfig } from "swr";
 import fetchJson from "../lib/fetchJson";
 import useUser from "../hooks/useUser";
@@ -27,7 +25,7 @@ function MyApp({ Component, pageProps }) {
         },
       }}
     >
-      <TopNavBar header={header} />
+      <TopNavBar header={header} user={user} />
       <BottomNavigationProvider>
         <Component {...pageProps} setHeader={setHeader} />
       </BottomNavigationProvider>

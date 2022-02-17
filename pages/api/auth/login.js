@@ -20,7 +20,12 @@ export default withIronSessionApiRoute(async (req, res) => {
     const valid = await bcrypt.compare(password, user.password);
 
     if (valid) {
-      req.session.user = { id: user.id, email: user.email };
+      req.session.user = {
+        id: user.id,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        email: user.email,
+      };
       await req.session.save();
       return res.json(user);
     } else {
