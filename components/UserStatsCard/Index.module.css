@@ -8,7 +8,9 @@
 }
 .container {
   position: relative;
-  padding-bottom: 2rem;
+}
+.padding {
+  padding-bottom: 3rem;
 }
 .username {
   padding-top: 2.1rem;
