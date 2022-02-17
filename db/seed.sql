@@ -346,7 +346,7 @@ values
 		'(174) 8414462',
 		'3 Arrowood Trail',
 		16,
-		'http://dummyimage.com/200x200.png/cc0000/ffffff'
+		'/images/lawyers/lawyer1.jpeg'
 	);
 
 insert into
@@ -379,7 +379,7 @@ values
 		'(476) 2749245',
 		'850 Petterle Terrace',
 		48,
-		'http://dummyimage.com/200x200.png/ff4444/ffffff'
+		'/images/lawyers/lawyer2.jpeg'
 	);
 
 insert into
@@ -412,7 +412,7 @@ values
 		'(803) 4716257',
 		'1969 Merry Pass',
 		37,
-		'http://dummyimage.com/200x200.png/ff4444/ffffff'
+		'/images/lawyers/lawyer3.jpeg'
 	);
 
 insert into
@@ -445,7 +445,7 @@ values
 		'(427) 9220284',
 		'5452 Hoepker Hill',
 		23,
-		'http://dummyimage.com/200x200.png/cc0000/ffffff'
+		'/images/lawyers/lawyer4.jpeg'
 	);
 
 insert into
@@ -478,7 +478,7 @@ values
 		'(865) 7726116',
 		'0 Morningstar Crossing',
 		37,
-		'http://dummyimage.com/200x200.png/ff4444/ffffff'
+		'/images/lawyers/lawyer5.jpeg'
 	);
 
 insert into
@@ -511,7 +511,7 @@ values
 		'(915) 7510306',
 		'757 Northridge Place',
 		34,
-		'http://dummyimage.com/200x200.png/cc0000/ffffff'
+		'/images/lawyers/lawyer6.jpeg'
 	);
 
 insert into
@@ -544,7 +544,7 @@ values
 		'(655) 6916437',
 		'781 Gina Crossing',
 		47,
-		'http://dummyimage.com/200x200.png/ff4444/ffffff'
+		'/images/lawyers/lawyer7.jpeg'
 	);
 
 insert into
@@ -577,7 +577,7 @@ values
 		'(373) 3810555',
 		'9402 4th Trail',
 		10,
-		'http://dummyimage.com/200x200.png/cc0000/ffffff'
+		'/images/lawyers/lawyer8.jpeg'
 	);
 
 insert into
@@ -610,7 +610,7 @@ values
 		'(527) 9387706',
 		'46851 Bay Park',
 		40,
-		'http://dummyimage.com/200x200.png/dddddd/000000'
+		'/images/lawyers/lawyer9.jpeg'
 	);
 
 insert into
@@ -643,7 +643,7 @@ values
 		'(796) 9075313',
 		'11013 Karstens Junction',
 		17,
-		'http://dummyimage.com/200x200.png/5fa2dd/ffffff'
+		'/images/lawyers/lawyer10.jpeg'
 	);
 
 insert into

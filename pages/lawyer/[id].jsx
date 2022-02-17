@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 import { useEffect, useState } from "react";
 import RoundedTopContainer from "../../components/RoundedTopContainer";
 import UserStatsCard from "../../components/UserStatsCard";
-import { Box as div, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
@@ -12,18 +12,25 @@ import Button from "../../components/Button";
 import AnnouncementIcon from "@mui/icons-material/Announcement";
 import EmailIcon from "@mui/icons-material/Email";
 import Widebutton from "../../components/WideButton";
+import { useRouter } from "next/router";
+import ViewLikesCounter from "../../components/ViewLikesCounter";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 
 export const getServerSideProps = withIronSessionSsr(
+  
+  const id = Number(context.params.id);
   async ({ req, res, params }) => {
     const user = req.session.user;
     const id = Number(params.id);
-    const lawyer = await prisma.lawyers.findUnique({
-      where: {
-        id: id,
-      },
-    });
+    
+    const lawfirmMembers = await prisma.lawfirm_members.findMany({
+    where: { lawyer_id: id },
+    include: {
+      lawyers: true
+    }
+  });
+    
     const lawyerFavourite = await prisma.lawyer_favourites.findFirst({
       where: {
         lawyer_id: id,
@@ -31,7 +38,9 @@ export const getServerSideProps = withIronSessionSsr(
     });
     return {
       props: {
-        lawyer,
+        lawyer: {...lawfirmMembers[0].lawyers,
+        date_certified: `${lawfirmMembers[0].lawyers.date_certified.getFullYear()}`},
+        lawfirmId: lawfirmMembers[0].lawfirm_id,
         user,
         lawyerFavourite,
       },
@@ -41,16 +50,20 @@ export const getServerSideProps = withIronSessionSsr(
 );
 
 const Lawyer = ({ setHeader, lawyer, user, lawyerFavourite }) => {
+const router = useRouter();
+
   const {
     last_name,
     first_name,
     address,
-    date_certified,
     phone_number,
     location,
     email,
     profile_pic,
     education,
+    date_certified,
+    views,
+    likes
   } = lawyer;
   useEffect(() => {
     setHeader(prev => ({ ...prev, hidden: true }));
@@ -122,7 +135,7 @@ const Lawyer = ({ setHeader, lawyer, user, lawyerFavourite }) => {
         name={`${first_name} ${last_name}`}
         image={profile_pic}
       ></UserStatsCard>
-
+      <ViewLikesCounter views={views} likes={likes} />
       <div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Button
@@ -159,7 +172,7 @@ const Lawyer = ({ setHeader, lawyer, user, lawyerFavourite }) => {
           {email}
         </Typography>
         <Typography variant="body2">
-          <strong>Recognized Since: {date_certified.getFullYear()}</strong>
+          <strong>Recognized Since: {date_certified}</strong>
         </Typography>
       </div>
       <Widebutton
@@ -205,6 +218,7 @@ const Lawyer = ({ setHeader, lawyer, user, lawyerFavourite }) => {
         padding="1rem 0"
         strong
         backgroundColor="#1B4463"
+        onClick={() => router.push(`/lawfirm/${lawfirmId}`)}
       >
         <div>
           <Typography variant="button">Firm Affiliation</Typography>

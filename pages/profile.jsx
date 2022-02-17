@@ -9,6 +9,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import UserStatCard from "../components/UserStatsCard";
 import { Typography, Box } from "@material-ui/core";
 import { useEffect } from "react";
+import ViewLikesCounter from "../components/ViewLikesCounter";
 
 const Profile = ({ setHeader }) => {
   useEffect(() => setHeader({ header: "", hidden: true }), []);
@@ -19,7 +20,7 @@ const Profile = ({ setHeader }) => {
       height="600px"
     >
       <UserStatCard name="Hu Tao" />
-
+      <ViewLikesCounter />
       <div style={{ paddingTop: "1rem" }}>
         <Typography
           component="h1"
