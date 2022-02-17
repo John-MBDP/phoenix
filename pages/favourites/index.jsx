@@ -4,7 +4,6 @@ import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import { PrismaClient } from "@prisma/client";
 import styles from "../../styles/Home.module.css";
-import { BottomNavigationContext } from "../../Contexts/BottomNavigationContext";
 import ArticleCard from "../../components/ArticleCard";
 import SearchCard from "../../components/SearchCard";
 import Timeago from "react-timeago";

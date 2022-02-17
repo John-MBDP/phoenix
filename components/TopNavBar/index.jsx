@@ -113,28 +113,44 @@ const TopNavBar = ({ header, user }) => {
         open={open}
       >
         <DrawerHeader>
-          <IconButton component="a" href="/profile" onClick={() => setOpen(false)}>
-            <Avatar sx={{ marginTop: 2, marginLeft: 1 }}/>
+          <IconButton
+            component="a"
+            href="/profile"
+            onClick={() => setOpen(false)}
+          >
+            <Avatar sx={{ marginTop: 2, marginLeft: 1 }} />
           </IconButton>
           <Typography
             variant="subtitle1"
             component="div"
             sx={{ fontWeight: "bold", marginTop: 2, marginLeft: 1.5 }}
           >
-            Profile
+            {user ? user.first_name : "Profile"}
           </Typography>
           <Typography
             variant="body"
             component="a"
             href="/logout"
             color="#1D1F37"
-            sx={{ fontWeight: "bold", marginTop: 1, padding: 1.5, backgroundColor: 'white', marginLeft: 23, borderRadius: 2 }}
+            sx={{
+              fontWeight: "bold",
+              marginTop: 1,
+              padding: 1.5,
+              backgroundColor: "white",
+              marginLeft: 23,
+              borderRadius: 2,
+            }}
           >
             Logout
           </Typography>
         </DrawerHeader>
         <List>
-          <ListItem button component="a" href="/" onClick={() => setOpen(false)}>
+          <ListItem
+            button
+            component="a"
+            href="/"
+            onClick={() => setOpen(false)}
+          >
             <ListItemIcon>
               <HomeIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
@@ -142,7 +158,12 @@ const TopNavBar = ({ header, user }) => {
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItem>
-          <ListItem button component="a" href="/search" onClick={() => setOpen(false)}>
+          <ListItem
+            button
+            component="a"
+            href="/search"
+            onClick={() => setOpen(false)}
+          >
             <ListItemIcon>
               <SearchIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
@@ -150,7 +171,12 @@ const TopNavBar = ({ header, user }) => {
             </ListItemIcon>
             <ListItemText primary="Find Lawyers" />
           </ListItem>
-          <ListItem button component="a" href="/messages" onClick={() => setOpen(false)}>
+          <ListItem
+            button
+            component="a"
+            href="/messages"
+            onClick={() => setOpen(false)}
+          >
             <ListItemIcon>
               <MessageIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
@@ -158,7 +184,12 @@ const TopNavBar = ({ header, user }) => {
             </ListItemIcon>
             <ListItemText primary="Messages" />
           </ListItem>
-          <ListItem button component="a" href="/favourites" onClick={() => setOpen(false)}>
+          <ListItem
+            button
+            component="a"
+            href="/favourites"
+            onClick={() => setOpen(false)}
+          >
             <ListItemIcon>
               <FavoriteIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}

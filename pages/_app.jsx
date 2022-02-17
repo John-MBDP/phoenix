@@ -33,7 +33,7 @@ function MyApp({ Component, pageProps }) {
         },
       }}
     >
-      <TopNavBar header={header} />
+      <TopNavBar header={header} user={user} />
       <div className={styles.view}>
         <Component {...pageProps} setHeader={setHeader} setNavbar={setNavbar} />
       </div>
