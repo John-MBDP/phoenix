@@ -3,34 +3,38 @@ const prisma = new PrismaClient();
 import { useEffect } from "react";
 import RoundedTopContainer from "../../components/RoundedTopContainer";
 import UserStatsCard from "../../components/UserStatsCard";
-import { Box as div, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Button from "../../components/Button";
 import AnnouncementIcon from "@mui/icons-material/Announcement";
 import EmailIcon from "@mui/icons-material/Email";
 import Widebutton from "../../components/WideButton";
+import { useRouter } from "next/router";
 export const getServerSideProps = async (context) => {
   const id = Number(context.params.id);
-  const lawyer = await prisma.lawyers.findUnique({
-    where: {
-      id: id
+
+  const lawfirmMembers = await prisma.lawfirm_members.findMany({
+    where: { lawyer_id: id },
+    include: {
+      lawyers: true
     }
   });
-
+  console.log(lawfirmMembers[0].id);
   return {
     props: {
-      lawyer
+      lawyer: lawfirmMembers[0].lawyers,
+      lawfirmId: lawfirmMembers[0].id
     }
   };
 };
 
-const Lawyer = ({ setHeader, lawyer }) => {
+const Lawyer = ({ setHeader, lawyer, lawfirmId }) => {
+  const router = useRouter();
   const {
     last_name,
     first_name,
     address,
-    date_certified,
     phone_number,
     location,
     email,
@@ -87,7 +91,7 @@ const Lawyer = ({ setHeader, lawyer }) => {
           {email}
         </Typography>
         <Typography variant="body2">
-          <strong>Recognized Since: {date_certified.getFullYear()}</strong>
+          <strong>Recognized Since:</strong>
         </Typography>
       </div>
       <Widebutton
@@ -133,6 +137,7 @@ const Lawyer = ({ setHeader, lawyer }) => {
         padding="1rem 0"
         strong
         backgroundColor="#1B4463"
+        onClick={() => router.push(`/lawfirms/${lawfirmId}`)}
       >
         <div>
           <Typography variant="button">Firm Affiliation</Typography>
