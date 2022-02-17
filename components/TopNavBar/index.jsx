@@ -12,8 +12,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
-import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import SearchIcon from "@mui/icons-material/Search";
+import Avatar from "@mui/material/Avatar";
+import MessageIcon from "@mui/icons-material/Message";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 
 const TopNavBar = ({ header }) => {
   const drawerHeight = 240;
@@ -24,7 +28,7 @@ const TopNavBar = ({ header }) => {
     padding: theme.spacing(0, 1),
     // necessary for content to be below drawer header
     ...theme.mixins.toolbar,
-    justifyContent: "flex-start",
+    justifyContent: "flex-end",
   }));
 
   const theme = useTheme();
@@ -90,16 +94,50 @@ const TopNavBar = ({ header }) => {
         open={open}
       >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            <ArrowBackIosNewIcon />
+          <IconButton onClick={handleDrawerClose} >
+            <Avatar sx={{ marginTop: 2, marginRight: 1 }}/>
           </IconButton>
         </DrawerHeader>
         <List>
           <ListItem button>
             <ListItemIcon>
-              <HomeIcon />
+              <HomeIcon
+                sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
+              />
             </ListItemIcon>
             <ListItemText primary="Home" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <SearchIcon
+                sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Find Lawyers" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <MessageIcon
+                sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Messages" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <FavoriteIcon
+                sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Favourites" />
+          </ListItem>
+          <ListItem button>
+            <ListItemIcon>
+              <BusinessCenterIcon
+                sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
+              />
+            </ListItemIcon>
+            <ListItemText primary="Services Status" />
           </ListItem>
         </List>
       </Drawer>
