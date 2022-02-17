@@ -94,12 +94,12 @@ const TopNavBar = ({ header }) => {
         open={open}
       >
         <DrawerHeader>
-          <IconButton onClick={handleDrawerClose} >
+          <IconButton component="a" href="/profile">
             <Avatar sx={{ marginTop: 2, marginRight: 1 }}/>
           </IconButton>
         </DrawerHeader>
         <List>
-          <ListItem button>
+          <ListItem button component="a" href="/">
             <ListItemIcon>
               <HomeIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
@@ -107,7 +107,7 @@ const TopNavBar = ({ header }) => {
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItem>
-          <ListItem button>
+          <ListItem button component="a" href="/search">
             <ListItemIcon>
               <SearchIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
@@ -115,7 +115,7 @@ const TopNavBar = ({ header }) => {
             </ListItemIcon>
             <ListItemText primary="Find Lawyers" />
           </ListItem>
-          <ListItem button>
+          <ListItem button component="a" href="/messages">
             <ListItemIcon>
               <MessageIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
@@ -123,7 +123,7 @@ const TopNavBar = ({ header }) => {
             </ListItemIcon>
             <ListItemText primary="Messages" />
           </ListItem>
-          <ListItem button>
+          <ListItem button component="a" href="/favourites">
             <ListItemIcon>
               <FavoriteIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
