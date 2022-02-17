@@ -15,7 +15,7 @@ import fetchJson, { FetchError } from "../lib/fetchJson";
 import useUser from "../hooks/useUser";
 
 const btnMain = {
-  alignItems: "right"
+  alignItems: "right",
 };
 
 const Signup = ({ setHeader }) => {
@@ -67,6 +67,10 @@ const Signup = ({ setHeader }) => {
     });
   };
 
+  const refreshPage = () => {
+    window.location.reload(false);
+  };
+
   const handleSubmit = async inputValues => {
     if (
       !inputValues.firstName ||
@@ -83,10 +87,10 @@ const Signup = ({ setHeader }) => {
     try {
       await fetchJson("/api/auth/register", {
         method: "POST",
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(inputValues),
       });
-      return router.push("/");
+      refreshPage();
     } catch (error) {
       if (error instanceof FetchError) {
         setErrorMsg(error.data.message);
@@ -111,7 +115,7 @@ const Signup = ({ setHeader }) => {
             <InputAdornment position="end">
               <AccountBoxIcon sx={{ color: "black" }} />
             </InputAdornment>
-          )
+          ),
         }}
         fullWidth
         variant="standard"
@@ -126,7 +130,7 @@ const Signup = ({ setHeader }) => {
             <InputAdornment position="end">
               <MailIcon sx={{ color: "black" }} />
             </InputAdornment>
-          )
+          ),
         }}
         fullWidth
         variant="standard"
@@ -141,7 +145,7 @@ const Signup = ({ setHeader }) => {
             <InputAdornment position="end">
               <LockIcon sx={{ color: "black" }} />
             </InputAdornment>
-          )
+          ),
         }}
         variant="standard"
         fullWidth
@@ -150,9 +154,14 @@ const Signup = ({ setHeader }) => {
       <Stack
         direction="row"
         spacing={2}
-        sx={{ mb: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}
+        sx={{
+          mb: 2,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
-        <Checkbox {...label} onChange={(e) => setChecked(e.target.checked)} />
+        <Checkbox {...label} onChange={e => setChecked(e.target.checked)} />
         <Typography
           fontWeight
           sx={{ display: "flex", justifyContent: "flex-end", color: "#ff0056" }}
@@ -178,7 +187,7 @@ const Signup = ({ setHeader }) => {
             justifyContent: "flex-end",
             color: "#ff0056",
             mb: 4,
-            fontWeight: "500"
+            fontWeight: "500",
           }}
           variant="h7"
         >
