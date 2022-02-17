@@ -5,6 +5,8 @@ import RoundedTopContainer from "../../components/RoundedTopContainer";
 import UserStatsCard from "../../components/UserStatsCard";
 import { Box as div, Typography } from "@material-ui/core";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Button from "../../components/Button";
 import AnnouncementIcon from "@mui/icons-material/Announcement";
@@ -53,12 +55,12 @@ const Lawyer = ({ setHeader, lawyer, user, lawyerFavourite }) => {
   useEffect(() => {
     setHeader(prev => ({ ...prev, hidden: true }));
   }, []);
-  
+
   const [favourited, setFavourited] = useState(lawyerFavourite ? true : false);
   const favourite = { client_id: user.id, lawyer_id: lawyer.id };
 
   const saveFavourite = async favourite => {
-    const response = await fetch("/api/favourites/articles/create", {
+    const response = await fetch("/api/favourites/lawyers/create", {
       method: "POST",
       body: JSON.stringify({ ...favourite, date_created: new Date() }),
     });
@@ -71,7 +73,7 @@ const Lawyer = ({ setHeader, lawyer, user, lawyerFavourite }) => {
   };
 
   const destroyFavourite = async favourite => {
-    const response = await fetch("/api/favourites/articles/delete", {
+    const response = await fetch("/api/favourites/lawyers/delete", {
       method: "POST",
       body: JSON.stringify(favourite),
     });
@@ -82,7 +84,7 @@ const Lawyer = ({ setHeader, lawyer, user, lawyerFavourite }) => {
     console.log("destroyed!");
     return await response.json();
   };
-  
+
   return (
     <RoundedTopContainer
       image="/images/articles/forest.jpeg"
@@ -90,10 +92,37 @@ const Lawyer = ({ setHeader, lawyer, user, lawyerFavourite }) => {
       alt="forest"
       padBottom
     >
+      {favourited && (
+        <FavoriteIcon
+          sx={{ color: "salmon" }}
+          onClick={async () => {
+            try {
+              await destroyFavourite(favourite);
+              setFavourited(false);
+            } catch (err) {
+              console.log(err);
+            }
+          }}
+        />
+      )}
+      {!favourited && (
+        <FavoriteBorderIcon
+          sx={{ color: "salmon" }}
+          onClick={async () => {
+            try {
+              await saveFavourite(favourite);
+              setFavourited(true);
+            } catch (err) {
+              console.log(err);
+            }
+          }}
+        />
+      )}
       <UserStatsCard
         name={`${first_name} ${last_name}`}
         image={profile_pic}
       ></UserStatsCard>
+
       <div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Button
