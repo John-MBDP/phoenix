@@ -4,40 +4,34 @@ import { useState, useEffect } from "react";
 import { BottomNavigationProvider } from "../Contexts/BottomNavigationContext";
 import { withIronSessionSsr } from "iron-session/next";
 import sessionOptions from "../lib/session";
-import { useRouter } from "next/router";
+import { SWRConfig } from "swr";
+import fetchJson from "../lib/fetchJson";
 import useUser from "../hooks/useUser";
 
-export const getInitalProps = withIronSessionSsr(async ({ req, res }) => {
-  const user = req.session.user;
-  return {
-    props: {
-      user,
-    },
-  };
-}, sessionOptions);
-
 // eslint-disable-next-line func-style
-function MyApp({ Component, pageProps, user }) {
-  const router = useRouter();
-
-  // useEffect(() => {
-  //   if (!user && !router.pathname === "/login") {
-  //     router.push("/login");
-  //   }
-  // });
+function MyApp({ Component, pageProps }) {
 
   const [header, setHeader] = useState({
     header: "NEWS FEED",
     hidden: false
   });
 
+  const { user } = useUser();
+
   return (
-    <>
+    <SWRConfig
+      value={{
+        fetcher: fetchJson,
+        onError: (err) => {
+          console.error(err);
+        },
+      }}
+    >
       <TopNavBar header={header} />
       <BottomNavigationProvider>
         <Component {...pageProps} setHeader={setHeader} />
       </BottomNavigationProvider>
-    </>
+    </SWRConfig>
   );
 }
 export default MyApp;

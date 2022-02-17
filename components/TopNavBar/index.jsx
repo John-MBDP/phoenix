@@ -18,11 +18,14 @@ import Avatar from "@mui/material/Avatar";
 import MessageIcon from "@mui/icons-material/Message";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
+import useUser from "../../hooks/useUser";
 
 const TopNavBar = ({ header }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const drawerHeight = 240;
+
+  const { user } = useUser();
 
   const DrawerHeader = styled("div")(({ theme }) => ({
     display: "flex",
