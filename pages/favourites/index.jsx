@@ -78,13 +78,11 @@ const Favourites = ({
   const LAWYERS = "LAWYERS";
   const LAWFIRMS = "LAWFIRMS";
 
-  const { setActive } = useContext(BottomNavigationContext);
   const [value, setValue] = useState(0);
   const [favourites, setFavourites] = useState(ARTICLES);
 
   useEffect(() => {
     setHeader({ header: "FAVOURITES", hidden: false });
-    setActive(true);
   }, []);
 
   const handleChange = (e, value) => {

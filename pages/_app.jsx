@@ -8,7 +8,7 @@ import fetchJson from "../lib/fetchJson";
 import useUser from "../hooks/useUser";
 
 // eslint-disable-next-line func-style
-function MyApp({ Component, pageProps, user }) {
+function MyApp({ Component, pageProps }) {
 
 
   const [header, setHeader] = useState({
