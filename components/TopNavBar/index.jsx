@@ -8,11 +8,12 @@ import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
 const TopNavBar = ({ header }) => {
   const drawerHeight = 240;
@@ -56,10 +57,11 @@ const TopNavBar = ({ header }) => {
             size="large"
             edge="start"
             aria-label="menu"
-            onClick={handleDrawerOpen}
+            onClick={open ? handleDrawerClose : handleDrawerOpen}
             sx={{ mr: 2, ...(open && { display: "none" }) }}
           >
-            <MenuIcon />
+            {!open && <MenuIcon />}
+            {open && <ArrowUpwardIcon />}
           </IconButton>
           <Typography
             variant="h5"
@@ -89,7 +91,7 @@ const TopNavBar = ({ header }) => {
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
+            <ArrowBackIosNewIcon />
           </IconButton>
         </DrawerHeader>
         <List>
