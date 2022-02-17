@@ -183,7 +183,7 @@ const Signup = ({ setHeader, setNavbar }) => {
           {...label}
           onChange={onCheckboxChangeHandler}
           sx={{
-            [`&.${checkboxClasses.checked}`]: {
+            [`&, &.${checkboxClasses.checked}`]: {
               color: "#ff0056",
             },
           }}

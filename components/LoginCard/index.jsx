@@ -10,6 +10,7 @@ import TextField from "@mui/material/TextField";
 import Button from "../Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Stack from "@mui/material/Stack";
+import { inputLabelClasses } from "@mui/material/InputLabel";
 
 const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
   const [formInput, setFormInput] = useState({ email: "", password: "" });
@@ -49,9 +50,16 @@ const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
         }}
       >
         <TextField
-          sx={{ mb: 2 }}
+          sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
           id="input-with-icon-textfield"
           label="Email Address"
+          InputLabelProps={{
+            sx: {
+              [`&.${inputLabelClasses.shrink}`]: {
+                color: "#FF0056",
+              },
+            },
+          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -64,9 +72,16 @@ const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
           onChange={onEmailChangeHandler}
         />
         <TextField
-          sx={{ mb: 2 }}
+          sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
           id="input-with-icon-textfield"
           label="Password"
+          InputLabelProps={{
+            sx: {
+              [`&.${inputLabelClasses.shrink}`]: {
+                color: "#FF0056",
+              },
+            },
+          }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
