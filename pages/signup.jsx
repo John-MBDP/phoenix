@@ -8,13 +8,12 @@ import InputAdornment from "@mui/material/InputAdornment";
 import MailIcon from "@mui/icons-material/Mail";
 import LockIcon from "@mui/icons-material/Lock";
 import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
+import Checkbox, { checkboxClasses } from "@mui/material/Checkbox";
 import Stack from "@mui/material/Stack";
 import Button from "../components/Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Link from "next/link";
 import { inputLabelClasses } from "@mui/material/InputLabel";
-
 const btnMain = {
   alignItems: "right",
 };
@@ -180,7 +179,15 @@ const Signup = ({ setHeader, setNavbar }) => {
         spacing={2}
         sx={{ mb: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}
       >
-        <Checkbox {...label} onChange={onCheckboxChangeHandler} />
+        <Checkbox
+          {...label}
+          onChange={onCheckboxChangeHandler}
+          sx={{
+            [`&.${checkboxClasses.checked}`]: {
+              color: "#ff0056",
+            },
+          }}
+        />
         <Typography
           fontWeight
           sx={{ display: "flex", justifyContent: "flex-end", color: "#ff0056" }}
