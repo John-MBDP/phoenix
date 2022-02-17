@@ -14,9 +14,11 @@ export default withIronSessionApiRoute(async (req, res) => {
         where: { email: email.toLowerCase() },
       });
       if (userCheck) {
+        return res.status(409).json({ message: "User already exists" });
+      } else if (password.length <= 5) {
         return res
           .status(409)
-          .json({ message: "User already exists" });
+          .json({ message: "Password must be at least 6 characters" });
       }
       // create user
       const hashPassword = await bcrypt.hash(password, 10);
@@ -26,7 +28,7 @@ export default withIronSessionApiRoute(async (req, res) => {
           last_name: lastName,
           email,
           password: hashPassword,
-        }
+        },
       });
       req.session.user = {
         id: user.id,
@@ -35,7 +37,7 @@ export default withIronSessionApiRoute(async (req, res) => {
         email: user.email,
       };
       await req.session.save();
-      return res.status(200).end();
+      return res.json(user);
     }
     return res.status(400).end();
   } catch (error) {

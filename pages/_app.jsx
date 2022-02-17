@@ -15,6 +15,7 @@ function MyApp({ Component, pageProps }) {
   });
 
   const { user } = useUser();
+  console.log(user);
 
   return (
     <SWRConfig
@@ -25,7 +26,7 @@ function MyApp({ Component, pageProps }) {
         },
       }}
     >
-      <TopNavBar header={header} user={user} />
+      <TopNavBar header={header} />
       <BottomNavigationProvider>
         <Component {...pageProps} setHeader={setHeader} />
       </BottomNavigationProvider>

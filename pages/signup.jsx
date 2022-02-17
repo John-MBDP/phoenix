@@ -11,7 +11,8 @@ import Checkbox from "@mui/material/Checkbox";
 import Stack from "@mui/material/Stack";
 import Button from "../components/Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-import fetchJson from "../lib/fetchJson";
+import fetchJson, { FetchError } from "../lib/fetchJson";
+import useUser from "../hooks/useUser";
 
 const btnMain = {
   alignItems: "right"
@@ -24,9 +25,14 @@ const Signup = ({ setHeader }) => {
     lastName: "",
     email: "",
     password: "",
-    checked: false,
   });
+  const [checked, setChecked] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  const { mutateUser } = useUser({
+    redirectTo: "/",
+    redirectIfFound: true,
+  });
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   useEffect(() => setHeader({ header: "", hidden: true }), []);
@@ -61,15 +67,6 @@ const Signup = ({ setHeader }) => {
     });
   };
 
-  const onCheckboxChangeHandler = e => {
-    setFormInput(prev => {
-      return {
-        ...prev,
-        checked: e.target.checked,
-      };
-    });
-  };
-
   const handleSubmit = async inputValues => {
     if (
       !inputValues.firstName ||
@@ -79,7 +76,7 @@ const Signup = ({ setHeader }) => {
     ) {
       setErrorMsg("Please fill out all fields");
       return;
-    } else if (!inputValues.checked) {
+    } else if (!checked) {
       setErrorMsg("Please accept Terms and Conditions");
       return;
     }
@@ -91,7 +88,11 @@ const Signup = ({ setHeader }) => {
       });
       return router.push("/");
     } catch (error) {
-      setErrorMsg(error.data.message);
+      if (error instanceof FetchError) {
+        setErrorMsg(error.data.message);
+      } else {
+        console.error("An unexpected error happened:", error);
+      }
     }
   };
 
@@ -151,7 +152,7 @@ const Signup = ({ setHeader }) => {
         spacing={2}
         sx={{ mb: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}
       >
-        <Checkbox {...label} onChange={onCheckboxChangeHandler} />
+        <Checkbox {...label} onChange={(e) => setChecked(e.target.checked)} />
         <Typography
           fontWeight
           sx={{ display: "flex", justifyContent: "flex-end", color: "#ff0056" }}

@@ -2,7 +2,7 @@ import { useState } from "react";
 import LoginCard from "../components/LoginCard";
 import useUser from "../hooks/useUser";
 import { useRouter } from "next/router";
-import fetchJson from "../lib/fetchJson";
+import fetchJson, { FetchError } from "../lib/fetchJson";
 
 const Login = ({ setHeader }) => {
   const router = useRouter();
@@ -29,8 +29,11 @@ const Login = ({ setHeader }) => {
       );
       return router.push("/");
     } catch (error) {
-      console.error("An unexpected error happened:", error);
-      setErrorMsg(error.data.message);
+      if (error instanceof FetchError) {
+        setErrorMsg(error.data.message);
+      } else {
+        console.error("An unexpected error happened:", error);
+      }
     }
   };
 
