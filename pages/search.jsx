@@ -49,6 +49,7 @@ const Search = ({ setHeader, lawyers }) => {
     const parsedResponse = await response.json();
     setCurrentLaywers(parsedResponse || {});
   };
+  console.log(lawyers);
 
   const lawyersArray = currentLawyers.map((lawyer) => {
     if (lawyer) {
@@ -57,7 +58,7 @@ const Search = ({ setHeader, lawyers }) => {
           key={lawyer.id}
           fullName={`${lawyer.first_name} ${lawyer.last_name}`}
           location={lawyer.location}
-          certified={JSON.stringify(lawyer.date_certified)}
+          certified={new Date(lawyer.date_certified).getFullYear()}
           phone={lawyer.phone_number}
           image={lawyer.profile_pic}
           id={lawyer.id}
