@@ -8,25 +8,23 @@ import useUser from "../hooks/useUser";
 
 // eslint-disable-next-line func-style
 function MyApp({ Component, pageProps }) {
-
   const [header, setHeader] = useState({
     header: "NEWS FEED",
-    hidden: false
+    hidden: false,
   });
 
   const { user } = useUser();
-  console.log(user);
 
   return (
     <SWRConfig
       value={{
         fetcher: fetchJson,
-        onError: (err) => {
+        onError: err => {
           console.error(err);
         },
       }}
     >
-      <TopNavBar header={header} />
+      <TopNavBar header={header} user={user} />
       <BottomNavigationProvider>
         <Component {...pageProps} setHeader={setHeader} />
       </BottomNavigationProvider>

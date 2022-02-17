@@ -113,30 +113,25 @@ const TopNavBar = ({ header, user }) => {
         open={open}
       >
         <DrawerHeader>
+          <IconButton component="a" href="/profile" onClick={() => setOpen(false)}>
+            <Avatar sx={{ marginTop: 2, marginLeft: 1 }}/>
+          </IconButton>
           <Typography
-            variant="body"
+            variant="subtitle1"
             component="div"
-            sx={{ flexgrow: 1, fontWeight: "bold" }}
+            sx={{ fontWeight: "bold", marginTop: 2, marginLeft: 1.5 }}
           >
-            Sign Up
+            Profile
           </Typography>
           <Typography
             variant="body"
-            component="div"
-            sx={{ flexgrow: 1, fontWeight: "bold" }}
-          >
-            Login
-          </Typography>
-          <Typography
-            variant="body"
-            component="div"
-            sx={{ flexgrow: 1, fontWeight: "bold" }}
+            component="a"
+            href="/logout"
+            color="#1D1F37"
+            sx={{ fontWeight: "bold", marginTop: 1, padding: 1.5, backgroundColor: 'white', marginLeft: 23, borderRadius: 2 }}
           >
             Logout
           </Typography>
-          <IconButton component="a" href="/profile" onClick={() => setOpen(false)}>
-            <Avatar sx={{ marginTop: 2, marginRight: 1 }}/>
-          </IconButton>
         </DrawerHeader>
         <List>
           <ListItem button component="a" href="/" onClick={() => setOpen(false)}>
