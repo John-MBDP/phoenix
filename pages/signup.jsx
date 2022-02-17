@@ -13,12 +13,27 @@ import Stack from "@mui/material/Stack";
 import Button from "../components/Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Link from "next/link";
+import { withStyles } from "@material-ui/core/styles";
 
 const btnMain = {
   alignItems: "right",
 };
 
-const Signup = ({ setHeader, setNavbar }) => {
+const styles = (theme) => ({
+  underline: {
+    "&::after": {
+      border: "1px solid rgba(0, 0, 0, 0.72)",
+    },
+  },
+  MuiInputLabel: {
+    root: {
+      color: "black",
+    },
+  },
+});
+
+const Signup = ({ setHeader, setNavbar, classes }) => {
+  // const classes = useStyles();
   const router = useRouter();
   const [formInput, setFormInput] = useState({
     firstName: "",
@@ -99,7 +114,7 @@ const Signup = ({ setHeader, setNavbar }) => {
   };
 
   return (
-    <RoundedTopContainer image={"/images/signup.png"} alt={"signup-image"}>
+    <RoundedTopContainer image={"/SignUp-2.png"} alt={"signup-image"} height={"430px"}>
       <Typography variant="h4" component="h1">
         Signup
       </Typography>
@@ -114,6 +129,10 @@ const Signup = ({ setHeader, setNavbar }) => {
               <AccountBoxIcon sx={{ color: "black" }} />
             </InputAdornment>
           ),
+          classes: {
+            underline: classes.underline,
+            MuiInputLabel: classes.MuiInputLabel,
+          },
         }}
         fullWidth
         variant="standard"
@@ -197,4 +216,4 @@ const Signup = ({ setHeader, setNavbar }) => {
   );
 };
 
-export default Signup;
+export default withStyles(styles)(Signup);

@@ -13,7 +13,7 @@ const TypeofUser = ({ setHeader, setNavbar }) => {
   const router = useRouter();
   //uwu
   return (
-    <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"signup-image"}>
+    <RoundedTopContainer image={"/TypeOfUser-1.png"} alt={"signup-image"} height="400px">
       <Typography
         variant="h6"
         fontWeight

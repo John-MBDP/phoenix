@@ -28,7 +28,7 @@ const SmsVerification = ({ setHeader, setNavbar }) => {
     },
   });
   return (
-    <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"signup-image"} height="350px">
+    <RoundedTopContainer image={"/sms-2.png"} alt={"signup-image"} height="350px">
       <Typography variant="h5" sx={{ fontWeight: "800px", mb: 4 }}>
         SMS Verification
       </Typography>

@@ -14,8 +14,8 @@ const GetStarted = ({ setHeader, setNavbar }) => {
     setNavbar({ navbar: "", hidden: false });
   }, []);
   return (
-    <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"signup-image"} height="400px">
-      <Stack spacing={2} sx={{ mb: 10 }}>
+    <RoundedTopContainer image={"/GetStarted-3.png"} alt={"signup-image"} height="350px">
+      <Stack spacing={2}>
         <Typography variant="h7" fontWeight sx={{ color: "#1D1F37", fontWeight: "600px" }}>
           THE BEST MOBILE ALL FOR LAWYERS
         </Typography>
@@ -26,14 +26,14 @@ const GetStarted = ({ setHeader, setNavbar }) => {
           Lorem ipsum, dolor sit amet consectetur adipisicing elit. Inventore beatae accusantium
           minima doloremque
         </Typography>
-      </Stack>
-      <Button onClick={() => router.push("/typeofuser")}>GET STARTED</Button>
-      <Typography sx={{ display: "flex", justifyContent: "flex-end" }} variant="h7" fontWeight>
-        Have an account?{" "}
-        <Typography sx={{ color: "#FF0056" }} fontWeight>
-          LOG IN
+        <Button onClick={() => router.push("/typeofuser")}>GET STARTED</Button>
+        <Typography sx={{ display: "flex", justifyContent: "flex-end" }} variant="h7" fontWeight>
+          Have an account?{" "}
+          <Typography sx={{ color: "#FF0056" }} fontWeight>
+            LOG IN
+          </Typography>
         </Typography>
-      </Typography>
+      </Stack>
     </RoundedTopContainer>
   );
 };
