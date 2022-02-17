@@ -1,12 +1,22 @@
+.nav_header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .profile {
   margin: 1em 2em 0 1em;
+  flex-grow: 3;
 }
 
 .logout {
+  display: fixed;
+  margin: 1em 1em 0 1em;
   background-color: white;
   padding: 0.8em;
   border-radius: 0.8em;
   justify-self: flex-end;
-  margin: 0.8em 2em 0 9em;
   color: #1D1F37;
+  flex-grow: 1;
+  text-align: center;
 }

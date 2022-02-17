@@ -1,6 +1,5 @@
 import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
 import { useState, useRef, useEffect } from "react";
-import { styled, useTheme } from "@mui/material/styles";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -21,18 +20,8 @@ import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import styles from "./index.module.scss";
 
 const TopNavBar = ({ header, user }) => {
-  const theme = useTheme();
   const [open, setOpen] = useState(false);
   const drawerHeight = 240;
-
-  const DrawerHeader = styled("div")(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below drawer header
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-start",
-  }));
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -113,43 +102,22 @@ const TopNavBar = ({ header, user }) => {
         anchor="top"
         open={open}
       >
-        <DrawerHeader>
+        <header className={styles.nav_header}>
           <IconButton
             component="a"
             href="/profile"
             onClick={() => setOpen(false)}
           >
             <Avatar
-              sx={{ marginTop: 2, marginLeft: 1 }}
+              sx={{ marginTop: 2, marginLeft: 2 }}
               src={"/images/huTao.png"}
             />
           </IconButton>
-          <span className={styles.profile}>Profile</span>
+          <span className={styles.profile}>
+            {user ? `${user.first_name} ${user.last_name}` : "Profile"}
+          </span>
           <span className={styles.logout}>Logout</span>
-          {/* <Typography
-            variant="subtitle1"
-            component="div"
-            sx={{ fontWeight: "bold", marginTop: 2, marginLeft: 1.5 }}
-          >
-            {user ? user.first_name : "Profile"}
-          </Typography>
-          <Typography
-            variant="body"
-            component="a"
-            href="/logout"
-            color="#1D1F37"
-            sx={{
-              fontWeight: "bold",
-              marginTop: 1,
-              padding: 1.5,
-              backgroundColor: "white",
-              marginLeft: 23,
-              borderRadius: 2,
-            }}
-          >
-            Logout
-          </Typography> */}
-        </DrawerHeader>
+        </header>
         <List>
           <ListItem
             button
