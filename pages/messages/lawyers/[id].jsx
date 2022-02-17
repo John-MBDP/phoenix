@@ -34,13 +34,14 @@ export async function getServerSideProps(context) {
   };
 }
 
-const Messages = ({ initialMessages, setHeader }) => {
+const Messages = ({ initialMessages, setHeader, setNavbar }) => {
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
   const [typingIndicator, setTypingIndicator] = useState(false);
 
   useEffect(() => {
     setHeader(() => ({ header: "Messages", hidden: false }));
+    setNavbar({ navbar: "", hidden: false });
     socketInitializer();
     const closeSocket = () => {
       socket.disconnect();

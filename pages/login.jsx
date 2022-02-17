@@ -7,6 +7,7 @@ import fetchJson, { FetchError } from "../lib/fetchJson";
 const Login = ({ setHeader, setNavbar }) => {
   useEffect(() => {
     setNavbar({ navbar: "", hidden: false });
+    setNavbar({ navbar: "", hidden: false });
   }, []);
   const router = useRouter();
 

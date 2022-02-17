@@ -5,8 +5,11 @@ import { Typography, List } from "@mui/material";
 
 import { useEffect } from "react";
 
-const Notifications = ({ setHeader }) => {
-  useEffect(() => setHeader({ header: "", hidden: true }), []);
+const Notifications = ({ setHeader, setNavbar }) => {
+  useEffect(() => {
+    setHeader({ header: "", hidden: true });
+    setNavbar({ navbar: "", hidden: false });
+  }, []);
   return (
     <RoundedTopContainer image="/images/waves.jpeg" alt="waves" height="600px">
       <UserStatCard />

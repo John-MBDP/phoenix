@@ -3,8 +3,11 @@ import { useEffect } from "react";
 import RoundedTopContainer from "../components/RoundedTopContainer";
 import UserStatsCard from "../components/UserStatsCard";
 
-const AboutUs = ({ setHeader }) => {
-  useEffect(() => setHeader({ heading: "", hidden: true }), []);
+const AboutUs = ({ setHeader, setNavbar }) => {
+  useEffect(() => {
+    setHeader({ heading: "", hidden: true });
+    setNavbar({ navbar: "", hidden: false });
+  }, []);
 
   return (
     <RoundedTopContainer image="/images/book3.jpeg" alt="books" height="600px">

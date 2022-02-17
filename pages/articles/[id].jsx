@@ -6,6 +6,7 @@ import CardMedia from "@mui/material/CardMedia";
 import styles from "./index";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
+import { useEffect } from "react";
 
 const prisma = new PrismaClient();
 
@@ -27,14 +28,18 @@ export const getServerSideProps = withIronSessionSsr(
       props: {
         user,
         article,
-        articleFavourite
+        articleFavourite,
       },
     };
   },
   sessionOptions
 );
 
-const ArticleShow = ({ article, user, articleFavourite }) => {
+const ArticleShow = ({ setNavbar, article, user, articleFavourite }) => {
+  useEffect(() => {
+    setNavbar({ navbar: "", hidden: false });
+  }, []);
+
   return (
     <>
       <Card className={styles.image}>

@@ -69,6 +69,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
 
 const Favourites = ({
   setHeader,
+  setNavbar,
   articleFavourites,
   lawyerFavourites,
   lawfirmFavourites,
@@ -82,6 +83,7 @@ const Favourites = ({
 
   useEffect(() => {
     setHeader({ header: "FAVOURITES", hidden: false });
+    setNavbar({ navbar: "", hidden: false });
   }, []);
 
   const handleChange = (e, value) => {

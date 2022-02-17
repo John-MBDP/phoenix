@@ -114,7 +114,7 @@ const TopNavBar = ({ header, user }) => {
             />
           </IconButton>
           <span className={styles.profile}>
-            {user ? `${user.first_name} ${user.last_name}` : "Profile"}
+            Profile
           </span>
           <span className={styles.logout}>Logout</span>
         </header>

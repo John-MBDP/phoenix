@@ -15,9 +15,10 @@ export const getServerSideProps = async () => {
   };
 };
 
-const Search = ({ setHeader, lawyers }) => {
+const Search = ({ setHeader, lawyers, setNavbar }) => {
   useEffect(() => {
     setHeader({ header: "LAWYERS", hidden: false });
+    setNavbar({ navbar: "", hidden: false });
   }, []);
 
   const lawyersArray = lawyers.map((lawyer) => {
