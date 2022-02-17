@@ -20,6 +20,8 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 
 const TopNavBar = ({ header }) => {
+  const theme = useTheme();
+  const [open, setOpen] = useState(false);
   const drawerHeight = 240;
 
   const DrawerHeader = styled("div")(({ theme }) => ({
@@ -31,9 +33,6 @@ const TopNavBar = ({ header }) => {
     justifyContent: "flex-end",
   }));
 
-  const theme = useTheme();
-  const [open, setOpen] = useState(false);
-
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -43,13 +42,11 @@ const TopNavBar = ({ header }) => {
   };
 
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef);
+  useOutsideNavCloser(wrapperRef);
 
-  function useOutsideAlerter(ref) {
+  function useOutsideNavCloser(ref) {
     useEffect(() => {
-      /**
-       * close nav bar if click outside detected
-       */
+      // close nav bar if click outside detected
       function handleClickOutside(event) {
         if (ref.current && !ref.current.contains(event.target)) {
           setOpen(false);
@@ -116,12 +113,12 @@ const TopNavBar = ({ header }) => {
         open={open}
       >
         <DrawerHeader>
-          <IconButton component="a" href="/profile">
-            <Avatar sx={{ marginTop: 2, marginRight: 1 }} />
+          <IconButton component="a" href="/profile" onClick={() => setOpen(false)}>
+            <Avatar sx={{ marginTop: 2, marginRight: 1 }}/>
           </IconButton>
         </DrawerHeader>
         <List>
-          <ListItem button component="a" href="/">
+          <ListItem button component="a" href="/" onClick={() => setOpen(false)}>
             <ListItemIcon>
               <HomeIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
@@ -129,7 +126,7 @@ const TopNavBar = ({ header }) => {
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItem>
-          <ListItem button component="a" href="/search">
+          <ListItem button component="a" href="/search" onClick={() => setOpen(false)}>
             <ListItemIcon>
               <SearchIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
@@ -137,7 +134,7 @@ const TopNavBar = ({ header }) => {
             </ListItemIcon>
             <ListItemText primary="Find Lawyers" />
           </ListItem>
-          <ListItem button component="a" href="/messages">
+          <ListItem button component="a" href="/messages" onClick={() => setOpen(false)}>
             <ListItemIcon>
               <MessageIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
@@ -145,7 +142,7 @@ const TopNavBar = ({ header }) => {
             </ListItemIcon>
             <ListItemText primary="Messages" />
           </ListItem>
-          <ListItem button component="a" href="/favourites">
+          <ListItem button component="a" href="/favourites" onClick={() => setOpen(false)}>
             <ListItemIcon>
               <FavoriteIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
