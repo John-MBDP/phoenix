@@ -1,3 +1,11 @@
+DROP TABLE IF EXISTS lawyer_favourites CASCADE;
+
+DROP TABLE IF EXISTS lawfirm_favourites CASCADE;
+
+DROP TABLE IF EXISTS article_favourites CASCADE;
+
+DROP TABLE IF EXISTS lawfirm_members CASCADE;
+
 DROP TABLE IF EXISTS messages CASCADE;
 
 DROP TABLE IF EXISTS articles CASCADE;
