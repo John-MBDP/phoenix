@@ -14,7 +14,7 @@ export default function BottomNav({ navbar }) {
 
   return (
     <>
-      {navbar.hidden ? (
+      {!navbar.hidden ? (
         <div className={styles.bottomNav}>
           <BottomNavigation
             showLabels

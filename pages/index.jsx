@@ -7,7 +7,6 @@ let socket;
 import ArticleCard from "../components/ArticleCard";
 import Timeago from "react-timeago";
 import { PrismaClient } from "@prisma/client";
-import { BottomNavigationContext } from "../Contexts/BottomNavigationContext";
 
 const prisma = new PrismaClient();
 
@@ -26,8 +25,7 @@ export const getServerSideProps = async () => {
   };
 };
 
-export default function Home({ setHeader, initialArticles }) {
-  // const { setActive } = useContext(BottomNavigationContext);
+export default function Home({ setHeader, initialArticles, setNavbar }) {
   const parsedArticleCards = initialArticles.map((article) => {
     return (
       <ArticleCard
@@ -43,7 +41,7 @@ export default function Home({ setHeader, initialArticles }) {
 
   useEffect(() => {
     setHeader({ header: "NEWS FEED", hidden: false });
-    // setActive(true);
+    setNavbar({ navbar: '', hidden: false });
   }, []);
 
   // useEffect(() => socketInitializer(), []);
