@@ -30,7 +30,7 @@ const TopNavBar = ({ header }) => {
     padding: theme.spacing(0, 1),
     // necessary for content to be below drawer header
     ...theme.mixins.toolbar,
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
   }));
 
   const handleDrawerOpen = () => {
@@ -113,9 +113,30 @@ const TopNavBar = ({ header }) => {
         open={open}
       >
         <DrawerHeader>
-          <IconButton component="a" href="/profile" onClick={() => setOpen(false)}>
+          {/* <IconButton component="a" href="/profile" onClick={() => setOpen(false)}>
             <Avatar sx={{ marginTop: 2, marginRight: 1 }}/>
-          </IconButton>
+          </IconButton> */}
+          <Typography
+            variant="body"
+            component="div"
+            sx={{ flexgrow: 1, fontWeight: "bold" }}
+          >
+            Sign Up
+          </Typography>
+          <Typography
+            variant="body"
+            component="div"
+            sx={{ flexgrow: 1, fontWeight: "bold" }}
+          >
+            Login
+          </Typography>
+          <Typography
+            variant="body"
+            component="div"
+            sx={{ flexgrow: 1, fontWeight: "bold" }}
+          >
+            Logout
+          </Typography>
         </DrawerHeader>
         <List>
           <ListItem button component="a" href="/" onClick={() => setOpen(false)}>
