@@ -2,7 +2,7 @@ import NotificationImportantIcon from "@mui/icons-material/NotificationImportant
 import { useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Drawer from "@mui/material/Drawer";
-import MuiAppBar from "@mui/material/AppBar";
+import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import Typography from "@mui/material/Typography";
@@ -17,28 +17,11 @@ import HomeIcon from "@mui/icons-material/Home";
 const TopNavBar = ({ header }) => {
   const drawerHeight = 240;
 
-  const AppBar = styled(MuiAppBar, {
-    shouldForwardProp: prop => prop !== "open",
-  })(({ theme, open }) => ({
-    transition: theme.transitions.create(["all"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    ...(open && {
-      width: "100%",
-      marginTop: `${drawerHeight}px`,
-      transition: theme.transitions.create(["all"], {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    }),
-  }));
-
   const DrawerHeader = styled("div")(({ theme }) => ({
     display: "flex",
     alignItems: "center",
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
+    // necessary for content to be below drawer header
     ...theme.mixins.toolbar,
     justifyContent: "flex-start",
   }));
@@ -61,6 +44,8 @@ const TopNavBar = ({ header }) => {
           backgroundColor: "#1D1F37",
           borderRadius: "0  0 2rem 2rem",
           display: header.hidden ? "none" : "block",
+          marginTop: open && `${drawerHeight}px`,
+          width: "100%",
         }}
         open={open}
       >
@@ -98,6 +83,7 @@ const TopNavBar = ({ header }) => {
           },
         }}
         variant="persistent"
+        transitionDuration={0}
         anchor="top"
         open={open}
       >
