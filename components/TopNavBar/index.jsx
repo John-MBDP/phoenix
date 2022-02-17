@@ -1,5 +1,5 @@
 import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
@@ -42,8 +42,30 @@ const TopNavBar = ({ header }) => {
     setOpen(false);
   };
 
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef);
+
+  function useOutsideAlerter(ref) {
+    useEffect(() => {
+      /**
+       * close nav bar if click outside detected
+       */
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setOpen(false);
+        }
+      }
+      // Bind the event listener
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  }
+
   return (
-    <div style={{ position: "fixed", zIndex: "10" }}>
+    <div style={{ position: "fixed", zIndex: "10" }} ref={wrapperRef}>
       <AppBar
         sx={{
           backgroundColor: "#1D1F37",
@@ -95,7 +117,7 @@ const TopNavBar = ({ header }) => {
       >
         <DrawerHeader>
           <IconButton component="a" href="/profile">
-            <Avatar sx={{ marginTop: 2, marginRight: 1 }}/>
+            <Avatar sx={{ marginTop: 2, marginRight: 1 }} />
           </IconButton>
         </DrawerHeader>
         <List>
