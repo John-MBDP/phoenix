@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
   const { id, location } = req.query;
-  if (req.method !== "POST") {
+  if (req.method !== "GET") {
     res.status(400).json({ error: "We do not currently support this Method" });
   } else {
     const lawyersFromLocation = await prisma.lawyers.findMany({
