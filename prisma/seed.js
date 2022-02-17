@@ -56,6 +56,29 @@ async function main() {
       }
     ]
   });
+  const createFieldsOfLaw = await prisma.fields_of_law.createMany({
+    data: [
+      { field: "Injury" },
+      { field: "Immigration" },
+      { field: "Criminal" },
+      { field: "Legal Assistance" },
+      { field: "NFT's" }
+    ]
+  });
+  const createlawyerFieldData = await prisma.lawyer_fields.createMany({
+    data: [
+      {
+        lawyers_id: 1,
+        fields_of_law_id: 2,
+        date_added: "1997-07-16T19:20:30.451Z"
+      },
+      {
+        lawyers_id: 2,
+        fields_of_law_id: 2,
+        date_added: "1997-07-16T19:20:30.451Z"
+      }
+    ]
+  });
 }
 
 main()
