@@ -9,10 +9,27 @@ import Stack from "@mui/material/Stack";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import InputAdornment from "@mui/material/InputAdornment";
 import Button from "../components/Button";
-const SmsVerification = ({ setHeader }) => {
-  useEffect(() => setHeader({ header: "", hidden: true }), []);
+// import { createTheme } from "@mui/material/styles";
+import { inputLabelClasses } from "@mui/material/InputLabel";
+const SmsVerification = ({ setHeader, setNavbar }) => {
+  // useEffect(() => setHeader({ header: "", hidden: true }), []);
+
+  useEffect(() => {
+    setHeader({ header: "", hidden: true });
+    setNavbar({ navbar: "", hidden: false });
+  }, []);
+
+  // const theme = createTheme({
+  //   overrides: {
+  //     MuiInput: {
+  //       root: {
+  //         borderBottom: "1px solid rgba(0, 0, 0, 0.42)",
+  //       },
+  //     },
+  //   },
+  // });
   return (
-    <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"signup-image"} height="350px">
+    <RoundedTopContainer image={"/sms-2.png"} alt={"signup-image"} height="350px">
       <Typography variant="h5" sx={{ fontWeight: "800px", mb: 4 }}>
         SMS Verification
       </Typography>
@@ -22,15 +39,22 @@ const SmsVerification = ({ setHeader }) => {
       </Button> */}
 
       <TextField
-        sx={{ mb: 2 }}
+        sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
         id="standard-basic"
         label="Your Phone Number"
-        value="+0123456789"
+        // value="+0123456789"
+        InputLabelProps={{
+          sx: {
+            color: "black",
+            [`&.${inputLabelClasses.shrink}`]: {
+              color: "black",
+            },
+          },
+        }}
         InputProps={{
           startAdornment: (
             <InputAdornment position="start">
-              {/* <KeyboardArrowDownIcon sx={{ color: "black" }} /> */}
-              <PublicIcon sx={{ color: "black" }}></PublicIcon>
+              <PublicIcon sx={{ color: "black" }} />
               <KeyboardArrowDownIcon sx={{ color: "black" }} />
             </InputAdornment>
           ),
