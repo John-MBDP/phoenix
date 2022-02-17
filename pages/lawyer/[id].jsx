@@ -1,12 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import RoundedTopContainer from "../../components/RoundedTopContainer";
 import UserStatsCard from "../../components/UserStatsCard";
 import { Typography } from "@material-ui/core";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Button from "../../components/Button";
 import AnnouncementIcon from "@mui/icons-material/Announcement";
@@ -14,44 +12,37 @@ import EmailIcon from "@mui/icons-material/Email";
 import Widebutton from "../../components/WideButton";
 import { useRouter } from "next/router";
 import ViewLikesCounter from "../../components/ViewLikesCounter";
-import sessionOptions from "../../lib/session";
-import { withIronSessionSsr } from "iron-session/next";
 
-export const getServerSideProps = withIronSessionSsr(
-  
+export const getServerSideProps = async (context) => {
   const id = Number(context.params.id);
-  async ({ req, res, params }) => {
-    const user = req.session.user;
-    const id = Number(params.id);
-    
-    const lawfirmMembers = await prisma.lawfirm_members.findMany({
+
+  const lawfirmMembers = await prisma.lawfirm_members.findMany({
     where: { lawyer_id: id },
     include: {
       lawyers: true
     }
   });
-    
-    const lawyerFavourite = await prisma.lawyer_favourites.findFirst({
-      where: {
-        lawyer_id: id,
-      },
-    });
-    return {
-      props: {
-        lawyer: {...lawfirmMembers[0].lawyers,
-        date_certified: `${lawfirmMembers[0].lawyers.date_certified.getFullYear()}`},
-        lawfirmId: lawfirmMembers[0].lawfirm_id,
-        user,
-        lawyerFavourite,
-      },
-    };
-  },
-  sessionOptions
-);
+  console.log(lawfirmMembers);
+  const lawfirmMembers = await prisma.lawfirm_members.findMany({
+    where: { lawyer_id: id },
+    include: {
+      lawyers: true
+    }
+  });
 
-const Lawyer = ({ setHeader, lawyer, user, lawyerFavourite }) => {
-const router = useRouter();
+  return {
+    props: {
+      lawyer: {
+        ...lawfirmMembers[0].lawyers,
+        date_certified: `${lawfirmMembers[0].lawyers.date_certified.getFullYear()}`
+      },
+      lawfirmId: lawfirmMembers[0].lawfirm_id
+    }
+  };
+};
 
+const Lawyer = ({ setHeader, lawyer, lawfirmId }) => {
+  const router = useRouter();
   const {
     last_name,
     first_name,
@@ -66,38 +57,8 @@ const router = useRouter();
     likes
   } = lawyer;
   useEffect(() => {
-    setHeader(prev => ({ ...prev, hidden: true }));
+    setHeader((prev) => ({ ...prev, hidden: true }));
   }, []);
-
-  const [favourited, setFavourited] = useState(lawyerFavourite ? true : false);
-  const favourite = { client_id: user.id, lawyer_id: lawyer.id };
-
-  const saveFavourite = async favourite => {
-    const response = await fetch("/api/favourites/lawyers/create", {
-      method: "POST",
-      body: JSON.stringify({ ...favourite, date_created: new Date() }),
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    console.log("saved!");
-    return await response.json();
-  };
-
-  const destroyFavourite = async favourite => {
-    const response = await fetch("/api/favourites/lawyers/delete", {
-      method: "POST",
-      body: JSON.stringify(favourite),
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    console.log("destroyed!");
-    return await response.json();
-  };
-
   return (
     <RoundedTopContainer
       image="/images/articles/forest.jpeg"
@@ -105,32 +66,6 @@ const router = useRouter();
       alt="forest"
       padBottom
     >
-      {favourited && (
-        <FavoriteIcon
-          sx={{ color: "salmon" }}
-          onClick={async () => {
-            try {
-              await destroyFavourite(favourite);
-              setFavourited(false);
-            } catch (err) {
-              console.log(err);
-            }
-          }}
-        />
-      )}
-      {!favourited && (
-        <FavoriteBorderIcon
-          sx={{ color: "salmon" }}
-          onClick={async () => {
-            try {
-              await saveFavourite(favourite);
-              setFavourited(true);
-            } catch (err) {
-              console.log(err);
-            }
-          }}
-        />
-      )}
       <UserStatsCard
         name={`${first_name} ${last_name}`}
         image={profile_pic}
@@ -252,7 +187,7 @@ const router = useRouter();
         strong
         backgroundColor="#1B4463"
         textAlign="left"
-        onClick={e => console.log("potato")}
+        onClick={(e) => console.log("potato")}
       >
         <div>
           <Typography variant="body2">Education:</Typography>
