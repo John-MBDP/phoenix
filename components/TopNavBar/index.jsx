@@ -18,6 +18,7 @@ import Avatar from "@mui/material/Avatar";
 import MessageIcon from "@mui/icons-material/Message";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
+import styles from "./index.module.scss";
 
 const TopNavBar = ({ header, user }) => {
   const theme = useTheme();
@@ -120,7 +121,9 @@ const TopNavBar = ({ header, user }) => {
           >
             <Avatar sx={{ marginTop: 2, marginLeft: 1 }} />
           </IconButton>
-          <Typography
+          <span className={styles.profile}>Profile</span>
+          <span className={styles.logout}>Logout</span>
+          {/* <Typography
             variant="subtitle1"
             component="div"
             sx={{ fontWeight: "bold", marginTop: 2, marginLeft: 1.5 }}
@@ -142,7 +145,7 @@ const TopNavBar = ({ header, user }) => {
             }}
           >
             Logout
-          </Typography>
+          </Typography> */}
         </DrawerHeader>
         <List>
           <ListItem
