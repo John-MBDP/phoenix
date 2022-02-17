@@ -27,8 +27,8 @@ export const getServerSideProps = async () => {
 };
 
 export default function Home({ setHeader, initialArticles }) {
-  const { setActive } = useContext(BottomNavigationContext);
-  const parsedArticleCards = initialArticles.map(article => {
+  // const { setActive } = useContext(BottomNavigationContext);
+  const parsedArticleCards = initialArticles.map((article) => {
     return (
       <ArticleCard
         key={article.id}
@@ -43,7 +43,7 @@ export default function Home({ setHeader, initialArticles }) {
 
   useEffect(() => {
     setHeader({ header: "NEWS FEED", hidden: false });
-    setActive(true);
+    // setActive(true);
   }, []);
 
   // useEffect(() => socketInitializer(), []);

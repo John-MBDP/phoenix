@@ -7,16 +7,18 @@ import InputAdornment from "@mui/material/InputAdornment";
 import MailIcon from "@mui/icons-material/Mail";
 import LockIcon from "@mui/icons-material/Lock";
 import TextField from "@mui/material/TextField";
-import Checkbox from "@mui/material/Checkbox";
+import Checkbox, { checkboxClasses } from "@mui/material/Checkbox";
 import Stack from "@mui/material/Stack";
 import Button from "../components/Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
-
+import Link from "next/link";
+import { inputLabelClasses } from "@mui/material/InputLabel";
 const btnMain = {
-  alignItems: "right"
+  alignItems: "right",
 };
 
-const Signup = ({ setHeader }) => {
+const Signup = ({ setHeader, setNavbar }) => {
+  // const classes = useStyles();
   const router = useRouter();
   const [formInput, setFormInput] = useState({
     firstName: "",
@@ -28,10 +30,13 @@ const Signup = ({ setHeader }) => {
   const [errorMsg, setErrorMsg] = useState("");
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
-  useEffect(() => setHeader({ header: "", hidden: true }), []);
+  useEffect(() => {
+    setHeader({ header: "", hidden: true });
+    setNavbar({ navbar: "", hidden: false });
+  }, []);
 
-  const onEmailChangeHandler = e => {
-    setFormInput(prev => {
+  const onEmailChangeHandler = (e) => {
+    setFormInput((prev) => {
       return {
         ...prev,
         email: e.target.value,
@@ -39,8 +44,8 @@ const Signup = ({ setHeader }) => {
     });
   };
 
-  const onPasswordChangeHandler = e => {
-    setFormInput(prev => {
+  const onPasswordChangeHandler = (e) => {
+    setFormInput((prev) => {
       return {
         ...prev,
         password: e.target.value,
@@ -48,10 +53,10 @@ const Signup = ({ setHeader }) => {
     });
   };
 
-  const onNameChangeHandler = e => {
+  const onNameChangeHandler = (e) => {
     const firstName = e.target.value.split(" ")[0];
     const lastName = e.target.value.split(" ")[1];
-    setFormInput(prev => {
+    setFormInput((prev) => {
       return {
         ...prev,
         firstName,
@@ -60,8 +65,8 @@ const Signup = ({ setHeader }) => {
     });
   };
 
-  const onCheckboxChangeHandler = e => {
-    setFormInput(prev => {
+  const onCheckboxChangeHandler = (e) => {
+    setFormInput((prev) => {
       return {
         ...prev,
         checked: e.target.checked,
@@ -69,7 +74,7 @@ const Signup = ({ setHeader }) => {
     });
   };
 
-  const handleSubmit = async inputValues => {
+  const handleSubmit = async (inputValues) => {
     if (
       !inputValues.firstName ||
       !inputValues.lastName ||
@@ -94,54 +99,78 @@ const Signup = ({ setHeader }) => {
   };
 
   return (
-    <RoundedTopContainer image={"/images/signup.png"} alt={"signup-image"}>
+    <RoundedTopContainer image={"/SignUp-2.png"} alt={"signup-image"} height={"430px"}>
       <Typography variant="h4" component="h1">
         Signup
       </Typography>
       {errorMsg && <p>{errorMsg}</p>}
       <TextField
-        sx={{ mb: 2 }}
+        sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
         id="input-with-icon-textfield"
         label="Full Name"
+        InputLabelProps={{
+          sx: {
+            [`&.${inputLabelClasses.shrink}`]: {
+              color: "#FF0056",
+            },
+          },
+        }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
               <AccountBoxIcon sx={{ color: "black" }} />
             </InputAdornment>
-          )
+          ),
         }}
         fullWidth
         variant="standard"
         onChange={onNameChangeHandler}
       />
       <TextField
-        sx={{ mb: 2 }}
+        sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
         id="input-with-icon-textfield"
         label="Email Address"
+        InputLabelProps={{
+          sx: {
+            [`&.${inputLabelClasses.shrink}`]: {
+              color: "#FF0056",
+            },
+          },
+        }}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end">
-              <MailIcon sx={{ color: "black" }} />
-            </InputAdornment>
-          )
+            <MailIcon position="end">
+              <AccountBoxIcon sx={{ color: "black" }} />
+            </MailIcon>
+          ),
         }}
         fullWidth
         variant="standard"
         onChange={onEmailChangeHandler}
       />
       <TextField
-        sx={{ mb: 2 }}
+        sx={{
+          mb: 2,
+          "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" },
+        }}
         id="input-with-icon-textfield"
         label="Password"
+        InputLabelProps={{
+          sx: {
+            [`&.${inputLabelClasses.shrink}`]: {
+              color: "#FF0056",
+            },
+          },
+        }}
         InputProps={{
           endAdornment: (
-            <InputAdornment position="end">
-              <LockIcon sx={{ color: "black" }} />
-            </InputAdornment>
-          )
+            <LockIcon position="end">
+              <AccountBoxIcon sx={{ color: "black" }} />
+            </LockIcon>
+          ),
         }}
-        variant="standard"
         fullWidth
+        variant="standard"
         onChange={onPasswordChangeHandler}
       />
       <Stack
@@ -149,7 +178,15 @@ const Signup = ({ setHeader }) => {
         spacing={2}
         sx={{ mb: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}
       >
-        <Checkbox {...label} onChange={onCheckboxChangeHandler} />
+        <Checkbox
+          {...label}
+          onChange={onCheckboxChangeHandler}
+          sx={{
+            [`&, &.${checkboxClasses.checked}`]: {
+              color: "#ff0056",
+            },
+          }}
+        />
         <Typography
           fontWeight
           sx={{ display: "flex", justifyContent: "flex-end", color: "#ff0056" }}
@@ -160,7 +197,7 @@ const Signup = ({ setHeader }) => {
       </Stack>
       <Stack sx={{ mb: 2, spacing: 2 }}>
         <form
-          onSubmit={e => {
+          onSubmit={(e) => {
             e.preventDefault();
             handleSubmit(formInput);
           }}
@@ -169,19 +206,20 @@ const Signup = ({ setHeader }) => {
             SIGN UP <ArrowRightAltIcon />
           </Button>
         </form>
-        <Typography
-          sx={{
-            display: "flex",
-            justifyContent: "flex-end",
-            color: "#ff0056",
-            mb: 4,
-            fontWeight: "500"
-          }}
-          variant="h7"
-        >
-          LOG IN
-        </Typography>
-
+        <Link href="/login">
+          <Typography
+            sx={{
+              display: "flex",
+              justifyContent: "flex-end",
+              color: "#ff0056",
+              mb: 4,
+              fontWeight: "500",
+            }}
+            variant="h7"
+          >
+            LOG IN
+          </Typography>
+        </Link>
         {/* 
         <Button variant="contained" endIcon={<ArrowRightAltIcon />}>
           LOG IN

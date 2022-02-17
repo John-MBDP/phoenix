@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LoginCard from "../components/LoginCard";
 import useUser from "../hooks/useUser";
 import { useRouter } from "next/router";
 
-const Login = ({ setHeader }) => {
+const Login = ({ setHeader, setNavbar }) => {
+  useEffect(() => {
+    setNavbar({ navbar: "", hidden: false });
+  }, []);
   const router = useRouter();
 
   const { mutateUser } = useUser({
@@ -13,7 +16,7 @@ const Login = ({ setHeader }) => {
 
   const [errorMsg, setErrorMsg] = useState("");
 
-  const handleSubmit = async inputValues => {
+  const handleSubmit = async (inputValues) => {
     if (!inputValues.email || !inputValues.password) {
       setErrorMsg("Please provide your email and password");
       return;
@@ -32,13 +35,7 @@ const Login = ({ setHeader }) => {
     }
   };
 
-  return (
-    <LoginCard
-      setHeader={setHeader}
-      errorMessage={errorMsg}
-      handleSubmit={handleSubmit}
-    />
-  );
+  return <LoginCard setHeader={setHeader} errorMessage={errorMsg} handleSubmit={handleSubmit} />;
 };
 
 export default Login;
