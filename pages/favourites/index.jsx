@@ -6,6 +6,7 @@ import { PrismaClient } from "@prisma/client";
 import styles from "../../styles/Home.module.css";
 import { BottomNavigationContext } from "../../Contexts/BottomNavigationContext";
 import ArticleCard from "../../components/ArticleCard";
+import SearchCard from "../../components/SearchCard";
 import Timeago from "react-timeago";
 
 const prisma = new PrismaClient();
@@ -103,6 +104,20 @@ const Favourites = ({
     );
   });
 
+  const parsedLawyerFavourites = lawyerFavourites.map(favourite => {
+    return (
+      <SearchCard
+        key={favourite.id}
+        fullName={`${favourite.lawyers.first_name} ${favourite.lawyers.last_name}`}
+        location={favourite.lawyers.location}
+        certified={favourite.lawyers.date_certified.getFullYear()}
+        phone={favourite.lawyers.phone_number}
+        image={favourite.lawyers.profile_pic}
+        id={favourite.lawyers.id}
+      />
+    );
+  });
+
   return (
     <div className={styles.container}>
       <Tabs
@@ -121,6 +136,7 @@ const Favourites = ({
         />
       </Tabs>
       {favourites === ARTICLES && parsedArticleFavourites}
+      {favourites === LAWYERS && parsedLawyerFavourites}
     </div>
   );
 };

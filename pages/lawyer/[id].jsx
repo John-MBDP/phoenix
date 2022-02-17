@@ -1,31 +1,46 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import RoundedTopContainer from "../../components/RoundedTopContainer";
 import UserStatsCard from "../../components/UserStatsCard";
 import { Box as div, Typography } from "@material-ui/core";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Button from "../../components/Button";
 import AnnouncementIcon from "@mui/icons-material/Announcement";
 import EmailIcon from "@mui/icons-material/Email";
 import Widebutton from "../../components/WideButton";
-export const getServerSideProps = async (context) => {
-  const id = Number(context.params.id);
-  const lawyer = await prisma.lawyers.findUnique({
-    where: {
-      id: id
-    }
-  });
+import sessionOptions from "../../lib/session";
+import { withIronSessionSsr } from "iron-session/next";
 
-  return {
-    props: {
-      lawyer
-    }
-  };
-};
+export const getServerSideProps = withIronSessionSsr(
+  async ({ req, res, params }) => {
+    const user = req.session.user;
+    const id = Number(params.id);
+    const lawyer = await prisma.lawyers.findUnique({
+      where: {
+        id: id,
+      },
+    });
+    const lawyerFavourite = await prisma.lawyer_favourites.findFirst({
+      where: {
+        lawyer_id: id,
+      },
+    });
+    return {
+      props: {
+        lawyer,
+        user,
+        lawyerFavourite,
+      },
+    };
+  },
+  sessionOptions
+);
 
-const Lawyer = ({ setHeader, lawyer }) => {
+const Lawyer = ({ setHeader, lawyer, user, lawyerFavourite }) => {
   const {
     last_name,
     first_name,
@@ -35,11 +50,41 @@ const Lawyer = ({ setHeader, lawyer }) => {
     location,
     email,
     profile_pic,
-    education
+    education,
   } = lawyer;
   useEffect(() => {
-    setHeader((prev) => ({ ...prev, hidden: true }));
+    setHeader(prev => ({ ...prev, hidden: true }));
   }, []);
+
+  const [favourited, setFavourited] = useState(lawyerFavourite ? true : false);
+  const favourite = { client_id: user.id, lawyer_id: lawyer.id };
+
+  const saveFavourite = async favourite => {
+    const response = await fetch("/api/favourites/lawyers/create", {
+      method: "POST",
+      body: JSON.stringify({ ...favourite, date_created: new Date() }),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    console.log("saved!");
+    return await response.json();
+  };
+
+  const destroyFavourite = async favourite => {
+    const response = await fetch("/api/favourites/lawyers/delete", {
+      method: "POST",
+      body: JSON.stringify(favourite),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    console.log("destroyed!");
+    return await response.json();
+  };
+
   return (
     <RoundedTopContainer
       image="/images/articles/forest.jpeg"
@@ -47,10 +92,37 @@ const Lawyer = ({ setHeader, lawyer }) => {
       alt="forest"
       padBottom
     >
+      {favourited && (
+        <FavoriteIcon
+          sx={{ color: "salmon" }}
+          onClick={async () => {
+            try {
+              await destroyFavourite(favourite);
+              setFavourited(false);
+            } catch (err) {
+              console.log(err);
+            }
+          }}
+        />
+      )}
+      {!favourited && (
+        <FavoriteBorderIcon
+          sx={{ color: "salmon" }}
+          onClick={async () => {
+            try {
+              await saveFavourite(favourite);
+              setFavourited(true);
+            } catch (err) {
+              console.log(err);
+            }
+          }}
+        />
+      )}
       <UserStatsCard
         name={`${first_name} ${last_name}`}
         image={profile_pic}
       ></UserStatsCard>
+
       <div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Button
@@ -166,7 +238,7 @@ const Lawyer = ({ setHeader, lawyer }) => {
         strong
         backgroundColor="#1B4463"
         textAlign="left"
-        onClick={(e) => console.log("potato")}
+        onClick={e => console.log("potato")}
       >
         <div>
           <Typography variant="body2">Education:</Typography>
