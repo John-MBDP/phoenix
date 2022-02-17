@@ -11,6 +11,8 @@ import AnnouncementIcon from "@mui/icons-material/Announcement";
 import EmailIcon from "@mui/icons-material/Email";
 import Widebutton from "../../components/WideButton";
 import { useRouter } from "next/router";
+import ViewLikesCounter from "../../components/ViewLikesCounter";
+
 export const getServerSideProps = async (context) => {
   const id = Number(context.params.id);
 
@@ -20,11 +22,15 @@ export const getServerSideProps = async (context) => {
       lawyers: true
     }
   });
-  console.log(lawfirmMembers[0].id);
+  console.log(lawfirmMembers);
+
   return {
     props: {
-      lawyer: lawfirmMembers[0].lawyers,
-      lawfirmId: lawfirmMembers[0].id
+      lawyer: {
+        ...lawfirmMembers[0].lawyers,
+        date_certified: `${lawfirmMembers[0].lawyers.date_certified.getFullYear()}`
+      },
+      lawfirmId: lawfirmMembers[0].lawfirm_id
     }
   };
 };
@@ -39,7 +45,10 @@ const Lawyer = ({ setHeader, lawyer, lawfirmId }) => {
     location,
     email,
     profile_pic,
-    education
+    education,
+    date_certified,
+    views,
+    likes
   } = lawyer;
   useEffect(() => {
     setHeader((prev) => ({ ...prev, hidden: true }));
@@ -55,6 +64,7 @@ const Lawyer = ({ setHeader, lawyer, lawfirmId }) => {
         name={`${first_name} ${last_name}`}
         image={profile_pic}
       ></UserStatsCard>
+      <ViewLikesCounter views={views} likes={likes} />
       <div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Button
@@ -91,7 +101,7 @@ const Lawyer = ({ setHeader, lawyer, lawfirmId }) => {
           {email}
         </Typography>
         <Typography variant="body2">
-          <strong>Recognized Since:</strong>
+          <strong>Recognized Since: {date_certified}</strong>
         </Typography>
       </div>
       <Widebutton
@@ -137,7 +147,7 @@ const Lawyer = ({ setHeader, lawyer, lawfirmId }) => {
         padding="1rem 0"
         strong
         backgroundColor="#1B4463"
-        onClick={() => router.push(`/lawfirms/${lawfirmId}`)}
+        onClick={() => router.push(`/lawfirm/${lawfirmId}`)}
       >
         <div>
           <Typography variant="button">Firm Affiliation</Typography>
