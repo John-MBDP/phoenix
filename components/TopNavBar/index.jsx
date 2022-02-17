@@ -119,7 +119,10 @@ const TopNavBar = ({ header, user }) => {
             href="/profile"
             onClick={() => setOpen(false)}
           >
-            <Avatar sx={{ marginTop: 2, marginLeft: 1 }} />
+            <Avatar
+              sx={{ marginTop: 2, marginLeft: 1 }}
+              src={"/images/huTao.png"}
+            />
           </IconButton>
           <span className={styles.profile}>Profile</span>
           <span className={styles.logout}>Logout</span>
