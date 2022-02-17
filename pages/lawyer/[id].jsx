@@ -23,12 +23,6 @@ export const getServerSideProps = async (context) => {
     }
   });
   console.log(lawfirmMembers);
-  const lawfirmMembers = await prisma.lawfirm_members.findMany({
-    where: { lawyer_id: id },
-    include: {
-      lawyers: true
-    }
-  });
 
   return {
     props: {
