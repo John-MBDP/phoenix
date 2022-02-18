@@ -15,21 +15,6 @@ let socket;
 
 export const getServerSideProps = withIronSessionSsr(async ({ req, res, params }) => {
   const user = req.session.user;
-  const messages = await prisma.messages.findMany({
-    where: {
-      lawyer_id: {
-        equals: Number(params.id)
-      },
-      client_id: {
-        equals: user.id
-      }
-    },
-    orderBy: [
-      {
-        date_sent: "asc"
-      }
-    ]
-  });
   return {
     props: {
       initialMessages: messages
@@ -41,6 +26,10 @@ const Messages = ({ initialMessages, setHeader, setNavbar }) => {
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
   const [typingIndicator, setTypingIndicator] = useState(false);
+
+  const grabMessages = async () => {
+    
+  }
 
   useEffect(() => {
     setHeader(() => ({ header: "Messages", hidden: false }));
@@ -55,6 +44,7 @@ const Messages = ({ initialMessages, setHeader, setNavbar }) => {
 
   useEffect(() => {
     scrollToBottom();
+    grabMessages();
   }, [messages, typingIndicator]);
 
   const socketInitializer = async () => {
@@ -71,7 +61,7 @@ const Messages = ({ initialMessages, setHeader, setNavbar }) => {
   };
 
   const saveMessage = async (message) => {
-    const response = await fetch("/api/messages", {
+    const response = await fetch("/api/messages/create", {
       method: "POST",
       body: JSON.stringify(message)
     });

@@ -82,7 +82,7 @@ const Messages = ({
   };
 
   const saveMessage = async message => {
-    const response = await fetch("/api/messages", {
+    const response = await fetch("/api/messages/create", {
       method: "POST",
       body: JSON.stringify(message),
     });
@@ -139,12 +139,11 @@ const Messages = ({
           e.preventDefault();
           const message = {
             body: input,
-            clientId,
-            lawyerId,
+            client_id: clientId,
+            lawyer_id: lawyerId,
             date_sent: new Date(),
             from_client: false,
           };
-          console.log(message);
           try {
             const newMessage = await saveMessage(message);
             setMessages([...messages, newMessage]);
