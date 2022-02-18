@@ -68,7 +68,6 @@ const Messages = ({
   useEffect(() => {
     setHeader(() => ({ header: headerName, hidden: false }));
     setNavbar({ navbar: "", hidden: false });
-    clearNotifications();
     socketInitializer();
     const closeSocket = () => {
       socket.emit("input-change", false);
@@ -76,6 +75,21 @@ const Messages = ({
       console.log("Socket closed");
     };
     return closeSocket;
+  }, []);
+
+  useEffect(async () => {
+    try {
+      const seenMessages = await updateSeenMessageStatus({
+        clientId,
+        lawyerId,
+      });
+      setMessages(prev =>
+        prev.map(message => ({ ...message, seen_client: true }))
+      );
+      clearNotifications();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   // to stop typing indicator on page refresh
@@ -122,7 +136,7 @@ const Messages = ({
       throw new Error(response.statusText);
     }
     return await response.json();
-  }
+  };
 
   const saveMessage = async message => {
     const response = await fetch("/api/messages/create", {
