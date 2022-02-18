@@ -66,7 +66,7 @@ const MessagesIndex = ({
 }) => {
   const [messageCards, setMessageCards] = useState(lawyerMessages);
   const [value, setValue] = useState(0);
-  const { addNotification } = useContext(notificationsContext);
+  const { addNotification, clearNotifications } = useContext(notificationsContext);
 
   const socketInitializer = async () => {
     await fetch("/api/socket");
@@ -82,7 +82,6 @@ const MessagesIndex = ({
 
     socket.on("update-client-messages", newMessage => {
       addNotification();
-      setMessageCards([...messageCards, newMessage]);
     });
   };
 
@@ -99,7 +98,10 @@ const MessagesIndex = ({
       socket.disconnect();
       console.log("Socket closed");
     };
-    return closeSocket;
+    return () => {
+      closeSocket();
+      clearNotifications();
+    };
   }, []);
 
   const handleChange = (e, value) => {
