@@ -16,7 +16,26 @@
   justify-content: center;
 }
 
+.back {
+  /* background-color: "#0088FF";
+  padding: 0.3rem 1rem; */
+  color: white;
+  background-color: #1d1f37;
+  border: none;
+  margin-bottom: 0.5rem;
+  padding: 0.3rem 1rem;
+  border-radius: 0.3rem;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .container {
   display: flex;
   justify-content: flex-end;
+}
+
+.hidden {
+  display: none;
 }
