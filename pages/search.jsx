@@ -96,7 +96,7 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
           phone={card.phone_number}
           image={card.profile_pic}
           id={card.id}
-          type={searchTypes[selectedType]}
+          type={searchTypes[selectedType].slice(0, -1)}
         />
       );
     } else if (card) {
