@@ -4,12 +4,13 @@ import Message from "../../../components/Message";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import timeifyDate from "../../../helpers/timeifyDate";
 import styles from "./index.module.scss";
 import io from "socket.io-client";
 import sessionOptions from "../../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
+import { notificationsContext } from "../../../provider/NotificationsProvider";
 const prisma = new PrismaClient();
 let socket;
 
@@ -56,15 +57,17 @@ const Messages = ({
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
   const [typingIndicator, setTypingIndicator] = useState(false);
+  const { clearNotifications } = useContext(notificationsContext);
   const lawyerProfilePic = messages ? messages[0].lawyers.profile_pic : null;
   const headerName = messages
     ? `${messages[0].lawyers.first_name} ${messages[0].lawyers.last_name}`
     : "Messages";
 
   useEffect(() => {
-    setMessages(messages.map(message => (message.seen_client = true)));
     setHeader(() => ({ header: headerName, hidden: false }));
     setNavbar({ navbar: "", hidden: false });
+    setMessages(messages.map(message => (message.seen_client = true)));
+    clearNotifications();
     socketInitializer();
     const closeSocket = () => {
       socket.emit("input-change", false);
