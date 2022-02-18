@@ -15,14 +15,15 @@ let socket;
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {
-    const user = req.session.user;
+    const lawyerId = req.session.user.lawyer_id;
+    const clientId = Number(params.id);
     const messages = await prisma.messages.findMany({
       where: {
         client_id: {
-          equals: Number(params.id),
+          equals: clientId,
         },
         lawyer_id: {
-          equals: user.lawyer_id,
+          equals: lawyerId,
         },
       },
       orderBy: [
@@ -33,9 +34,9 @@ export const getServerSideProps = withIronSessionSsr(
     });
     return {
       props: {
+        lawyerId,
+        clientId,
         initialMessages: messages,
-        clientId: Number(params.id),
-        lawyerId: user.lawyer_id,
       },
     };
   },
@@ -44,8 +45,8 @@ export const getServerSideProps = withIronSessionSsr(
 
 const Messages = ({
   initialMessages,
-  clientId,
   lawyerId,
+  clientId,
   setHeader,
   setNavbar,
 }) => {
@@ -76,8 +77,12 @@ const Messages = ({
       console.log("connected");
     });
 
-    socket.on("update-input", bool => {
+    socket.on("update-typing-status", bool => {
       setTypingIndicator(bool);
+    });
+
+    socket.on("update-messages", newMessage => {
+      setMessages([...messages, newMessage]);
     });
   };
 
@@ -147,7 +152,9 @@ const Messages = ({
           try {
             const newMessage = await saveMessage(message);
             setMessages([...messages, newMessage]);
-            e.target.reset();
+            socket.emit("send-message", newMessage);
+            socket.emit("input-change", false);
+            setInput("");
           } catch (err) {
             console.log(err);
           }
