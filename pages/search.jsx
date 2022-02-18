@@ -3,6 +3,7 @@ import { Tabs, Tab, Box, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import SearchCard from "../components/SearchCard";
 import { PrismaClient } from "@prisma/client";
+import getGeoLocation from "../helpers/getGeoLocation";
 const prisma = new PrismaClient();
 
 export const getServerSideProps = async () => {
@@ -49,34 +50,12 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
     setCity(e.target.value);
   };
 
-  const getGeoLocation = async () => {
-    const success = async (data) => {
-      const { latitude, longitude } = data.coords;
-
-      const cityData = await fetch(
-        `/api/location?latitude=${latitude}&longitude=${longitude}`,
-        {
-          method: "POST"
-        }
-      );
-      const parsedCitydata = await cityData.json();
-
-      setCity(parsedCitydata.location);
-    };
-    const error = (err) => {
-      console.log(err.code);
-    };
-
-    navigator.geolocation.getCurrentPosition(success, error);
-  };
-
   const getLawyers = async (location, field) => {
     const response = await fetch(
       `/api/lawyers?location=${location ? location : "null"}&field=${
         field === "All" ? "null" : field
       }`
     );
-
     const parsedResponse = await response.json();
     setCurrentLaywers(parsedResponse);
   };
@@ -105,7 +84,9 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
     <Box sx={{ px: "2rem", mt: "5rem" }}>
       <br />
       <div>
-        <button onClick={() => getGeoLocation()}>Get Location</button>
+        <button onClick={() => getGeoLocation((location) => setCity(location))}>
+          Get Location
+        </button>
         <form onSubmit={(e) => handleSubmit(e, city, fields[selectedField])}>
           <TextField
             fullWidth
