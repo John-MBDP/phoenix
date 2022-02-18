@@ -58,15 +58,16 @@ const Messages = ({
   const [input, setInput] = useState("");
   const [typingIndicator, setTypingIndicator] = useState(false);
   const { clearNotifications } = useContext(notificationsContext);
-  const lawyerProfilePic = messages ? messages[0].lawyers.profile_pic : null;
-  const headerName = messages
-    ? `${messages[0].lawyers.first_name} ${messages[0].lawyers.last_name}`
+  const lawyerProfilePic = initialMessages
+    ? initialMessages[0].lawyers.profile_pic
+    : null;
+  const headerName = initialMessages
+    ? `${initialMessages[0].lawyers.first_name} ${initialMessages[0].lawyers.last_name}`
     : "Messages";
 
   useEffect(() => {
     setHeader(() => ({ header: headerName, hidden: false }));
     setNavbar({ navbar: "", hidden: false });
-    setMessages(messages.map(message => (message.seen_client = true)));
     clearNotifications();
     socketInitializer();
     const closeSocket = () => {
@@ -107,9 +108,13 @@ const Messages = ({
     });
 
     socket.on("update-messages", newMessage => {
-      setMessages([...messages, {...newMessage, seen_client: true}]);
+      setMessages([...messages, { ...newMessage, seen_client: true }]);
     });
   };
+
+  const updateSeenMessageStatus = async message => {
+
+  }
 
   const saveMessage = async message => {
     const response = await fetch("/api/messages/create", {
@@ -174,6 +179,7 @@ const Messages = ({
             lawyer_id: lawyerId,
             date_sent: new Date(),
             from_client: true,
+            seen_client: true,
           };
           try {
             const newMessage = await saveMessage(message);
