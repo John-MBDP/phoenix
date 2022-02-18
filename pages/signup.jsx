@@ -163,6 +163,7 @@ const Signup = ({ setHeader, setNavbar }) => {
         }}
         id="input-with-icon-textfield"
         label="Password"
+        type="password"
         InputLabelProps={{
           sx: {
             [`&.${inputLabelClasses.shrink}`]: {
@@ -193,7 +194,7 @@ const Signup = ({ setHeader, setNavbar }) => {
       >
         <Checkbox
           {...label}
-          onChange={e => setChecked(e.target.checked)}
+          onChange={(e) => setChecked(e.target.checked)}
           sx={{
             [`&, &.${checkboxClasses.checked}`]: {
               color: "#ff0056",
