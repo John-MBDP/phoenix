@@ -26,6 +26,9 @@ export const getServerSideProps = withIronSessionSsr(
           equals: lawyerId,
         },
       },
+      include: {
+        lawyers: true,
+      },
       orderBy: [
         {
           date_sent: "asc",
@@ -53,6 +56,7 @@ const Messages = ({
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
   const [typingIndicator, setTypingIndicator] = useState(false);
+  const lawyerProfilePic = messages ? messages[0].lawyers.profile_pic : null;
 
   useEffect(() => {
     setHeader(() => ({ header: "Messages", hidden: false }));
@@ -118,6 +122,7 @@ const Messages = ({
         key={item.id}
         fromClient={item.from_client}
         date={timeifyDate(item.date_sent)}
+        profilePic={lawyerProfilePic}
       >
         {item.body}
       </Message>
@@ -128,7 +133,7 @@ const Messages = ({
       <div className={styles.messages_container}>
         {messageArray}
         {typingIndicator && (
-          <Message>
+          <Message profilePic={lawyerProfilePic}>
             <div className={styles.typing_indicator}>
               <span></span>
               <span></span>

@@ -9,13 +9,14 @@ const MessageCard = ({
   lastName,
   recentMessage,
   dateSent,
+  profilePic,
 }) => {
   return (
     <Link href={`/messages/${route}/${id}`} passHref>
       <Card className={styles.message_card}>
         <Avatar
-          alt="lawyer icon"
-          src="/images/justice-gd35301419_1920.jpg"
+          alt="profile photo"
+          src={profilePic || "/images/huTao.png"}
           sx={{ width: 55, height: 55, mx: 1 }}
           className={styles.avatar}
         />

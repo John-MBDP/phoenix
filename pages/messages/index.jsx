@@ -14,7 +14,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const lawyerMessages = await prisma.messages.findMany({
     where: {
       client_id: {
-        equals: 4,
+        equals: user.id,
       },
       law_firm_id: {
         equals: null,
@@ -91,6 +91,7 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader, setNavbar }
                 lastName={message.lawyers.last_name}
                 recentMessage={message.body}
                 dateSent={timeifyDate(message.date_sent)}
+                profilePic={message.lawyers.profile_pic}
               />
             );
           } else if (message.lawfirms) {
@@ -103,6 +104,7 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader, setNavbar }
                 lastName=""
                 recentMessage={message.body}
                 dateSent={timeifyDate(message.date_sent)}
+                profilePic={message.lawfirms.profile_pic}
               />
             );
           }

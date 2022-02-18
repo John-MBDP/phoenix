@@ -26,6 +26,9 @@ export const getServerSideProps = withIronSessionSsr(
           equals: lawyerId,
         },
       },
+      include: {
+        clients: true,
+      },
       orderBy: [
         {
           date_sent: "asc",
