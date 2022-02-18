@@ -9,10 +9,10 @@ export default withIronSessionApiRoute(async (req, res) => {
   const { email, password } = await req.body;
 
   try {
-    
+
     // admin login
     if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
-      req.session.user = { admin: true };
+      req.session.user = { admin: true, id: 11 };
       await req.session.save();
       return res.json(user);
     }
