@@ -58,11 +58,6 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
   };
 
   const getData = async (location, field, type) => {
-    console.log(
-      `/api/${type}?location=${location ? location : "null"}&field=${
-        field === "All" ? "null" : field
-      }`
-    );
     const response = await fetch(
       `/api/${type}?location=${location ? location : "null"}&field=${
         field === "All" ? "null" : field
@@ -78,7 +73,6 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
   });
 
   const cardArray = currentData.map((card) => {
-    console.log(card);
     if (card) {
       return (
         <SearchCard
