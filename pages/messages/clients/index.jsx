@@ -69,7 +69,7 @@ const MessagesIndex = ({
           return (
             <MessageCard
               key={message.id}
-              route="lawyers"
+              route="clients"
               id={message.client_id}
               firstName={message.clients.first_name}
               lastName={message.clients.last_name}
