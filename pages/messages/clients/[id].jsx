@@ -4,12 +4,13 @@ import Message from "../../../components/Message";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import timeifyDate from "../../../helpers/timeifyDate";
 import styles from "../lawyers/index.module.scss";
 import io from "socket.io-client";
 import sessionOptions from "../../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
+import { notificationsContext } from "../../../provider/NotificationsProvider";
 const prisma = new PrismaClient();
 let socket;
 
@@ -56,7 +57,9 @@ const Messages = ({
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
   const [typingIndicator, setTypingIndicator] = useState(false);
-  const headerName = messages
+  const [clientPresence, setClientPresence] = useState(false);
+  const { clearNotifications } = useContext(notificationsContext);
+  const headerName = messages.length > 0
     ? `${messages[0].clients.first_name} ${messages[0].clients.last_name}`
     : "Messages";
 
@@ -64,7 +67,6 @@ const Messages = ({
     setHeader(() => ({ header: headerName, hidden: false }));
     setNavbar({ navbar: "", hidden: false });
     socketInitializer();
-    console.log(headerName);
     const closeSocket = () => {
       socket.emit("input-change", false);
       socket.disconnect();
@@ -104,6 +106,11 @@ const Messages = ({
 
     socket.on("update-lawyer-messages", newMessage => {
       setMessages([...messages, newMessage]);
+    });
+
+    socket.on("update-client-presence", bool => {
+      setClientPresence(bool);
+      bool && clearNotifications();
     });
   };
 
@@ -169,8 +176,9 @@ const Messages = ({
             lawyer_id: lawyerId,
             date_sent: new Date(),
             from_client: false,
-            seen_client: false,
+            seen_client: clientPresence,
           };
+          console.log(message);
           try {
             const newMessage = await saveMessage(message);
             setMessages([...messages, newMessage]);

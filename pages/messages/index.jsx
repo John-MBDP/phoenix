@@ -80,8 +80,9 @@ const MessagesIndex = ({
       // do something with message card
     });
 
-    socket.on("update-messages", newMessage => {
+    socket.on("update-client-messages", newMessage => {
       addNotification();
+      setMessageCards([...messageCards, newMessage]);
     });
   };
 
@@ -94,6 +95,11 @@ const MessagesIndex = ({
         addNotification();
       }
     });
+    const closeSocket = () => {
+      socket.disconnect();
+      console.log("Socket closed");
+    };
+    return closeSocket;
   }, []);
 
   const handleChange = (e, value) => {

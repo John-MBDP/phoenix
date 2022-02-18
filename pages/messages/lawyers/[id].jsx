@@ -58,12 +58,12 @@ const Messages = ({
   const [input, setInput] = useState("");
   const [typingIndicator, setTypingIndicator] = useState(false);
   const { clearNotifications } = useContext(notificationsContext);
-  const lawyerProfilePic = initialMessages
-    ? initialMessages[0].lawyers.profile_pic
-    : null;
-  const headerName = initialMessages
-    ? `${initialMessages[0].lawyers.first_name} ${initialMessages[0].lawyers.last_name}`
-    : "Messages";
+  const lawyerProfilePic =
+    initialMessages.length > 0 ? initialMessages[0].lawyers.profile_pic : null;
+  const headerName =
+    initialMessages.length > 0
+      ? `${initialMessages[0].lawyers.first_name} ${initialMessages[0].lawyers.last_name}`
+      : "Messages";
 
   useEffect(() => {
     setHeader(() => ({ header: headerName, hidden: false }));
@@ -71,6 +71,7 @@ const Messages = ({
     socketInitializer();
     const closeSocket = () => {
       socket.emit("input-change", false);
+      socket.emit("client-present", false);
       socket.disconnect();
       console.log("Socket closed");
     };
@@ -83,9 +84,14 @@ const Messages = ({
         clientId,
         lawyerId,
       });
-      setMessages(prev =>
-        prev.map(message => ({ ...message, seen_client: true }))
-      );
+      setMessages(prev => {
+        const updatedMessages = prev.map(message => ({
+          ...message,
+          seen_client: true,
+        }));
+        return updatedMessages;
+      });
+      socket.emit("client-present", true);
       clearNotifications();
     } catch (err) {
       console.log(err);

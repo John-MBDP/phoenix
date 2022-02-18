@@ -18,6 +18,9 @@ const SocketHandler = (req, res) => {
       socket.on('send-message-from-client', newMessage => {
         socket.broadcast.emit("update-lawyer-messages", newMessage);
       });
+      socket.on('client-present', bool => {
+        socket.broadcast.emit("update-client-presence", bool);
+      });
     });
   }
   res.end();
