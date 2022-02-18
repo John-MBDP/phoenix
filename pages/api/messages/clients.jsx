@@ -8,10 +8,10 @@ export default async function handler(req, res) {
     const messages = await prisma.messages.findMany({
       where: {
         client_id: {
-          equals: data.client_id,
+          equals: data.clientId,
         },
         lawyer_id: {
-          equals: data.lawyer_id,
+          equals: data.lawyerId,
         },
       },
       orderBy: [

@@ -13,23 +13,58 @@ import { withIronSessionSsr } from "iron-session/next";
 const prisma = new PrismaClient();
 let socket;
 
-export const getServerSideProps = withIronSessionSsr(async ({ req, res, params }) => {
-  const user = req.session.user;
-  return {
-    props: {
-      initialMessages: messages
-    }
-  };
-}, sessionOptions);
+export const getServerSideProps = withIronSessionSsr(
+  async ({ req, res, params }) => {
+    const lawyerId = req.session.user.lawyer_id;
+    const clientId = Number(params.id);
+    const messages = await prisma.messages.findMany({
+      where: {
+        client_id: {
+          equals: clientId,
+        },
+        lawyer_id: {
+          equals: lawyerId,
+        },
+      },
+      orderBy: [
+        {
+          date_sent: "asc",
+        },
+      ],
+    });
+    return {
+      props: {
+        lawyerId,
+        clientId,
+        initialMessages: messages,
+      },
+    };
+  },
+  sessionOptions
+);
 
-const Messages = ({ initialMessages, setHeader, setNavbar }) => {
+const Messages = ({
+  initialMessages,
+  lawyerId,
+  clientId,
+  setHeader,
+  setNavbar,
+}) => {
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
   const [typingIndicator, setTypingIndicator] = useState(false);
 
   const grabMessages = async () => {
-    
-  }
+    const response = await fetch("/api/messages/clients", {
+      method: "POST",
+      body: JSON.stringify({ lawyerId, clientId }),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return await response.json();
+  };
 
   useEffect(() => {
     setHeader(() => ({ header: "Messages", hidden: false }));
@@ -44,7 +79,6 @@ const Messages = ({ initialMessages, setHeader, setNavbar }) => {
 
   useEffect(() => {
     scrollToBottom();
-    grabMessages();
   }, [messages, typingIndicator]);
 
   const socketInitializer = async () => {
@@ -55,15 +89,15 @@ const Messages = ({ initialMessages, setHeader, setNavbar }) => {
       console.log("connected");
     });
 
-    socket.on("update-input", (bool) => {
+    socket.on("update-input", bool => {
       setTypingIndicator(bool);
     });
   };
 
-  const saveMessage = async (message) => {
+  const saveMessage = async message => {
     const response = await fetch("/api/messages/create", {
       method: "POST",
-      body: JSON.stringify(message)
+      body: JSON.stringify(message),
     });
 
     if (!response.ok) {
@@ -72,7 +106,7 @@ const Messages = ({ initialMessages, setHeader, setNavbar }) => {
     return await response.json();
   };
 
-  const onChangeHandler = (e) => {
+  const onChangeHandler = e => {
     console.log(socket.disconnected);
     setInput(e.target.value);
     e.target.value
@@ -86,7 +120,7 @@ const Messages = ({ initialMessages, setHeader, setNavbar }) => {
     messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
   };
 
-  const messageArray = messages.map((item) => {
+  const messageArray = messages.map(item => {
     return (
       <Message
         key={item.id}
@@ -114,14 +148,14 @@ const Messages = ({ initialMessages, setHeader, setNavbar }) => {
       <div ref={messagesEndRef} />
       <form
         className={styles.messages_input}
-        onSubmit={async (e) => {
+        onSubmit={async e => {
           e.preventDefault();
           const message = {
             body: input,
-            client_id: 4,
-            lawyer_id: 2,
+            client_id: clientId,
+            lawyer_id: lawyerId,
             date_sent: new Date(),
-            from_client: true
+            from_client: true,
           };
           try {
             const newMessage = await saveMessage(message);
