@@ -116,7 +116,7 @@ const TopNavBar = ({ header, user }) => {
           <span className={styles.profile}>
             Profile
           </span>
-          <span className={styles.logout}>Logout</span>
+          <a className={styles.logout} href="/logout">Logout</a>
         </header>
         <List>
           <ListItem

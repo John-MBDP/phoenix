@@ -10,8 +10,11 @@ const SocketHandler = (req, res) => {
 
     io.on("connection", socket => {
       socket.on("input-change", bool => {
-        socket.broadcast.emit("update-input", bool);
+        socket.broadcast.emit("update-typing-status", bool);
       });
+      socket.on('send-message', newMessage => {
+        socket.broadcast.emit('update-messages', newMessage);
+      })
     });
   }
   res.end();

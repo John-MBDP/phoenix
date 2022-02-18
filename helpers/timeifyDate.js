@@ -26,7 +26,8 @@ const timeifyDate = date => {
   ];
 
   date = typeof new Date() !== typeof date ? new Date(date) : date;
-  const time = `${(date.getHours() + 24) % 12 || 12}:${date.getMinutes()}`;
+  const minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+  const time = `${(date.getHours() + 24) % 12 || 12}:${minutes}`;
 
   if (date.getTime() < Date.now() - 31536000000) {
     return `${
