@@ -2,7 +2,7 @@ import { createContext, useState } from "react";
 
 export const notificationsContext = createContext();
 
-export default function NotificationsProvider() {
+export default function NotificationsProvider({ children }) {
   const [notifications, setNotifications] = useState(0);
 
   const addNotification = () => {
@@ -17,7 +17,7 @@ export default function NotificationsProvider() {
 
   return (
     <notificationsContext.Provider value={notificationsData}>
-      {props.children}
+      {children}
     </notificationsContext.Provider>
   );
 }
