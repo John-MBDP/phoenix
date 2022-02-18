@@ -3,6 +3,7 @@ import { Tabs, Tab, Box, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import SearchCard from "../components/SearchCard";
 import { PrismaClient } from "@prisma/client";
+import getGeoLocation from "../helpers/getGeoLocation";
 const prisma = new PrismaClient();
 
 export const getServerSideProps = async () => {
@@ -16,9 +17,11 @@ export const getServerSideProps = async () => {
 };
 
 const Search = ({ setHeader, lawyers, setNavbar }) => {
-  const [currentLawyers, setCurrentLaywers] = useState(lawyers);
-  const [city, setCity] = useState("");
+  const [currentData, setCurrentData] = useState(lawyers);
   const [selectedField, setSelectedField] = useState(0);
+  const [selectedType, setSelectedType] = useState(0);
+  const [city, setCity] = useState("");
+
   const fields = [
     "All",
     "Injury",
@@ -27,6 +30,7 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
     "Legal Assistance",
     "NFT's"
   ];
+  const searchTypes = ["lawyers", "lawfirms"];
 
   useEffect(() => {
     setHeader({ header: "LAWYERS", hidden: false });
@@ -34,70 +38,62 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
   }, []);
 
   useEffect(() => {
-    getLawyers(city, fields[selectedField]);
+    getData(city, fields[selectedField], searchTypes[selectedType]);
   }, [city]);
 
-  const handleChange = async (e, index) => {
+  const handleFieldChange = async (e, index) => {
     setSelectedField(index);
-    getLawyers(city, fields[index]);
+    getData(city, fields[index], searchTypes[selectedType]);
+  };
+  const handleSearchTypeChange = (e, index) => {
+    setSelectedType(index);
+    getData(city, fields[selectedField], searchTypes[index]);
   };
   const handleSubmit = (e, city, field) => {
     e.preventDefault();
-    getLawyers(city, field);
+    getData(city, field, searchTypes[selectedType]);
   };
   const handleInputChange = (e) => {
     setCity(e.target.value);
   };
 
-  const getGeoLocation = async () => {
-    const success = async (data) => {
-      const { latitude, longitude } = data.coords;
-
-      const cityData = await fetch(
-        `/api/location?latitude=${latitude}&longitude=${longitude}`,
-        {
-          method: "POST"
-        }
-      );
-      const parsedCitydata = await cityData.json();
-
-      setCity(parsedCitydata.location);
-    };
-    const error = (err) => {
-      console.log(err.code);
-    };
-
-    navigator.geolocation.getCurrentPosition(success, error);
-  };
-
-  const getLawyers = async (location, field) => {
+  const getData = async (location, field, type) => {
     const response = await fetch(
-      `/api/lawyers?location=${location ? location : "null"}&field=${
+      `/api/${type}?location=${location ? location : "null"}&field=${
         field === "All" ? "null" : field
       }`
     );
 
     const parsedResponse = await response.json();
-    setCurrentLaywers(parsedResponse);
+    setCurrentData(parsedResponse);
   };
 
   const tabs = fields.map((tab, i) => {
-    return <Tab key={i} label={tab} />;
+    return <Tab key={i} label={tab} wrapped />;
   });
 
-  const lawyersArray = currentLawyers.map((lawyer) => {
-    if (lawyer) {
+  const cardArray = currentData.map((card) => {
+    if (card) {
       return (
         <SearchCard
-          key={lawyer.id}
-          fullName={`${lawyer.first_name} ${lawyer.last_name}`}
-          location={lawyer.location}
-          certified={new Date(lawyer.date_certified).getFullYear()}
-          phone={lawyer.phone_number}
-          image={lawyer.profile_pic}
-          id={lawyer.id}
+          key={card.id}
+          fullName={
+            card.first_name ? `${card.first_name} ${card.last_name}` : card.name
+          }
+          name={card.name}
+          location={card.location}
+          certified={
+            new Date(
+              card.date_certified || card.registration_date
+            ).getFullYear() || null
+          }
+          phone={card.phone_number}
+          image={card.profile_pic}
+          id={card.id}
+          type={searchTypes[selectedType].slice(0, -1)}
         />
       );
+    } else if (card) {
     }
   });
 
@@ -105,7 +101,9 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
     <Box sx={{ px: "2rem", mt: "5rem" }}>
       <br />
       <div>
-        <button onClick={() => getGeoLocation()}>Get Location</button>
+        <button onClick={() => getGeoLocation((location) => setCity(location))}>
+          Get Location
+        </button>
         <form onSubmit={(e) => handleSubmit(e, city, fields[selectedField])}>
           <TextField
             fullWidth
@@ -121,13 +119,22 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
         variant="scrollable"
         scrollButtons="auto"
         aria-label="scrollable auto tabs example"
+        value={selectedType}
+        onChange={handleSearchTypeChange}
+      >
+        <Tab label="Lawyers" />
+        <Tab label="Lawfirms" />
+      </Tabs>
+      <Tabs
+        variant="scrollable"
+        scrollButtons="auto"
+        aria-label="scrollable auto tabs example"
         value={selectedField}
-        onChange={handleChange}
-        onKeyUp={handleChange}
+        onChange={handleFieldChange}
       >
         {tabs}
       </Tabs>
-      {lawyersArray}
+      {cardArray}
     </Box>
   );
 };
