@@ -9,6 +9,16 @@ export default withIronSessionApiRoute(async (req, res) => {
   const { email, password } = await req.body;
 
   try {
+
+    // admin login
+    if (email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD) {
+      const user = { admin: true, lawyer_id: 11 }
+      req.session.user = user;
+      await req.session.save();
+      return res.json(user);
+    }
+
+    // normal login
     const user = await prisma.clients.findFirst({
       where: { email: email.toLowerCase() },
     });
