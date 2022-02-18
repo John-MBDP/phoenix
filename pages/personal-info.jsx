@@ -4,23 +4,26 @@ import { Typography, TextField } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
 
-const PersonalInfo = ({ setHeader }) => {
-  useEffect(() => setHeader({ header: "", hidden: true }), []);
+const PersonalInfo = ({ setHeader, setNavbar }) => {
+  useEffect(() => {
+    setHeader({ header: "", hidden: true });
+    setNavbar({ navbar: "", hidden: false });
+  }, []);
   const [formInput, setFormInput] = useState({
     firstName: "",
     lastName: "",
     address: "",
     phoneNumber: "",
-    emailAdress: ""
+    emailAdress: "",
   });
 
-  const handleInput = (e) => {
-    setFormInput((prev) => {
+  const handleInput = e => {
+    setFormInput(prev => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
   };
 
@@ -40,7 +43,7 @@ const PersonalInfo = ({ setHeader }) => {
           id="first-name"
           name="firstName"
           value={formInput.firstName}
-          onChange={(e) => handleInput(e)}
+          onChange={e => handleInput(e)}
           margin="normal"
         />
 
@@ -49,7 +52,7 @@ const PersonalInfo = ({ setHeader }) => {
           label="Last Name"
           name="lastName"
           value={formInput.lastName}
-          onChange={(e) => handleInput(e)}
+          onChange={e => handleInput(e)}
           margin="normal"
         />
         <TextField
@@ -57,7 +60,7 @@ const PersonalInfo = ({ setHeader }) => {
           label="Email Address"
           name="emailAdress"
           value={formInput.emailAdress}
-          onChange={(e) => handleInput(e)}
+          onChange={e => handleInput(e)}
           margin="normal"
         />
         <TextField
@@ -65,7 +68,7 @@ const PersonalInfo = ({ setHeader }) => {
           label="Phone Number"
           name="phoneNumber"
           value={formInput.phoneNumber}
-          onChange={(e) => handleInput(e)}
+          onChange={e => handleInput(e)}
           margin="normal"
         />
         <TextField
@@ -73,7 +76,7 @@ const PersonalInfo = ({ setHeader }) => {
           label="Address"
           name="address"
           value={formInput.address}
-          onChange={(e) => handleInput(e)}
+          onChange={e => handleInput(e)}
           margin="normal"
         />
         <Button type="submit" onClick={() => console.log("update")}>

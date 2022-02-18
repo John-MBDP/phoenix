@@ -8,26 +8,33 @@ import { useState } from "react";
 import { ButtonBase } from "@mui/material";
 import { useRouter } from "next/router";
 
-export default function BottomNav() {
+export default function BottomNav({ navbar }) {
   const views = ["", "messages", "search", "profile"];
   const router = useRouter();
 
   return (
-    <div className={styles.bottomNav}>
-      <BottomNavigation
-        showLabels
-        onChange={(event, newValue) => {
-          router.push(`/${views[newValue]}`);
-        }}
-      >
-        <BottomNavigationAction label="Home" icon={<HomeIcon sx={{ color: "black" }} />} />
-        <BottomNavigationAction label="Messages" icon={<MessageIcon sx={{ color: "black" }} />} />
-        <BottomNavigationAction label="Search" icon={<SearchIcon sx={{ color: "black" }} />} />
-        <BottomNavigationAction
-          label="Profile"
-          icon={<AccountCircleIcon sx={{ color: "black" }} />}
-        />
-      </BottomNavigation>
-    </div>
+    <>
+      {!navbar.hidden ? (
+        <div className={styles.bottomNav}>
+          <BottomNavigation
+            showLabels
+            onChange={(event, newValue) => {
+              router.push(`/${views[newValue]}`);
+            }}
+          >
+            <BottomNavigationAction label="Home" icon={<HomeIcon sx={{ color: "black" }} />} />
+            <BottomNavigationAction
+              label="Messages"
+              icon={<MessageIcon sx={{ color: "black" }} />}
+            />
+            <BottomNavigationAction label="Search" icon={<SearchIcon sx={{ color: "black" }} />} />
+            <BottomNavigationAction
+              label="Profile"
+              icon={<AccountCircleIcon sx={{ color: "black" }} />}
+            />
+          </BottomNavigation>
+        </div>
+      ) : null}
+    </>
   );
 }

@@ -6,8 +6,7 @@ import sessionOptions from "../../../lib/session";
 const prisma = new PrismaClient();
 
 export default withIronSessionApiRoute(async (req, res) => {
-  const data = await req.body;
-  const { firstName, lastName, email, password } = JSON.parse(data);
+  const { firstName, lastName, email, password } = await req.body;
 
   try {
     if (req.method === "POST") {
@@ -15,9 +14,11 @@ export default withIronSessionApiRoute(async (req, res) => {
         where: { email: email.toLowerCase() },
       });
       if (userCheck) {
+        return res.status(409).json({ message: "User already exists" });
+      } else if (password.length <= 5) {
         return res
           .status(409)
-          .json({ message: "User already exists" });
+          .json({ message: "Password must be at least 6 characters" });
       }
       // create user
       const hashPassword = await bcrypt.hash(password, 10);
@@ -27,11 +28,16 @@ export default withIronSessionApiRoute(async (req, res) => {
           last_name: lastName,
           email,
           password: hashPassword,
-        }
+        },
       });
-      req.session.user = { id: user.id, email: user.email };
+      req.session.user = {
+        id: user.id,
+        firstName: user.first_name,
+        lastName: user.last_name,
+        email: user.email,
+      };
       await req.session.save();
-      return res.status(200).end();
+      return res.json(user);
     }
     return res.status(400).end();
   } catch (error) {

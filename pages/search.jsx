@@ -15,7 +15,7 @@ export const getServerSideProps = async () => {
   };
 };
 
-const Search = ({ setHeader, lawyers }) => {
+const Search = ({ setHeader, lawyers, setNavbar }) => {
   const [currentLawyers, setCurrentLaywers] = useState(lawyers);
   const [city, setCity] = useState("");
   const [selectedField, setSelectedField] = useState(0);
@@ -30,6 +30,7 @@ const Search = ({ setHeader, lawyers }) => {
 
   useEffect(() => {
     setHeader({ header: "LAWYERS", hidden: false });
+    setNavbar({ navbar: "", hidden: false });
   }, []);
 
   useEffect(() => {

@@ -4,13 +4,16 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Button from "../components/Button";
 import { useRouter } from "next/router";
-const TypeofUser = ({ setHeader }) => {
-  useEffect(() => setHeader({ header: "", hidden: true }), []);
+const TypeofUser = ({ setHeader, setNavbar }) => {
+  useEffect(() => {
+    setHeader({ header: "", hidden: true });
+    setNavbar({ navbar: "", hidden: false });
+  }, []);
 
   const router = useRouter();
   //uwu
   return (
-    <RoundedTopContainer image={"/images/articles/forest.jpeg"} alt={"signup-image"}>
+    <RoundedTopContainer image={"/TypeOfUser-1.png"} alt={"signup-image"} height="400px">
       <Typography
         variant="h6"
         fontWeight

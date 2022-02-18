@@ -9,7 +9,7 @@ import { withIronSessionSsr } from "iron-session/next";
 const prisma = new PrismaClient();
 
 // COOKIE GRAB EXAMPLE
-export const getServerSideProps = withIronSessionSsr(async ({req, res}) => {
+export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const user = req.session.user;
   const lawyerMessages = await prisma.messages.findMany({
     where: {
@@ -52,15 +52,16 @@ export const getServerSideProps = withIronSessionSsr(async ({req, res}) => {
       lawyerMessages,
       lawfirmMessages,
     },
-  }
+  };
 }, sessionOptions);
 
-const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader }) => {
+const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader, setNavbar }) => {
   const [messageCards, setMessageCards] = useState(lawyerMessages);
   const [value, setValue] = useState(0);
 
   useEffect(() => {
     setHeader({ header: "MESSAGES", hidden: false });
+    setNavbar({ navbar: "", hidden: false });
   }, []);
 
   const handleChange = (e, value) => {

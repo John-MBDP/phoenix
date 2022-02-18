@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import RoundedTopContainer from "../../components/RoundedTopContainer";
 import UserStatsCard from "../../components/UserStatsCard";
 import { Typography } from "@material-ui/core";
@@ -12,30 +12,41 @@ import EmailIcon from "@mui/icons-material/Email";
 import Widebutton from "../../components/WideButton";
 import { useRouter } from "next/router";
 import ViewLikesCounter from "../../components/ViewLikesCounter";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import sessionOptions from "../../lib/session";
+import { withIronSessionSsr } from "iron-session/next";
 
-export const getServerSideProps = async (context) => {
-  const id = Number(context.params.id);
+export const getServerSideProps = withIronSessionSsr(
+  async ({ req, res, params }) => {
+    const user = req.session.user;
+    const id = Number(params.id);
 
-  const lawfirmMembers = await prisma.lawfirm_members.findMany({
-    where: { lawyer_id: id },
-    include: {
-      lawyers: true
-    }
-  });
-  console.log(lawfirmMembers);
-
-  return {
-    props: {
-      lawyer: {
-        ...lawfirmMembers[0].lawyers,
-        date_certified: `${lawfirmMembers[0].lawyers.date_certified.getFullYear()}`
+    const lawfirmMembers = await prisma.lawfirm_members.findMany({
+      where: { lawyer_id: id },
+      include: {
+        lawyers: true
+      }
+    });
+    const lawyerFavourite = await prisma.lawyer_favourites.findFirst({
+      where: {
+        lawyer_id: id,
       },
-      lawfirmId: lawfirmMembers[0].lawfirm_id
-    }
-  };
-};
+    })
+    return {
+      props: {
+        user,
+        lawyerFavourite,
+        lawyer: {
+          ...lawfirmMembers[0].lawyers,
+          date_certified: `${lawfirmMembers[0].lawyers.date_certified.getFullYear()}`
+        },
+        lawfirmId: lawfirmMembers[0].lawfirm_id
+      }
+    };
+  }, sessionOptions);
 
-const Lawyer = ({ setHeader, lawyer, lawfirmId }) => {
+const Lawyer = ({ setHeader, setNavbar, lawyer, lawfirmId, user, lawyerFavourite }) => {
   const router = useRouter();
   const {
     last_name,
@@ -52,7 +63,38 @@ const Lawyer = ({ setHeader, lawyer, lawfirmId }) => {
   } = lawyer;
   useEffect(() => {
     setHeader((prev) => ({ ...prev, hidden: true }));
+    setNavbar({ navbar: "", hidden: false });
   }, []);
+
+  const [favourited, setFavourited] = useState(lawyerFavourite ? true : false);
+  const favourite = { client_id: user.id, lawyer_id: lawyer.id };
+
+  const saveFavourite = async favourite => {
+    const response = await fetch("/api/favourites/lawyers/create", {
+      method: "POST",
+      body: JSON.stringify({ ...favourite, date_created: new Date() }),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    console.log("saved!");
+    return await response.json();
+  };
+
+  const destroyFavourite = async favourite => {
+    const response = await fetch("/api/favourites/lawyers/delete", {
+      method: "POST",
+      body: JSON.stringify(favourite),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    console.log("destroyed!");
+    return await response.json();
+  };
+
   return (
     <RoundedTopContainer
       image="/images/articles/forest.jpeg"
@@ -60,6 +102,32 @@ const Lawyer = ({ setHeader, lawyer, lawfirmId }) => {
       alt="forest"
       padBottom
     >
+      {favourited && (
+        <FavoriteIcon
+          sx={{ color: "salmon" }}
+          onClick={async () => {
+            try {
+              await destroyFavourite(favourite);
+              setFavourited(false);
+            } catch (err) {
+              console.log(err);
+            }
+          }}
+        />
+      )}
+      {!favourited && (
+        <FavoriteBorderIcon
+          sx={{ color: "salmon" }}
+          onClick={async () => {
+            try {
+              await saveFavourite(favourite);
+              setFavourited(true);
+            } catch (err) {
+              console.log(err);
+            }
+          }}
+        />
+      )}
       <UserStatsCard
         name={`${first_name} ${last_name}`}
         image={profile_pic}
