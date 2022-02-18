@@ -33,6 +33,7 @@ const SearchCard = ({
               objectFit: "cover",
               borderRadius: 1
             }}
+            component="img"
             image={image}
             alt="user-icon"
           />
