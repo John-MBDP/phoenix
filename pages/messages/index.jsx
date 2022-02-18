@@ -100,14 +100,15 @@ const MessagesIndex = ({
     setValue(value);
   };
 
+  messageCards.forEach(message => {
+    if (message.seen_client === false) {
+      addNotification();
+    }
+  });
+
   const parseMessageCards = messageCards => {
     return (
       messageCards
-        .map(message => {
-          if (message.seen_client === false) {
-            addNotification();
-          }
-        })
         // to just grab the first most recent message
         .filter((value, index, self) => {
           return (
