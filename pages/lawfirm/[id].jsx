@@ -16,6 +16,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
+import { Rating } from "@mui/material";
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {
@@ -54,10 +55,10 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
     location,
     email,
     profile_pic,
-    education,
     registration_date,
     views,
-    likes
+    likes,
+    rating
   } = lawfirm;
   useEffect(() => {
     setHeader((prev) => ({ ...prev, hidden: true }));
@@ -101,7 +102,7 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
     >
       {favourited && (
         <FavoriteIcon
-          sx={{ color: "salmon" }}
+          sx={{ color: "salmon", position: "fixed", zIndex: "10" }}
           onClick={async () => {
             try {
               await destroyFavourite(favourite);
@@ -114,7 +115,7 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
       )}
       {!favourited && (
         <FavoriteBorderIcon
-          sx={{ color: "salmon" }}
+          sx={{ color: "salmon", position: "fixed", zIndex: "10" }}
           onClick={async () => {
             try {
               await saveFavourite(favourite);
@@ -126,6 +127,15 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
         />
       )}
       <UserStatsCard name={name} image={profile_pic}></UserStatsCard>
+      <div className="flex-center">
+        <Rating
+          name="read-only"
+          value={rating / 10}
+          precision={0.1}
+          readOnly
+          size="large"
+        />
+      </div>
       <ViewLikesCounter views={views} likes={likes} />
       <div>
         <div style={{ display: "flex", justifyContent: "center" }}>
@@ -169,59 +179,6 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
         </Typography>
       </div>
       <Widebutton
-        color="black"
-        outLineColor="#1B4463"
-        padding=" 0.3rem 0"
-        outline
-        strong
-        ammount="$550"
-      >
-        <div>
-          <Typography variant="button">
-            <strong>ONE TIME SERVICE FEE</strong>
-          </Typography>
-          <Typography variant="caption">click to see more</Typography>
-          <style jsx>{`
-            display: flex;
-            flex-direction: column;
-          `}</style>
-        </div>
-      </Widebutton>
-      <Widebutton
-        color="black"
-        outLineColor="#00589B"
-        padding="0.3rem 0"
-        outline
-        strong
-        ammount="$550"
-      >
-        <div>
-          <Typography variant="button">
-            <strong>Monthly Fee</strong>
-          </Typography>
-          <Typography variant="caption">click to see more</Typography>
-          <style jsx>{`
-            display: flex;
-            flex-direction: column;
-          `}</style>
-        </div>
-      </Widebutton>
-      <Widebutton
-        color="white"
-        padding="1rem 0"
-        strong
-        backgroundColor="#1B4463"
-        onClick={() => router.push(`/lawfirm/${lawfirmId}`)}
-      >
-        <div>
-          <Typography variant="button">Firm Affiliation</Typography>
-          <style jsx>{`
-            display: flex;
-            flex-direction: column;
-          `}</style>
-        </div>
-      </Widebutton>
-      <Widebutton
         color="white"
         padding="0.4rem 0"
         strong
@@ -233,29 +190,15 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
           <Typography variant="caption">
             Mining, Criminal, Administrative
           </Typography>
-          <style jsx>{`
-            display: flex;
-            flex-direction: column;
-          `}</style>
         </div>
       </Widebutton>
-      <Widebutton
-        color="white"
-        padding="0.4rem 0"
-        strong
-        backgroundColor="#1B4463"
-        textAlign="left"
-        onClick={(e) => console.log("potato")}
-      >
-        <div>
-          <Typography variant="body2">Education:</Typography>
-          <Typography variant="caption">{education}</Typography>
-          <style jsx>{`
-            display: flex;
-            flex-direction: column;
-          `}</style>
-        </div>
-      </Widebutton>
+      <style jsx>{`
+        .flex-center {
+          display: grid;
+          place-items: center;
+          padding: 0.3rem 0 0.5rem 0;
+        }
+      `}</style>
     </RoundedTopContainer>
   );
 };
