@@ -16,20 +16,20 @@ export const getServerSideProps = withIronSessionSsr(
     const id = Number(params.id);
     const article = await prisma.articles.findUnique({
       where: {
-        id,
-      },
+        id
+      }
     });
     const articleFavourite = await prisma.article_favourites.findFirst({
       where: {
-        article_id: id,
-      },
+        article_id: id
+      }
     });
     return {
       props: {
         user,
         article,
-        articleFavourite,
-      },
+        articleFavourite
+      }
     };
   },
   sessionOptions
@@ -53,7 +53,7 @@ const ArticleShow = ({ setNavbar, article, user, articleFavourite }) => {
       <section className="article-container">
         <style jsx>{`
           .article-container {
-            height: 500px;
+            height: 550px;
             overflow: scroll;
             position: fixed;
             bottom: 0;
