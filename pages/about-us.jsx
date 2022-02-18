@@ -27,7 +27,7 @@ const AboutUs = ({ setHeader, setNavbar }) => {
       </div>
       <br />
       <div>
-        <Typography variant="body1" component="body1">
+        <Typography variant="body1" component="h3">
           <strong>Why Join Our Platform?</strong>
         </Typography>
         <Typography variant="body1" component="h3">
