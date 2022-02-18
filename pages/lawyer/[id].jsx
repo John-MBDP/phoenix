@@ -28,11 +28,31 @@ export const getServerSideProps = withIronSessionSsr(
         lawyers: true
       }
     });
+
     const lawyerFavourite = await prisma.lawyer_favourites.findFirst({
       where: {
-        lawyer_id: id,
-      },
-    })
+        lawyer_id: id
+      }
+    });
+
+    if (lawfirmMembers.length === 0) {
+      const lawyer = await prisma.lawyers.findUnique({
+        where: { id }
+      });
+
+      return {
+        props: {
+          user,
+          lawyerFavourite,
+          lawyer: {
+            ...lawyer,
+            date_certified: `${lawyer.date_certified.getFullYear()}`
+          },
+          lawfirmId: null
+        }
+      };
+    }
+
     return {
       props: {
         user,
@@ -44,9 +64,18 @@ export const getServerSideProps = withIronSessionSsr(
         lawfirmId: lawfirmMembers[0].lawfirm_id
       }
     };
-  }, sessionOptions);
+  },
+  sessionOptions
+);
 
-const Lawyer = ({ setHeader, setNavbar, lawyer, lawfirmId, user, lawyerFavourite }) => {
+const Lawyer = ({
+  setHeader,
+  setNavbar,
+  lawyer,
+  lawfirmId,
+  user,
+  lawyerFavourite
+}) => {
   const router = useRouter();
   const {
     last_name,
@@ -69,10 +98,10 @@ const Lawyer = ({ setHeader, setNavbar, lawyer, lawfirmId, user, lawyerFavourite
   const [favourited, setFavourited] = useState(lawyerFavourite ? true : false);
   const favourite = { client_id: user.id, lawyer_id: lawyer.id };
 
-  const saveFavourite = async favourite => {
+  const saveFavourite = async (favourite) => {
     const response = await fetch("/api/favourites/lawyers/create", {
       method: "POST",
-      body: JSON.stringify({ ...favourite, date_created: new Date() }),
+      body: JSON.stringify({ ...favourite, date_created: new Date() })
     });
 
     if (!response.ok) {
@@ -82,10 +111,10 @@ const Lawyer = ({ setHeader, setNavbar, lawyer, lawfirmId, user, lawyerFavourite
     return await response.json();
   };
 
-  const destroyFavourite = async favourite => {
+  const destroyFavourite = async (favourite) => {
     const response = await fetch("/api/favourites/lawyers/delete", {
       method: "POST",
-      body: JSON.stringify(favourite),
+      body: JSON.stringify(favourite)
     });
 
     if (!response.ok) {
@@ -93,6 +122,12 @@ const Lawyer = ({ setHeader, setNavbar, lawyer, lawfirmId, user, lawyerFavourite
     }
     console.log("destroyed!");
     return await response.json();
+  };
+
+  const handleLawfirmClick = () => {
+    if (lawfirmId) {
+      router.push(`/lawfirm/${lawfirmId}`);
+    }
   };
 
   return (
@@ -192,6 +227,7 @@ const Lawyer = ({ setHeader, setNavbar, lawyer, lawfirmId, user, lawyerFavourite
         </div>
       </Widebutton>
       <Widebutton
+        hidden={!lawfirmId}
         color="black"
         outLineColor="#00589B"
         padding="0.3rem 0"
@@ -211,11 +247,11 @@ const Lawyer = ({ setHeader, setNavbar, lawyer, lawfirmId, user, lawyerFavourite
         </div>
       </Widebutton>
       <Widebutton
-        color="white"
+        color={lawfirmId ? "white" : "#405b6e"}
         padding="1rem 0"
         strong
-        backgroundColor="#1B4463"
-        onClick={() => router.push(`/lawfirm/${lawfirmId}`)}
+        backgroundColor={lawfirmId ? "#1B4463" : "#0c1f2e"}
+        onClick={handleLawfirmClick}
       >
         <div>
           <Typography variant="button">Firm Affiliation</Typography>
