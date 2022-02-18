@@ -1,5 +1,5 @@
 import ScrollableMenu from "../components/ScrollableMenu";
-import { Tab, Box, TextField } from "@mui/material";
+import { Tabs, Tab, Box, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import SearchCard from "../components/SearchCard";
 import { PrismaClient } from "@prisma/client";
@@ -18,13 +18,38 @@ export const getServerSideProps = async () => {
 const Search = ({ setHeader, lawyers }) => {
   const [currentLawyers, setCurrentLaywers] = useState(lawyers);
   const [city, setCity] = useState("");
+  const [selectedField, setSelectedField] = useState(0);
+  const fields = [
+    "All",
+    "Injury",
+    "Immigration",
+    "Criminal",
+    "Legal Assistance",
+    "NFT's"
+  ];
+
   useEffect(() => {
     setHeader({ header: "LAWYERS", hidden: false });
   }, []);
 
+  useEffect(() => {
+    getLawyers(city, fields[selectedField]);
+  }, [city]);
+
+  const handleChange = async (e, index) => {
+    setSelectedField(index);
+    getLawyers(city, fields[index]);
+  };
+  const handleSubmit = (e, city, field) => {
+    e.preventDefault();
+    getLawyers(city, field);
+  };
+  const handleInputChange = (e) => {
+    setCity(e.target.value);
+  };
+
   const getGeoLocation = async () => {
     const success = async (data) => {
-      console.log(data);
       const { latitude, longitude } = data.coords;
 
       const cityData = await fetch(
@@ -34,7 +59,7 @@ const Search = ({ setHeader, lawyers }) => {
         }
       );
       const parsedCitydata = await cityData.json();
-      console.log(parsedCitydata.location);
+
       setCity(parsedCitydata.location);
     };
     const error = (err) => {
@@ -44,12 +69,20 @@ const Search = ({ setHeader, lawyers }) => {
     navigator.geolocation.getCurrentPosition(success, error);
   };
 
-  const getLawyers = async (location) => {
-    const response = await fetch(`/api/lawyers?location=${location}`);
+  const getLawyers = async (location, field) => {
+    const response = await fetch(
+      `/api/lawyers?location=${location ? location : "null"}&field=${
+        field === "All" ? "null" : field
+      }`
+    );
+
     const parsedResponse = await response.json();
-    setCurrentLaywers(parsedResponse || {});
+    setCurrentLaywers(parsedResponse);
   };
-  console.log(lawyers);
+
+  const tabs = fields.map((tab, i) => {
+    return <Tab key={i} label={tab} />;
+  });
 
   const lawyersArray = currentLawyers.map((lawyer) => {
     if (lawyer) {
@@ -66,35 +99,33 @@ const Search = ({ setHeader, lawyers }) => {
       );
     }
   });
-  const handleSubmit = (e, city) => {
-    e.preventDefault();
-    getLawyers(city);
-    console.log(e);
-  };
 
   return (
     <Box sx={{ px: "2rem", mt: "5rem" }}>
       <br />
       <div>
         <button onClick={() => getGeoLocation()}>Get Location</button>
-        <form onSubmit={(e) => handleSubmit(e, city)}>
+        <form onSubmit={(e) => handleSubmit(e, city, fields[selectedField])}>
           <TextField
             fullWidth
             value={city}
-            onChange={(e) => setCity(e.target.value)}
+            onChange={handleInputChange}
             margin="normal"
             autoComplete="off"
           />
           <button type="submit">submit</button>
         </form>
       </div>
-      <ScrollableMenu>
-        <Tab label="Injury" />
-        <Tab label="Immigration" />
-        <Tab label="Criminal" />
-        <Tab label="Legal Aid" />
-        <Tab label="NTF's" />
-      </ScrollableMenu>
+      <Tabs
+        variant="scrollable"
+        scrollButtons="auto"
+        aria-label="scrollable auto tabs example"
+        value={selectedField}
+        onChange={handleChange}
+        onKeyUp={handleChange}
+      >
+        {tabs}
+      </Tabs>
       {lawyersArray}
     </Box>
   );
