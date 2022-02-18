@@ -56,18 +56,36 @@ const Messages = ({
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
   const [typingIndicator, setTypingIndicator] = useState(false);
+  const headerName = messages
+    ? `${messages[0].clients.first_name} ${messages[0].clients.last_name}`
+    : "Messages";
 
   useEffect(() => {
-    setHeader(() => ({ header: "Messages", hidden: false }));
+    setHeader(() => ({ header: headerName, hidden: false }));
     setNavbar({ navbar: "", hidden: false });
     socketInitializer();
+    console.log(headerName);
     const closeSocket = () => {
+      socket.emit("input-change", false);
       socket.disconnect();
       console.log("Socket closed");
     };
     return closeSocket;
   }, []);
 
+  // to stop typing indicator on page refresh
+  useEffect(() => {
+    window.addEventListener("beforeunload", () =>
+      socket.emit("input-change", false)
+    );
+    return () => {
+      window.removeEventListener("beforeunload", () =>
+        socket.emit("input-change", false)
+      );
+    };
+  }, []);
+
+  // to always scroll to bottom when new messages or typing indicator are present
   useEffect(() => {
     scrollToBottom();
   }, [messages, typingIndicator]);

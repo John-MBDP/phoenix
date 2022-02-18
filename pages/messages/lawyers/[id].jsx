@@ -57,18 +57,35 @@ const Messages = ({
   const [input, setInput] = useState("");
   const [typingIndicator, setTypingIndicator] = useState(false);
   const lawyerProfilePic = messages ? messages[0].lawyers.profile_pic : null;
+  const headerName = messages
+    ? `${messages[0].lawyers.first_name} ${messages[0].lawyers.last_name}`
+    : "Messages";
 
   useEffect(() => {
-    setHeader(() => ({ header: "Messages", hidden: false }));
+    setHeader(() => ({ header: headerName, hidden: false }));
     setNavbar({ navbar: "", hidden: false });
     socketInitializer();
     const closeSocket = () => {
+      socket.emit("input-change", false);
       socket.disconnect();
       console.log("Socket closed");
     };
     return closeSocket;
   }, []);
 
+  // to stop typing indicator on page refresh
+  useEffect(() => {
+    window.addEventListener("beforeunload", () =>
+      socket.emit("input-change", false)
+    );
+    return () => {
+      window.removeEventListener("beforeunload", () =>
+        socket.emit("input-change", false)
+      );
+    };
+  }, []);
+
+  // to always scroll to bottom when new messages or typing indicator are present
   useEffect(() => {
     scrollToBottom();
   }, [messages, typingIndicator]);
