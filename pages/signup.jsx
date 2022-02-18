@@ -216,7 +216,7 @@ const Signup = ({ setHeader, setNavbar }) => {
             handleSubmit(formInput);
           }}
         >
-          <Button type="submit">
+          <Button type="submit" onClick={() => router.push("/smsverification")}>
             SIGN UP <ArrowRightAltIcon />
           </Button>
         </form>

@@ -8,10 +8,12 @@ import TextField from "@mui/material/TextField";
 import * as React from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
+import { useRouter } from "next/router";
 
 const Confirmation = ({ setHeader, setNavbar }) => {
+  const router = useRouter();
   useEffect(() => {
-    setHeader({ header: "", hidden: true }), setNavbar({ navbar: "", hidden: false });
+    setHeader({ header: "", hidden: true }), setNavbar({ navbar: "", hidden: true });
   }, []);
   return (
     <RoundedTopContainer image={"/sms-2.png"} alt={"signup-image"} height="350px">
@@ -83,7 +85,7 @@ const Confirmation = ({ setHeader, setNavbar }) => {
           Resend code.
         </Typography>
       </Stack>
-      <Button>Confirm</Button>
+      <Button onClick={() => router.push("/")}>Confirm</Button>
     </RoundedTopContainer>
   );
 };
