@@ -4,7 +4,6 @@ import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import { PrismaClient } from "@prisma/client";
 import styles from "../../styles/Home.module.css";
-import { BottomNavigationContext } from "../../Contexts/BottomNavigationContext";
 import ArticleCard from "../../components/ArticleCard";
 import SearchCard from "../../components/SearchCard";
 import Timeago from "react-timeago";
@@ -70,6 +69,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
 
 const Favourites = ({
   setHeader,
+  setNavbar,
   articleFavourites,
   lawyerFavourites,
   lawfirmFavourites,
@@ -78,13 +78,12 @@ const Favourites = ({
   const LAWYERS = "LAWYERS";
   const LAWFIRMS = "LAWFIRMS";
 
-  const { setActive } = useContext(BottomNavigationContext);
   const [value, setValue] = useState(0);
   const [favourites, setFavourites] = useState(ARTICLES);
 
   useEffect(() => {
     setHeader({ header: "FAVOURITES", hidden: false });
-    setActive(true);
+    setNavbar({ navbar: "", hidden: false });
   }, []);
 
   const handleChange = (e, value) => {

@@ -1,6 +1,5 @@
 import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
-import { useState } from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { useState, useRef, useEffect } from "react";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -18,21 +17,11 @@ import Avatar from "@mui/material/Avatar";
 import MessageIcon from "@mui/icons-material/Message";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
+import styles from "./index.module.scss";
 
-const TopNavBar = ({ header }) => {
-  const drawerHeight = 240;
-
-  const DrawerHeader = styled("div")(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below drawer header
-    ...theme.mixins.toolbar,
-    justifyContent: "flex-end",
-  }));
-
-  const theme = useTheme();
+const TopNavBar = ({ header, user }) => {
   const [open, setOpen] = useState(false);
+  const drawerHeight = 240;
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -42,8 +31,28 @@ const TopNavBar = ({ header }) => {
     setOpen(false);
   };
 
+  const wrapperRef = useRef(null);
+  useOutsideNavCloser(wrapperRef);
+
+  function useOutsideNavCloser(ref) {
+    useEffect(() => {
+      // close nav bar if click outside detected
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setOpen(false);
+        }
+      }
+      // Bind the event listener
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  }
+
   return (
-    <div style={{ position: "fixed", zIndex: "10" }}>
+    <div style={{ position: "fixed", zIndex: "10" }} ref={wrapperRef}>
       <AppBar
         sx={{
           backgroundColor: "#1D1F37",
@@ -93,13 +102,29 @@ const TopNavBar = ({ header }) => {
         anchor="top"
         open={open}
       >
-        <DrawerHeader>
-          <IconButton component="a" href="/profile">
-            <Avatar sx={{ marginTop: 2, marginRight: 1 }}/>
+        <header className={styles.nav_header}>
+          <IconButton
+            component="a"
+            href="/profile"
+            onClick={() => setOpen(false)}
+          >
+            <Avatar
+              sx={{ marginTop: 2, marginLeft: 2 }}
+              src={"/images/huTao.png"}
+            />
           </IconButton>
-        </DrawerHeader>
+          <span className={styles.profile}>
+            Profile
+          </span>
+          <span className={styles.logout}>Logout</span>
+        </header>
         <List>
-          <ListItem button component="a" href="/">
+          <ListItem
+            button
+            component="a"
+            href="/"
+            onClick={() => setOpen(false)}
+          >
             <ListItemIcon>
               <HomeIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
@@ -107,7 +132,12 @@ const TopNavBar = ({ header }) => {
             </ListItemIcon>
             <ListItemText primary="Home" />
           </ListItem>
-          <ListItem button component="a" href="/search">
+          <ListItem
+            button
+            component="a"
+            href="/search"
+            onClick={() => setOpen(false)}
+          >
             <ListItemIcon>
               <SearchIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
@@ -115,7 +145,12 @@ const TopNavBar = ({ header }) => {
             </ListItemIcon>
             <ListItemText primary="Find Lawyers" />
           </ListItem>
-          <ListItem button component="a" href="/messages">
+          <ListItem
+            button
+            component="a"
+            href="/messages"
+            onClick={() => setOpen(false)}
+          >
             <ListItemIcon>
               <MessageIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
@@ -123,7 +158,12 @@ const TopNavBar = ({ header }) => {
             </ListItemIcon>
             <ListItemText primary="Messages" />
           </ListItem>
-          <ListItem button component="a" href="/favourites">
+          <ListItem
+            button
+            component="a"
+            href="/favourites"
+            onClick={() => setOpen(false)}
+          >
             <ListItemIcon>
               <FavoriteIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
