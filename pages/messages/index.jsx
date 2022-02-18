@@ -68,17 +68,6 @@ const MessagesIndex = ({
   const [value, setValue] = useState(0);
   const { addNotification } = useContext(notificationsContext);
 
-  useEffect(() => {
-    setHeader({ header: "MESSAGES", hidden: false });
-    setNavbar({ navbar: "", hidden: false });
-    socketInitializer();
-    const closeSocket = () => {
-      socket.disconnect();
-      console.log("Socket closed");
-    };
-    return closeSocket;
-  }, []);
-
   const socketInitializer = async () => {
     await fetch("/api/socket");
     socket = io();
@@ -96,15 +85,20 @@ const MessagesIndex = ({
     });
   };
 
+  useEffect(() => {
+    setHeader({ header: "MESSAGES", hidden: false });
+    setNavbar({ navbar: "", hidden: false });
+    socketInitializer();
+    messageCards.forEach(message => {
+      if (message.seen_client === false) {
+        addNotification();
+      }
+    });
+  }, []);
+
   const handleChange = (e, value) => {
     setValue(value);
   };
-
-  messageCards.forEach(message => {
-    if (message.seen_client === false) {
-      addNotification();
-    }
-  });
 
   const parseMessageCards = messageCards => {
     return (
