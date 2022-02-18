@@ -12,8 +12,11 @@ const SocketHandler = (req, res) => {
       socket.on("input-change", bool => {
         socket.broadcast.emit("update-typing-status", bool);
       });
-      socket.on("send-message", newMessage => {
-        socket.broadcast.emit("update-messages", newMessage);
+      socket.on("send-message-from-lawyer", newMessage => {
+        socket.broadcast.emit("update-client-messages", newMessage);
+      });
+      socket.on('send-message-from-client', newMessage => {
+        socket.broadcast.emit("update-lawyer-messages", newMessage);
       });
     });
   }

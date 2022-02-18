@@ -206,7 +206,7 @@ const Messages = ({
           try {
             const newMessage = await saveMessage(message);
             setMessages([...messages, newMessage]);
-            socket.emit("send-message", newMessage);
+            socket.emit("send-message-from-client", newMessage);
             socket.emit("input-change", false);
             setInput("");
           } catch (err) {
