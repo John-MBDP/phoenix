@@ -62,6 +62,7 @@ const Messages = ({
     : "Messages";
 
   useEffect(() => {
+    setMessages(messages.map(message => (message.seen_client = true)));
     setHeader(() => ({ header: headerName, hidden: false }));
     setNavbar({ navbar: "", hidden: false });
     socketInitializer();
@@ -103,7 +104,7 @@ const Messages = ({
     });
 
     socket.on("update-messages", newMessage => {
-      setMessages([...messages, newMessage]);
+      setMessages([...messages, {...newMessage, seen_client: true}]);
     });
   };
 
@@ -170,6 +171,7 @@ const Messages = ({
             lawyer_id: lawyerId,
             date_sent: new Date(),
             from_client: true,
+            seen_client: false,
           };
           try {
             const newMessage = await saveMessage(message);
