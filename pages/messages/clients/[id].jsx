@@ -169,6 +169,7 @@ const Messages = ({
             lawyer_id: lawyerId,
             date_sent: new Date(),
             from_client: false,
+            seen_client: false,
           };
           try {
             const newMessage = await saveMessage(message);
