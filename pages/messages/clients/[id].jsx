@@ -102,7 +102,7 @@ const Messages = ({
       setTypingIndicator(bool);
     });
 
-    socket.on("update-messages", newMessage => {
+    socket.on("update-lawyer-messages", newMessage => {
       setMessages([...messages, newMessage]);
     });
   };
@@ -174,7 +174,7 @@ const Messages = ({
           try {
             const newMessage = await saveMessage(message);
             setMessages([...messages, newMessage]);
-            socket.emit("send-message", newMessage);
+            socket.emit("send-message-from-lawyer", newMessage);
             socket.emit("input-change", false);
             setInput("");
           } catch (err) {

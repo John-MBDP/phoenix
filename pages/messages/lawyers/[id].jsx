@@ -121,7 +121,7 @@ const Messages = ({
       setTypingIndicator(bool);
     });
 
-    socket.on("update-messages", newMessage => {
+    socket.on("update-client-messages", newMessage => {
       setMessages([...messages, { ...newMessage, seen_client: true }]);
     });
   };
