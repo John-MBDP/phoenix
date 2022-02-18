@@ -190,6 +190,71 @@ async function main() {
       }
     ]
   });
+  const createLawfirmFieldData = await prisma.lawfirm_fields.createMany({
+    data: [
+      {
+        lawfirms_id: 1,
+        fields_of_law_id: 1,
+        date_added: "1997-07-16T19:20:30.451Z"
+      },
+      {
+        lawfirms_id: 1,
+        fields_of_law_id: 2,
+        date_added: "1997-07-16T19:20:30.451Z"
+      },
+      {
+        lawfirms_id: 1,
+        fields_of_law_id: 3,
+        date_added: "1997-07-16T19:20:30.451Z"
+      },
+      {
+        lawfirms_id: 2,
+        fields_of_law_id: 1,
+        date_added: "1997-07-16T19:20:30.451Z"
+      },
+      {
+        lawfirms_id: 2,
+        fields_of_law_id: 2,
+        date_added: "1997-07-16T19:20:30.451Z"
+      },
+      {
+        lawfirms_id: 2,
+        fields_of_law_id: 5,
+        date_added: "1997-07-16T19:20:30.451Z"
+      },
+      {
+        lawfirms_id: 3,
+        fields_of_law_id: 3,
+        date_added: "1997-07-16T19:20:30.451Z"
+      },
+      {
+        lawfirms_id: 3,
+        fields_of_law_id: 4,
+        date_added: "1997-07-16T19:20:30.451Z"
+      },
+      {
+        lawfirms_id: 3,
+        fields_of_law_id: 5,
+        date_added: "1997-07-16T19:20:30.451Z"
+      },
+      {
+        lawfirms_id: 4,
+        fields_of_law_id: 3,
+        date_added: "1997-07-16T19:20:30.451Z"
+      },
+      {
+        lawfirms_id: 4,
+        fields_of_law_id: 4,
+        date_added: "1997-07-16T19:20:30.451Z"
+      },
+      ,
+      {
+        lawfirms_id: 5,
+        fields_of_law_id: 4,
+        date_added: "1997-07-16T19:20:30.451Z"
+      }
+    ]
+  });
 }
 
 main()
