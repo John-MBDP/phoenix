@@ -8,17 +8,20 @@ import { useState, useEffect, useRef } from "react";
 import timeifyDate from "../../../helpers/timeifyDate";
 import styles from "./index.module.scss";
 import io from "socket.io-client";
+import sessionOptions from "../../../lib/session";
+import { withIronSessionSsr } from "iron-session/next";
 const prisma = new PrismaClient();
 let socket;
 
-export async function getServerSideProps(context) {
+export const getServerSideProps = withIronSessionSsr(async ({ req, res, params }) => {
+  const user = req.session.user;
   const messages = await prisma.messages.findMany({
     where: {
       lawyer_id: {
-        equals: Number(context.params.id)
+        equals: Number(params.id)
       },
       client_id: {
-        equals: 4
+        equals: user.id
       }
     },
     orderBy: [
@@ -32,7 +35,7 @@ export async function getServerSideProps(context) {
       initialMessages: messages
     }
   };
-}
+}, sessionOptions);
 
 const Messages = ({ initialMessages, setHeader, setNavbar }) => {
   const [messages, setMessages] = useState(initialMessages);
