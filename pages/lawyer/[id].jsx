@@ -46,7 +46,7 @@ export const getServerSideProps = withIronSessionSsr(
     };
   }, sessionOptions);
 
-const Lawyer = ({ setHeader, lawyer, lawfirmId, user, lawyerFavourite }) => {
+const Lawyer = ({ setHeader, setNavbar, lawyer, lawfirmId, user, lawyerFavourite }) => {
   const router = useRouter();
   const {
     last_name,
@@ -63,6 +63,7 @@ const Lawyer = ({ setHeader, lawyer, lawfirmId, user, lawyerFavourite }) => {
   } = lawyer;
   useEffect(() => {
     setHeader((prev) => ({ ...prev, hidden: true }));
+    setNavbar({ navbar: "", hidden: false });
   }, []);
 
   const [favourited, setFavourited] = useState(lawyerFavourite ? true : false);

@@ -11,8 +11,11 @@ import Checkbox, { checkboxClasses } from "@mui/material/Checkbox";
 import Stack from "@mui/material/Stack";
 import Button from "../components/Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
+import fetchJson, { FetchError } from "../lib/fetchJson";
+import useUser from "../hooks/useUser";
 import Link from "next/link";
 import { inputLabelClasses } from "@mui/material/InputLabel";
+
 const btnMain = {
   alignItems: "right",
 };
@@ -25,9 +28,14 @@ const Signup = ({ setHeader, setNavbar }) => {
     lastName: "",
     email: "",
     password: "",
-    checked: false,
   });
+  const [checked, setChecked] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  const { mutateUser } = useUser({
+    redirectTo: "/",
+    redirectIfFound: true,
+  });
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   useEffect(() => {
@@ -65,13 +73,8 @@ const Signup = ({ setHeader, setNavbar }) => {
     });
   };
 
-  const onCheckboxChangeHandler = (e) => {
-    setFormInput((prev) => {
-      return {
-        ...prev,
-        checked: e.target.checked,
-      };
-    });
+  const refreshPage = () => {
+    window.location.reload(false);
   };
 
   const handleSubmit = async (inputValues) => {
@@ -83,18 +86,23 @@ const Signup = ({ setHeader, setNavbar }) => {
     ) {
       setErrorMsg("Please fill out all fields");
       return;
-    } else if (!inputValues.checked) {
+    } else if (!checked) {
       setErrorMsg("Please accept Terms and Conditions");
       return;
     }
     try {
-      await fetch("/api/auth/register", {
+      await fetchJson("/api/auth/register", {
         method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(inputValues),
       });
-      return router.push("/");
+      refreshPage();
     } catch (error) {
-      setErrorMsg(error.data.message);
+      if (error instanceof FetchError) {
+        setErrorMsg(error.data.message);
+      } else {
+        console.error("An unexpected error happened:", error);
+      }
     }
   };
 
@@ -176,11 +184,16 @@ const Signup = ({ setHeader, setNavbar }) => {
       <Stack
         direction="row"
         spacing={2}
-        sx={{ mb: 2, display: "flex", justifyContent: "space-between", alignItems: "center" }}
+        sx={{
+          mb: 2,
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
       >
         <Checkbox
           {...label}
-          onChange={onCheckboxChangeHandler}
+          onChange={e => setChecked(e.target.checked)}
           sx={{
             [`&, &.${checkboxClasses.checked}`]: {
               color: "#ff0056",

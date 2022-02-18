@@ -11,8 +11,11 @@ import { Typography, Box } from "@material-ui/core";
 import { useEffect } from "react";
 import ViewLikesCounter from "../components/ViewLikesCounter";
 
-const Profile = ({ setHeader }) => {
-  useEffect(() => setHeader({ header: "", hidden: true }), []);
+const Profile = ({ setHeader, setNavbar }) => {
+  useEffect(() => {
+    setHeader({ header: "", hidden: true });
+    setNavbar({ navbar: "", hidden: false });
+  }, []);
   return (
     <RoundedTopContainer
       image={"/images/articles/forest.jpeg"}

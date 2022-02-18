@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import LoginCard from "../components/LoginCard";
 import useUser from "../hooks/useUser";
 import { useRouter } from "next/router";
+import fetchJson, { FetchError } from "../lib/fetchJson";
 
 const Login = ({ setHeader, setNavbar }) => {
   useEffect(() => {
+    setNavbar({ navbar: "", hidden: false });
     setNavbar({ navbar: "", hidden: false });
   }, []);
   const router = useRouter();
@@ -23,15 +25,19 @@ const Login = ({ setHeader, setNavbar }) => {
     }
     try {
       mutateUser(
-        await fetch("api/auth/login", {
+        await fetchJson("api/auth/login", {
           method: "POST",
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(inputValues),
         })
       );
-      router.push("/");
+      return router.push("/");
     } catch (error) {
-      console.error("An unexpected error happened:", error);
-      setErrorMsg(error.data.message);
+      if (error instanceof FetchError) {
+        setErrorMsg(error.data.message);
+      } else {
+        console.error("An unexpected error happened:", error);
+      }
     }
   };
 
