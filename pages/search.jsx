@@ -93,7 +93,6 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
           type={searchTypes[selectedType].slice(0, -1)}
         />
       );
-    } else if (card) {
     }
   });
 
