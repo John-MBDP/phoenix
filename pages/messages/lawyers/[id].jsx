@@ -112,8 +112,16 @@ const Messages = ({
     });
   };
 
-  const updateSeenMessageStatus = async message => {
+  const updateSeenMessageStatus = async messageIds => {
+    const response = await fetch("/api/messages/update", {
+      method: "POST",
+      body: JSON.stringify(messageIds),
+    });
 
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return await response.json();
   }
 
   const saveMessage = async message => {

@@ -6,9 +6,12 @@ export default async function handler(req, res) {
   }
 
   try {
-    const message = JSON.parse(req.body);
-    const savedMessage = await prisma.messages.update({
-      where: { date_sent: { equals: message.date_sent } },
+    const { clientId, lawyerId } = JSON.parse(req.body);
+    const savedMessage = await prisma.messages.updateMany({
+      where: {
+        client_id: { equals: clientId },
+        lawyer_id: { equals: lawyerId },
+      },
       data: { seen_client: true },
     });
     res.status(200).json(savedMessage);
