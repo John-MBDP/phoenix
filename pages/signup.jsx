@@ -40,7 +40,7 @@ const Signup = ({ setHeader, setNavbar }) => {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   useEffect(() => {
     setHeader({ header: "", hidden: true });
-    setNavbar({ navbar: "", hidden: false });
+    setNavbar({ navbar: "", hidden: true });
   }, []);
 
   const onEmailChangeHandler = (e) => {
