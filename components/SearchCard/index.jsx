@@ -5,9 +5,17 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Link from "next/link";
 
-const SearchCard = ({ fullName, location, phone, certified, image, id }) => {
+const SearchCard = ({
+  fullName,
+  location,
+  phone,
+  certified,
+  image,
+  id,
+  type
+}) => {
   return (
-    <Link href={`/lawyer/${id}`}>
+    <Link href={`/${type}/${id}`}>
       <Card
         sx={{
           mt: "0.5rem",
