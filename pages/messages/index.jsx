@@ -1,10 +1,13 @@
 import { PrismaClient } from "@prisma/client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import MessageCard from "../../components/MessageCard";
 import { Tabs, Tab } from "@material-ui/core";
 import timeifyDate from "../../helpers/timeifyDate";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
+import { notificationsContext } from "../../provider/NotificationsProvider";
+import io from "socket.io-client";
+let socket;
 
 const prisma = new PrismaClient();
 
@@ -55,14 +58,43 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   };
 }, sessionOptions);
 
-const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader, setNavbar }) => {
+const MessagesIndex = ({
+  lawyerMessages,
+  lawfirmMessages,
+  setHeader,
+  setNavbar,
+}) => {
   const [messageCards, setMessageCards] = useState(lawyerMessages);
   const [value, setValue] = useState(0);
+  const { addNotification } = useContext(notificationsContext);
 
   useEffect(() => {
     setHeader({ header: "MESSAGES", hidden: false });
     setNavbar({ navbar: "", hidden: false });
+    socketInitializer();
+    const closeSocket = () => {
+      socket.disconnect();
+      console.log("Socket closed");
+    };
+    return closeSocket;
   }, []);
+
+  const socketInitializer = async () => {
+    await fetch("/api/socket");
+    socket = io();
+
+    socket.on("connect", () => {
+      console.log("connected");
+    });
+
+    socket.on("update-typing-status", bool => {
+      // do something with message card
+    });
+
+    socket.on("update-messages", newMessage => {
+      addNotification();
+    });
+  };
 
   const handleChange = (e, value) => {
     setValue(value);
@@ -71,6 +103,11 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader, setNavbar }
   const parseMessageCards = messageCards => {
     return (
       messageCards
+        .map(message => {
+          if (message.seen_client === false) {
+            addNotification();
+          }
+        })
         // to just grab the first most recent message
         .filter((value, index, self) => {
           return (
