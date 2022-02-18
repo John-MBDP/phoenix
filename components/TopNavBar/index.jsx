@@ -1,5 +1,5 @@
 import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -18,10 +18,36 @@ import MessageIcon from "@mui/icons-material/Message";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import styles from "./index.module.scss";
+import { notificationsContext } from "../../provider/NotificationsProvider";
+import io from "socket.io-client";
+let socket;
 
 const TopNavBar = ({ header, user }) => {
   const [open, setOpen] = useState(false);
+  const { notifications, addNotification } = useContext(notificationsContext);
   const drawerHeight = 240;
+
+  const socketInitializer = async () => {
+    await fetch("/api/socket");
+    socket = io();
+
+    socket.on("connect", () => {
+      console.log("connected");
+    });
+
+    socket.on("update-client-messages", newMessage => {
+      addNotification();
+    });
+  };
+
+  useEffect(() => {
+    socketInitializer();
+    const closeSocket = () => {
+      socket.disconnect();
+      console.log("Socket closed");
+    };
+    return closeSocket;
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -83,7 +109,12 @@ const TopNavBar = ({ header, user }) => {
           >
             {header.header}
           </Typography>
-          <NotificationImportantIcon />
+          <div style={{ display: "flex" }}>
+            {notifications > 0 && (
+              <div className={styles.messages_ping}>{notifications}</div>
+            )}
+            <NotificationImportantIcon />
+          </div>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -113,10 +144,10 @@ const TopNavBar = ({ header, user }) => {
               src={"/images/huTao.png"}
             />
           </IconButton>
-          <span className={styles.profile}>
-            Profile
-          </span>
-          <a className={styles.logout} href="/logout">Logout</a>
+          <span className={styles.profile}>Profile</span>
+          <a className={styles.logout} href="/logout">
+            Logout
+          </a>
         </header>
         <List>
           <ListItem
