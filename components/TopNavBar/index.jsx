@@ -27,27 +27,34 @@ const TopNavBar = ({ header, user }) => {
   const { notifications, addNotification } = useContext(notificationsContext);
   const drawerHeight = 240;
 
-  const socketInitializer = async () => {
-    await fetch("/api/socket");
-    socket = io();
+  // const socketInitializer = async () => {
+  //   await fetch("/api/socket");
+  //   socket = io();
 
-    socket.on("connect", () => {
-      console.log("connected");
-    });
+  //   socket.on("connect", () => {
+  //     console.log("connected");
+  //   });
 
-    socket.on("update-client-messages", newMessage => {
-      addNotification();
-    });
-  };
+  //   socket.on("update-client-messages", ping => {
+  //     if (!clientPresence) {
+  //       addNotification();
+  //     }
+  //   });
 
-  useEffect(() => {
-    socketInitializer();
-    const closeSocket = () => {
-      socket.disconnect();
-      console.log("Socket closed");
-    };
-    return closeSocket;
-  }, []);
+  //   socket.on("update-client-presence", bool => {
+  //     setClientPresence(bool);
+  //     console.log(clientPresence);
+  //   });
+  // };
+
+  // useEffect(() => {
+  //   socketInitializer();
+  //   const closeSocket = () => {
+  //     socket.disconnect();
+  //     console.log("Socket closed");
+  //   };
+  //   return closeSocket;
+  // }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);

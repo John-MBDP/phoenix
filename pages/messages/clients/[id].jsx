@@ -59,9 +59,10 @@ const Messages = ({
   const [typingIndicator, setTypingIndicator] = useState(false);
   const [clientPresence, setClientPresence] = useState(false);
   const { clearNotifications } = useContext(notificationsContext);
-  const headerName = messages.length > 0
-    ? `${messages[0].clients.first_name} ${messages[0].clients.last_name}`
-    : "Messages";
+  const headerName =
+    messages.length > 0
+      ? `${messages[0].clients.first_name} ${messages[0].clients.last_name}`
+      : "Messages";
 
   useEffect(() => {
     setHeader(() => ({ header: headerName, hidden: false }));
@@ -178,7 +179,6 @@ const Messages = ({
             from_client: false,
             seen_client: clientPresence,
           };
-          console.log(message);
           try {
             const newMessage = await saveMessage(message);
             setMessages([...messages, newMessage]);

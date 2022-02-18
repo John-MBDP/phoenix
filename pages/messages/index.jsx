@@ -68,40 +68,39 @@ const MessagesIndex = ({
   const [value, setValue] = useState(0);
   const { addNotification, clearNotifications } = useContext(notificationsContext);
 
-  // const socketInitializer = async () => {
-  //   await fetch("/api/socket");
-  //   socket = io();
+  const socketInitializer = async () => {
+    await fetch("/api/socket");
+    socket = io();
 
-  //   socket.on("connect", () => {
-  //     console.log("connected");
-  //   });
+    socket.on("connect", () => {
+      console.log("connected");
+    });
 
-  //   socket.on("update-typing-status", bool => {
-  //     // do something with message card
-  //   });
+    socket.on("update-typing-status", bool => {
+      // do something with message card
+    });
 
-  //   socket.on("update-client-messages", newMessage => {
-  //     addNotification();
-  //   });
-  // };
+    socket.on("update-client-messages", newMessage => {
+      addNotification();
+    });
+  };
 
   useEffect(() => {
     setHeader({ header: "MESSAGES", hidden: false });
     setNavbar({ navbar: "", hidden: false });
-    // socketInitializer();
-    // messageCards.forEach(message => {
-    //   if (message.seen_client === false) {
-    //     addNotification();
-    //   }
-    // });
-    // const closeSocket = () => {
-    //   socket.disconnect();
-    //   console.log("Socket closed");
-    // };
-    // return () => {
-    //   closeSocket();
-    //   clearNotifications();
-    // };
+    socketInitializer();
+    messageCards.forEach(message => {
+      if (message.seen_client === false) {
+        addNotification();
+      }
+    });
+    const closeSocket = () => {
+      socket.disconnect();
+      console.log("Socket closed");
+    };
+    return () => {
+      closeSocket();
+    };
   }, []);
 
   const handleChange = (e, value) => {
