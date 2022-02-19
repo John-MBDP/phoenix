@@ -4,11 +4,12 @@ import { useEffect } from "react";
 import useUser from "../hooks/useUser";
 import RoundedTopContainer from "../components/RoundedTopContainer";
 
-const Logout = ({ setHeader }) => {
+const Logout = ({ setHeader, setNavbar }) => {
   const router = useRouter();
   const { user, mutateUser } = useUser();
   useEffect(() => {
     setHeader({ header: "", hidden: true });
+    setNavbar({ navbar: "", hidden: true });
     setTimeout(async () => {
       mutateUser(await fetch("/api/auth/logout", { method: "POST" }), false);
       router.push("/signup");
