@@ -1,12 +1,16 @@
 DROP TABLE IF EXISTS lawyer_favourites CASCADE;
 
+DROP TABLE IF EXISTS lawfirm_fields CASCADE;
+
+DROP TABLE IF EXISTS lawyer_fields CASCADE;
+
 DROP TABLE IF EXISTS lawfirm_favourites CASCADE;
 
 DROP TABLE IF EXISTS article_favourites CASCADE;
 
 DROP TABLE IF EXISTS lawfirm_members CASCADE;
 
-DROP TABLE IF EXISTS lawyer_fields CASCADE;
+DROP TABLE IF EXISTS fields_of_law CASCADE;
 
 DROP TABLE IF EXISTS messages CASCADE;
 
@@ -17,8 +21,6 @@ DROP TABLE IF EXISTS lawyers CASCADE;
 DROP TABLE IF EXISTS lawfirms CASCADE;
 
 DROP TABLE IF EXISTS clients CASCADE;
-
-DROP TABLE IF EXISTS fields_of_law CASCADE;
 
 create table articles (
 	id SERIAL PRIMARY KEY,

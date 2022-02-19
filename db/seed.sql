@@ -22,7 +22,7 @@ values
 		'(449) 7083958',
 		'492 Forster Place',
 		11,
-		'http://dummyimage.com/200x200.png/5fa2dd/ffffff'
+		'/images/lawfirms/lawfirm1.png'
 	);
 
 insert into
@@ -49,7 +49,7 @@ values
 		'(189) 8409866',
 		'49967 Moose Parkway',
 		17,
-		'http://dummyimage.com/200x200.png/cc0000/ffffff'
+		'/images/lawfirms/lawfirm2.png'
 	);
 
 insert into
@@ -76,7 +76,7 @@ values
 		'(217) 9050822',
 		'37 Scoville Alley',
 		35,
-		'http://dummyimage.com/200x200.png/dddddd/000000'
+		'/images/lawfirms/lawfirm3.png'
 	);
 
 insert into
@@ -103,7 +103,7 @@ values
 		'(124) 4060935',
 		'8 Hoffman Place',
 		37,
-		'http://dummyimage.com/200x200.png/cc0000/ffffff'
+		'/images/lawfirms/lawfirm4.png'
 	);
 
 insert into
@@ -130,7 +130,7 @@ values
 		'(600) 2323746',
 		'8 Bobwhite Trail',
 		30,
-		'http://dummyimage.com/200x200.png/ff4444/ffffff'
+		'/images/lawfirms/lawfirm5.png'
 	);
 
 insert into
