@@ -32,7 +32,7 @@ export const getServerSideProps = withIronSessionSsr(
       where: {
         lawyer_id: id,
       },
-    })
+    });
     return {
       props: {
         user,
@@ -148,7 +148,7 @@ const Lawyer = ({ setHeader, setNavbar, lawyer, lawfirmId, user, lawyerFavourite
             background="#00589B"
             padding="0.5rem 1rem"
             icon={<AnnouncementIcon />}
-            onClick={() => console.log("button")}
+            onClick={() => router.push(`/messages/lawyers/${lawyer.id}`)}
           >
             message
           </Button>
