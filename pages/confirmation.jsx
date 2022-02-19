@@ -45,7 +45,7 @@ const Confirmation = ({ setHeader, setNavbar }) => {
               justifyContent: "center",
             }}
           >
-            <TextField value="0" />
+            <TextField />
           </Card>
           <Card
             sx={{
@@ -56,7 +56,7 @@ const Confirmation = ({ setHeader, setNavbar }) => {
               justifyContent: "center",
             }}
           >
-            <TextField value="9" />
+            <TextField />
           </Card>
           <Card
             sx={{
@@ -67,7 +67,7 @@ const Confirmation = ({ setHeader, setNavbar }) => {
               justifyContent: "center",
             }}
           >
-            <TextField value="2" />
+            <TextField />
           </Card>
           <Card
             sx={{
@@ -78,7 +78,7 @@ const Confirmation = ({ setHeader, setNavbar }) => {
               justifyContent: "center",
             }}
           >
-            <TextField value="6" />
+            <TextField />
           </Card>
         </Box>
         <Typography paragraph fontWeight sx={{ color: "#FF0056" }}>
