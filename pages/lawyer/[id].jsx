@@ -20,6 +20,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
+import { FastRewindTwoTone } from "@mui/icons-material";
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {
@@ -43,6 +44,11 @@ export const getServerSideProps = withIronSessionSsr(
       where: {
         lawyer_id: id,
       },
+      orderBy: [
+        {
+          date_changed: "desc",
+        },
+      ],
     });
 
     const lawyer = await prisma.lawyers.findUnique({
@@ -96,9 +102,10 @@ const Lawyer = ({
   }, []);
 
   const [favourited, setFavourited] = useState(lawyerFavourite ? true : false);
-  const [connectionRequested, setConnectionRequested] = useState(
-    lawyerConnection ? true : false
-  );
+  const [connection, setConnection] = useState({
+    pending: lawyerConnection ? lawyerConnection.pending : false,
+    accepted: lawyerConnection ? lawyerConnection.accepted : false,
+  });
   const userIds = { client_id: user.id, lawyer_id: lawyer.id };
 
   const sendConnectionRequest = async connectionIds => {
@@ -115,7 +122,7 @@ const Lawyer = ({
   };
 
   const destroyConnectionRequest = async connectionIds => {
-    const response = await fetch("/api/connections/lawyers/create", {
+    const response = await fetch("/api/connections/lawyers/delete", {
       method: "POST",
       body: JSON.stringify({ ...connectionIds }),
     });
@@ -123,7 +130,7 @@ const Lawyer = ({
     if (!response.ok) {
       throw new Error(response.statusText);
     }
-    console.log("sent connection request!");
+    console.log("destroyed connection!");
     return await response.json();
   };
 
@@ -136,7 +143,7 @@ const Lawyer = ({
     if (!response.ok) {
       throw new Error(response.statusText);
     }
-    console.log("saved!");
+    console.log("saved favourite!");
     return await response.json();
   };
 
@@ -149,7 +156,7 @@ const Lawyer = ({
     if (!response.ok) {
       throw new Error(response.statusText);
     }
-    console.log("destroyed!");
+    console.log("destroyed favourite!");
     return await response.json();
   };
 
@@ -200,21 +207,34 @@ const Lawyer = ({
       <div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Button
-            color={(connectionRequested && "grey") || "#00589B"}
+            color="#00589B"
+            background={(connection.pending || connection.accepted) ? "grey" : null}
             padding="0.5rem 1rem"
             icon={<AnnouncementIcon />}
             onClick={() => {
-              if (!connectionRequested) {
+              if (!connection.pending && !connection.accepted) {
                 try {
                   sendConnectionRequest(userIds);
-                  setConnectionRequested(true);
+                  setConnection({ ...connection, pending: true });
+                } catch (err) {
+                  console.log(err);
+                }
+              } else {
+                try {
+                  destroyConnectionRequest(userIds);
+                  setConnection({
+                    pending: false,
+                    accepted: false,
+                  });
                 } catch (err) {
                   console.log(err);
                 }
               }
             }}
           >
-            {connectionRequested && 'request sent' || 'connect'}
+            {(connection.pending && "request sent") ||
+              (connection.accepted && "connected") ||
+              "connect"}
           </Button>
           <div style={{ width: "0.2rem" }}></div>
           <Button
