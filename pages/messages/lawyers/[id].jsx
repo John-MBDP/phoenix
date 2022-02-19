@@ -38,15 +38,15 @@ export const getServerSideProps = withIronSessionSsr(
     });
     const lawyer = await prisma.lawyers.findUnique({
       where: {
-        id: lawyerId
-      }
+        id: lawyerId,
+      },
     });
     return {
       props: {
         lawyerId,
         clientId,
         initialMessages: messages,
-        lawyer
+        lawyer,
       },
     };
   },
@@ -196,6 +196,11 @@ const Messages = ({
               <span></span>
               <span></span>
             </div>
+          </Message>
+        )}
+        {messageArray.length < 1 && (
+          <Message profilePic={"/images/lawyers/bot_icon_still_2x.jpg"}>
+            Welcome to Phoenix Chat! Please feel free to start the conversation!
           </Message>
         )}
       </div>
