@@ -89,11 +89,6 @@ const MessagesIndex = ({
     setHeader({ header: "MESSAGES", hidden: false });
     setNavbar({ navbar: "", hidden: false });
     socketInitializer();
-    messageCards.forEach(message => {
-      if (message.seen_client === false) {
-        addNotification();
-      }
-    });
     const closeSocket = () => {
       socket.disconnect();
       console.log("Socket closed");
@@ -103,6 +98,15 @@ const MessagesIndex = ({
       clearNotifications();
     };
   }, []);
+
+  useEffect(() => {
+    messageCards.forEach(message => {
+      if (message.seen_client === false) {
+        addNotification();
+      }
+    });
+    return clearNotifications;
+  }, [messageCards]);
 
   const handleChange = (e, value) => {
     setValue(value);
