@@ -28,30 +28,16 @@ export const getServerSideProps = withIronSessionSsr(
         lawyers: true
       }
     });
-
+    
     const lawyerFavourite = await prisma.lawyer_favourites.findFirst({
       where: {
         lawyer_id: id
       }
     });
-
-    if (lawfirmMembers.length === 0) {
-      const lawyer = await prisma.lawyers.findUnique({
-        where: { id }
-      });
-
-      return {
-        props: {
-          user,
-          lawyerFavourite,
-          lawyer: {
-            ...lawyer,
-            date_certified: `${lawyer.date_certified.getFullYear()}`
-          },
-          lawfirmId: null
-        }
-      };
-    }
+    
+    const lawyer = await prisma.lawyers.findUnique({
+      where: { id }
+    });
 
     return {
       props: {
