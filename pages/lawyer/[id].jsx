@@ -3,13 +3,17 @@ const prisma = new PrismaClient();
 import { useEffect, useState } from "react";
 import RoundedTopContainer from "../../components/RoundedTopContainer";
 import UserStatsCard from "../../components/UserStatsCard";
-import { Typography } from "@material-ui/core";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Button from "../../components/Button";
 import AnnouncementIcon from "@mui/icons-material/Announcement";
 import EmailIcon from "@mui/icons-material/Email";
 import Widebutton from "../../components/WideButton";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRouter } from "next/router";
 import ViewLikesCounter from "../../components/ViewLikesCounter";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -25,18 +29,18 @@ export const getServerSideProps = withIronSessionSsr(
     const lawfirmMembers = await prisma.lawfirm_members.findMany({
       where: { lawyer_id: id },
       include: {
-        lawyers: true
-      }
+        lawyers: true,
+      },
     });
-    
+
     const lawyerFavourite = await prisma.lawyer_favourites.findFirst({
       where: {
-        lawyer_id: id
-      }
+        lawyer_id: id,
+      },
     });
-    
+
     const lawyer = await prisma.lawyers.findUnique({
-      where: { id }
+      where: { id },
     });
 
     return {
@@ -45,10 +49,11 @@ export const getServerSideProps = withIronSessionSsr(
         lawyerFavourite,
         lawyer: {
           ...lawyer,
-          date_certified: `${lawyer.date_certified.getFullYear()}`
+          date_certified: `${lawyer.date_certified.getFullYear()}`,
         },
-        lawfirmId: (lawfirmMembers.length > 0 ? lawfirmMembers[0].lawfirm_id : null)
-      }
+        lawfirmId:
+          lawfirmMembers.length > 0 ? lawfirmMembers[0].lawfirm_id : null,
+      },
     };
   },
   sessionOptions
@@ -60,7 +65,7 @@ const Lawyer = ({
   lawyer,
   lawfirmId,
   user,
-  lawyerFavourite
+  lawyerFavourite,
 }) => {
   const router = useRouter();
   const {
@@ -70,24 +75,25 @@ const Lawyer = ({
     phone_number,
     location,
     email,
+    description,
     profile_pic,
     education,
     date_certified,
     views,
-    likes
+    likes,
   } = lawyer;
   useEffect(() => {
-    setHeader((prev) => ({ ...prev, hidden: true }));
+    setHeader(prev => ({ ...prev, hidden: true }));
     setNavbar({ navbar: "", hidden: false });
   }, []);
 
   const [favourited, setFavourited] = useState(lawyerFavourite ? true : false);
   const favourite = { client_id: user.id, lawyer_id: lawyer.id };
 
-  const saveFavourite = async (favourite) => {
+  const saveFavourite = async favourite => {
     const response = await fetch("/api/favourites/lawyers/create", {
       method: "POST",
-      body: JSON.stringify({ ...favourite, date_created: new Date() })
+      body: JSON.stringify({ ...favourite, date_created: new Date() }),
     });
 
     if (!response.ok) {
@@ -97,10 +103,10 @@ const Lawyer = ({
     return await response.json();
   };
 
-  const destroyFavourite = async (favourite) => {
+  const destroyFavourite = async favourite => {
     const response = await fetch("/api/favourites/lawyers/delete", {
       method: "POST",
-      body: JSON.stringify(favourite)
+      body: JSON.stringify(favourite),
     });
 
     if (!response.ok) {
@@ -271,7 +277,7 @@ const Lawyer = ({
         strong
         backgroundColor="#1B4463"
         textAlign="left"
-        onClick={(e) => console.log("potato")}
+        onClick={e => console.log("potato")}
       >
         <div>
           <Typography variant="body2">Education:</Typography>
@@ -282,6 +288,22 @@ const Lawyer = ({
           `}</style>
         </div>
       </Widebutton>
+      <Accordion
+        sx={{
+          backgroundColor: "#1B4463",
+          padding: "0 0.7em",
+          marginTop: "1em",
+          color: "white",
+          textAlign: 'center'
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+        >
+          <Typography>More About {first_name}</Typography>
+        </AccordionSummary>
+        <AccordionDetails sx={{ textAlign: 'left' }}><Typography>{description}</Typography></AccordionDetails>
+      </Accordion>
     </RoundedTopContainer>
   );
 };

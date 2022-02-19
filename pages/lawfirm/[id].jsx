@@ -3,7 +3,11 @@ const prisma = new PrismaClient();
 import { useEffect, useState } from "react";
 import RoundedTopContainer from "../../components/RoundedTopContainer";
 import UserStatsCard from "../../components/UserStatsCard";
-import { Typography } from "@material-ui/core";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Button from "../../components/Button";
@@ -55,6 +59,7 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
     location,
     email,
     profile_pic,
+    description,
     registration_date,
     views,
     likes,
@@ -192,6 +197,22 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
           </Typography>
         </div>
       </Widebutton>
+      <Accordion
+        sx={{
+          backgroundColor: "#1B4463",
+          padding: "0 0.7em",
+          marginTop: "1em",
+          color: "white",
+          textAlign: 'center'
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+        >
+          <Typography variant="body2">More About {name}</Typography>
+        </AccordionSummary>
+        <AccordionDetails sx={{ textAlign: 'left' }}>{description}</AccordionDetails>
+      </Accordion>
       <style jsx>{`
         .flex-center {
           display: grid;
