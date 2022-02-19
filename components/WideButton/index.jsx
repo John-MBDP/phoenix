@@ -10,7 +10,7 @@ const Widebutton = ({
   textAlign
 }) => {
   return (
-    <div className="container">
+    <div className={`container`}>
       <button onClick={onClick}>
         <div className="dollarAccent">{ammount}</div>
         <div className="text">{children}</div>
