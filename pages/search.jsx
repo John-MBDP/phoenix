@@ -99,8 +99,7 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
   });
 
   return (
-    <Box sx={{ px: "2rem", mt: "5rem" }}>
-      <br />
+    <div style={{ padding: "1rem 2rem", marginTop: "5rem" }}>
       <form onSubmit={(e) => handleSubmit(e, city, fields[selectedField])}>
         <FormControl fullWidth>
           <OutlinedInput
@@ -142,7 +141,7 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
         {tabs}
       </Tabs>
       {cardArray}
-    </Box>
+    </div>
   );
 };
 
