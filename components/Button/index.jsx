@@ -9,7 +9,6 @@ const StyledButton = ({
   hidden,
   ...restprops
 }) => {
-  console.log(hidden);
   return (
     <div className={styles.container}>
       <button
