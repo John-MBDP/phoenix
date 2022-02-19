@@ -9,8 +9,6 @@ import useUser from "../hooks/useUser";
 
 // eslint-disable-next-line func-style
 function MyApp({ Component, pageProps }) {
-
-
   const [header, setHeader] = useState({
     header: "NEWS FEED",
     hidden: false,
@@ -18,17 +16,16 @@ function MyApp({ Component, pageProps }) {
 
   const [navbar, setNavbar] = useState({
     navbar: "",
-    hidden: true,
+    hidden: false,
   });
 
   const { user } = useUser();
 
   return (
-
     <SWRConfig
       value={{
         fetcher: fetchJson,
-        onError: err => {
+        onError: (err) => {
           console.error(err);
         },
       }}
@@ -38,7 +35,7 @@ function MyApp({ Component, pageProps }) {
         <Component {...pageProps} setHeader={setHeader} setNavbar={setNavbar} />
       </div>
       <BottomNav navbar={navbar} />
-      </SWRConfig>
+    </SWRConfig>
   );
 }
 export default MyApp;
