@@ -3,19 +3,57 @@ import UserStatCard from "../components/UserStatsCard";
 import { Typography, TextField } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
+import { PrismaClient } from "@prisma/client";
+import { withIronSessionSsr } from "iron-session/next";
+import sessionOptions from "../lib/session";
 
-const PersonalInfo = ({ setHeader, setNavbar }) => {
+const prisma = new PrismaClient();
+
+export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
+  const user = req.session.user;
+  const client = await prisma.clients.findUnique({
+    where: { id: user.id },
+  });
+  return {
+    props: {
+      client,
+    },
+  };
+}, sessionOptions);
+
+const PersonalInfo = ({ setHeader, setNavbar, client }) => {
   useEffect(() => {
     setHeader({ header: "", hidden: true });
     setNavbar({ navbar: "", hidden: false });
   }, []);
   const [formInput, setFormInput] = useState({
-    firstName: "",
-    lastName: "",
-    address: "",
-    phoneNumber: "",
-    emailAdress: "",
+    id: client.id,
+    firstName: client.first_name || "",
+    lastName: client.last_name || "",
+    address: client.address || "",
+    phoneNumber: client.phone_number || "",
+    emailAddress: client.email || "",
   });
+
+  const updateClient = async clientInfo => {
+    const client = {
+      id: clientInfo.id,
+      first_name: clientInfo.firstName,
+      last_name: clientInfo.lastName,
+      email: clientInfo.emailAddress,
+      phone_number: clientInfo.phoneNumber,
+      address: clientInfo.address,
+    };
+    const response = await fetch("/api/clients/update", {
+      method: "POST",
+      body: JSON.stringify(client),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return await response.json();
+  };
 
   const handleInput = e => {
     setFormInput(prev => {
@@ -23,8 +61,14 @@ const PersonalInfo = ({ setHeader, setNavbar }) => {
     });
   };
 
-  const handleSubmit = async e => {
-    e.preventDefault();
+  const handleSubmit = async formInput => {
+    try {
+      const updatedClient = await updateClient(formInput);
+      setFormInput({...formInput, updatedClient});
+      console.log('client info updated!');
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -36,7 +80,12 @@ const PersonalInfo = ({ setHeader, setNavbar }) => {
       <UserStatCard />
       <RoundedTopContainer.Header text="Personal Information" />
 
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={e => {
+          e.preventDefault();
+          handleSubmit(formInput);
+        }}
+      >
         <TextField
           fullWidth
           label="First Name"
@@ -59,7 +108,7 @@ const PersonalInfo = ({ setHeader, setNavbar }) => {
           fullWidth
           label="Email Address"
           name="emailAdress"
-          value={formInput.emailAdress}
+          value={formInput.emailAddress}
           onChange={e => handleInput(e)}
           margin="normal"
         />

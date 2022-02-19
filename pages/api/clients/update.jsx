@@ -7,11 +7,12 @@ export default async function handler(req, res) {
 
   try {
     const client = JSON.parse(req.body);
+    const { id, first_name, last_name, email, phone_number, address } = client;
     const updatedClient = await prisma.clients.update({
       where: {
-        client_id: { equals: client.id },
+        id
       },
-      data: { client },
+      data: { first_name, last_name, email, phone_number, address },
     });
     res.status(200).json(updatedClient);
   } catch {
