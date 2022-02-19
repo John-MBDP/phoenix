@@ -16,7 +16,7 @@ export default async (req, res) => {
         }
       ],
       mode: "payment",
-      success_url: `${req.headers.origin}/stripe/result?session_id={CHECKOUT_SESSION_ID}`,
+      success_url: `${req.headers.origin}/stripe/purchase?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${req.headers.origin}/checkout`
     })
     .then((data) => {
