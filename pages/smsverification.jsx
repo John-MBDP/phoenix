@@ -20,24 +20,11 @@ const SmsVerification = ({ setHeader, setNavbar }) => {
     setNavbar({ navbar: "", hidden: true });
   }, []);
 
-  // const theme = createTheme({
-  //   overrides: {
-  //     MuiInput: {
-  //       root: {
-  //         borderBottom: "1px solid rgba(0, 0, 0, 0.42)",
-  //       },
-  //     },
-  //   },
-  // });
   return (
     <RoundedTopContainer image={"/sms-2.png"} alt={"signup-image"} height="350px">
       <Typography variant="h5" sx={{ fontWeight: "800px", mb: 4 }}>
         SMS Verification
       </Typography>
-      {/* <Button sx={{ display: "flex" }}>
-        <PublicIcon sx={{ color: "black" }}></PublicIcon>
-        <KeyboardArrowDownIcon sx={{ color: "black" }} />
-      </Button> */}
 
       <TextField
         sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
