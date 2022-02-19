@@ -5,7 +5,7 @@ import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
 import { useState, useEffect, useRef, useContext } from "react";
 import timeifyDate from "../../../helpers/timeifyDate";
-import styles from "./index.module.scss";
+import styles from "../lawyers/index.module.scss";
 import io from "socket.io-client";
 import sessionOptions from "../../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";

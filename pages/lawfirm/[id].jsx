@@ -152,7 +152,7 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
             background="#00589B"
             padding="0.5rem 1rem"
             icon={<AnnouncementIcon />}
-            onClick={() => console.log("button")}
+            onClick={() => router.push(`/messages/law_firms/${lawfirm.id}`)}
           >
             message
           </Button>
