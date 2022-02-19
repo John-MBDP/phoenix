@@ -1,56 +1,118 @@
-import { Box, Paper, Typography } from "@material-ui/core";
 import { PrismaClient } from "@prisma/client";
 import Message from "../../../components/Message";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
+import { useState, useEffect, useRef, useContext } from "react";
 import timeifyDate from "../../../helpers/timeifyDate";
-import styles from "../lawyers/index.module.scss";
-import { useState, useEffect, useRef } from "react";
+import styles from "./index.module.scss";
 import io from "socket.io-client";
+import sessionOptions from "../../../lib/session";
+import { withIronSessionSsr } from "iron-session/next";
+import { notificationsContext } from "../../../provider/NotificationsProvider";
+const prisma = new PrismaClient();
 let socket;
 
-const prisma = new PrismaClient();
-
-export async function getServerSideProps(context) {
-  const messages = await prisma.messages.findMany({
-    where: {
-      law_firm_id: {
-        equals: Number(context.params.id)
+export const getServerSideProps = withIronSessionSsr(
+  async ({ req, res, params }) => {
+    const lawfirmId = Number(params.id);
+    const clientId = req.session.user.id;
+    const messages = await prisma.messages.findMany({
+      where: {
+        client_id: {
+          equals: clientId,
+        },
+        law_firm_id: {
+          equals: lawfirmId,
+        },
       },
-      client_id: {
-        equals: 1
-      }
-    },
-    orderBy: [
-      {
-        date_sent: "asc"
-      }
-    ]
-  });
-  return {
-    props: {
-      initialMessages: messages
-    }
-  };
-}
+      include: {
+        lawfirms: true,
+      },
+      orderBy: [
+        {
+          date_sent: "asc",
+        },
+      ],
+    });
+    const lawfirm = await prisma.lawfirms.findUnique({
+      where: {
+        id: lawfirmId,
+      },
+    });
+    return {
+      props: {
+        lawfirmId,
+        clientId,
+        initialMessages: messages,
+        lawfirm,
+      },
+    };
+  },
+  sessionOptions
+);
 
-const Messages = ({ initialMessages, setHeader, setNavbar }) => {
+const Messages = ({
+  initialMessages,
+  lawfirmId,
+  clientId,
+  lawfirm,
+  setHeader,
+  setNavbar,
+}) => {
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
   const [typingIndicator, setTypingIndicator] = useState(false);
+  const { clearNotifications } = useContext(notificationsContext);
+  const lawfirmProfilePic = lawfirm.profile_pic;
+  const headerName = lawfirm.name;
 
   useEffect(() => {
-    setHeader({ header: "MESSAGES", hidden: false });
+    setHeader(() => ({ header: headerName, hidden: false }));
     setNavbar({ navbar: "", hidden: false });
     socketInitializer();
     const closeSocket = () => {
+      socket.emit("input-change", false);
+      socket.emit("client-present", false);
       socket.disconnect();
       console.log("Socket closed");
     };
     return closeSocket;
   }, []);
 
+  useEffect(async () => {
+    try {
+      const seenMessages = await updateSeenMessageStatus({
+        clientId,
+        lawfirmId,
+      });
+      setMessages(prev => {
+        const updatedMessages = prev.map(message => ({
+          ...message,
+          seen_client: true,
+        }));
+        return updatedMessages;
+      });
+      socket.emit("client-present", true);
+      clearNotifications();
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  // to stop typing indicator on page refresh
+  useEffect(() => {
+    window.addEventListener("beforeunload", () =>
+      socket.emit("input-change", false)
+    );
+    return () => {
+      window.removeEventListener("beforeunload", () =>
+        socket.emit("input-change", false)
+      );
+    };
+  }, []);
+
+  // to always scroll to bottom when new messages or typing indicator are present
   useEffect(() => {
     scrollToBottom();
   }, [messages, typingIndicator]);
@@ -63,15 +125,19 @@ const Messages = ({ initialMessages, setHeader, setNavbar }) => {
       console.log("connected");
     });
 
-    socket.on("update-input", (bool) => {
+    socket.on("update-typing-status", bool => {
       setTypingIndicator(bool);
+    });
+
+    socket.on("update-client-messages", newMessage => {
+      setMessages([...messages, { ...newMessage, seen_client: true }]);
     });
   };
 
-  const saveMessage = async (message) => {
-    const response = await fetch("/api/messages", {
+  const updateSeenMessageStatus = async messageIds => {
+    const response = await fetch("/api/messages/update", {
       method: "POST",
-      body: JSON.stringify(message)
+      body: JSON.stringify(messageIds),
     });
 
     if (!response.ok) {
@@ -80,7 +146,20 @@ const Messages = ({ initialMessages, setHeader, setNavbar }) => {
     return await response.json();
   };
 
-  const onChangeHandler = (e) => {
+  const saveMessage = async message => {
+    const response = await fetch("/api/messages/create", {
+      method: "POST",
+      body: JSON.stringify(message),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return await response.json();
+  };
+
+  const onChangeHandler = e => {
+    console.log(socket.disconnected);
     setInput(e.target.value);
     e.target.value
       ? socket.emit("input-change", true)
@@ -93,12 +172,13 @@ const Messages = ({ initialMessages, setHeader, setNavbar }) => {
     messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
   };
 
-  const messageArray = messages.map((item) => {
+  const messageArray = messages.map(item => {
     return (
       <Message
         key={item.id}
         fromClient={item.from_client}
         date={timeifyDate(item.date_sent)}
+        profilePic={lawfirmProfilePic}
       >
         {item.body}
       </Message>
@@ -109,7 +189,7 @@ const Messages = ({ initialMessages, setHeader, setNavbar }) => {
       <div className={styles.messages_container}>
         {messageArray}
         {typingIndicator && (
-          <Message>
+          <Message profilePic={lawfirmProfilePic}>
             <div className={styles.typing_indicator}>
               <span></span>
               <span></span>
@@ -117,23 +197,31 @@ const Messages = ({ initialMessages, setHeader, setNavbar }) => {
             </div>
           </Message>
         )}
+        {messageArray.length < 1 && (
+          <Message profilePic={"/images/lawyers/bot_icon_still_2x.jpg"}>
+            Welcome to Phoenix Chat! Please feel free to start the conversation!
+          </Message>
+        )}
       </div>
       <div ref={messagesEndRef} />
       <form
         className={styles.messages_input}
-        onSubmit={async (e) => {
+        onSubmit={async e => {
           e.preventDefault();
           const message = {
             body: input,
-            client_id: 4,
-            lawyer_id: 2,
+            client_id: clientId,
+            law_firm_id: lawfirmId,
             date_sent: new Date(),
-            from_client: true
+            from_client: true,
+            seen_client: true,
           };
           try {
             const newMessage = await saveMessage(message);
             setMessages([...messages, newMessage]);
-            e.target.reset();
+            socket.emit("send-message-from-client", newMessage);
+            socket.emit("input-change", false);
+            setInput("");
           } catch (err) {
             console.log(err);
           }
@@ -144,9 +232,9 @@ const Messages = ({ initialMessages, setHeader, setNavbar }) => {
           label="Type something..."
           variant="standard"
           onChange={onChangeHandler}
-          autoComplete="off"
           value={input}
           fullWidth
+          autoComplete="off"
         />
         <Button type="submit">
           <SendIcon />
