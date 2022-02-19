@@ -18,6 +18,7 @@ const Logout = ({ setHeader, setNavbar }) => {
   return (
     <RoundedTopContainer image={"/Logout-2.png"} alt={"signup-image"} height={"300px"}>
       <Typography
+        variant="h5"
         sx={{
           fontWeight: "800px",
           display: "flex",
