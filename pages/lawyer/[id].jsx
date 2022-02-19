@@ -33,15 +33,20 @@ export const getServerSideProps = withIronSessionSsr(
         lawyer_id: id,
       },
     });
+    const lawyer = await prisma.lawyers.findUnique({
+      where: {
+        id
+      }
+    })
     return {
       props: {
         user,
         lawyerFavourite,
         lawyer: {
-          ...lawfirmMembers[0].lawyers,
-          date_certified: `${lawfirmMembers[0].lawyers.date_certified.getFullYear()}`
+          ...lawyer,
+          date_certified: `${lawyer.date_certified.getFullYear()}`
         },
-        lawfirmId: lawfirmMembers[0].lawfirm_id
+        lawfirmId: (lawfirmMembers.length > 0 ? lawfirmMembers[0].lawfirm_id : null)
       }
     };
   }, sessionOptions);

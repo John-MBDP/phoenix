@@ -36,11 +36,17 @@ export const getServerSideProps = withIronSessionSsr(
         },
       ],
     });
+    const lawyer = await prisma.lawyers.findUnique({
+      where: {
+        id: lawyerId
+      }
+    });
     return {
       props: {
         lawyerId,
         clientId,
         initialMessages: messages,
+        lawyer
       },
     };
   },
@@ -51,6 +57,7 @@ const Messages = ({
   initialMessages,
   lawyerId,
   clientId,
+  lawyer,
   setHeader,
   setNavbar,
 }) => {
@@ -58,12 +65,8 @@ const Messages = ({
   const [input, setInput] = useState("");
   const [typingIndicator, setTypingIndicator] = useState(false);
   const { clearNotifications } = useContext(notificationsContext);
-  const lawyerProfilePic =
-    initialMessages.length > 0 ? initialMessages[0].lawyers.profile_pic : null;
-  const headerName =
-    initialMessages.length > 0
-      ? `${initialMessages[0].lawyers.first_name} ${initialMessages[0].lawyers.last_name}`
-      : "Messages";
+  const lawyerProfilePic = lawyer.profile_pic;
+  const headerName = `${lawyer.first_name} ${lawyer.last_name}`;
 
   useEffect(() => {
     setHeader(() => ({ header: headerName, hidden: false }));
