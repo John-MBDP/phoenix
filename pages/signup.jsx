@@ -33,7 +33,7 @@ const Signup = ({ setHeader, setNavbar }) => {
   const [errorMsg, setErrorMsg] = useState("");
 
   const { mutateUser } = useUser({
-    redirectTo: "/",
+    redirectTo: "/smsverification",
     redirectIfFound: true,
   });
 
@@ -216,7 +216,7 @@ const Signup = ({ setHeader, setNavbar }) => {
             handleSubmit(formInput);
           }}
         >
-          <Button type="submit" onClick={() => router.push("/smsverification")}>
+          <Button type="submit">
             SIGN UP <ArrowRightAltIcon />
           </Button>
         </form>
