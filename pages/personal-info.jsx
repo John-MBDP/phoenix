@@ -86,7 +86,9 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
       <form
         onSubmit={e => {
           e.preventDefault();
-          handleSubmit(formInput);
+          if (!updated) {
+            handleSubmit(formInput);
+          }
         }}
       >
         <TextField
