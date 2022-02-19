@@ -24,7 +24,7 @@ let socket;
 
 const TopNavBar = ({ header, user }) => {
   const [open, setOpen] = useState(false);
-  const { notifications, addNotification } = useContext(notificationsContext);
+  // const { notifications, addNotification } = useContext(notificationsContext);
   const drawerHeight = 240;
 
   // const socketInitializer = async () => {
@@ -116,12 +116,12 @@ const TopNavBar = ({ header, user }) => {
           >
             {header.header}
           </Typography>
-          <div style={{ display: "flex" }}>
+          {/* <div style={{ display: "flex" }}>
             {notifications > 0 && (
               <div className={styles.messages_ping}>{notifications}</div>
-            )}
+            )} */}
             <NotificationImportantIcon />
-          </div>
+          {/* </div> */}
         </Toolbar>
       </AppBar>
       <Drawer

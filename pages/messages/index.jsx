@@ -100,6 +100,7 @@ const MessagesIndex = ({
     };
     return () => {
       closeSocket();
+      clearNotifications();
     };
   }, []);
 

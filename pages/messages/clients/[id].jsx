@@ -111,7 +111,6 @@ const Messages = ({
 
     socket.on("update-client-presence", bool => {
       setClientPresence(bool);
-      bool && clearNotifications();
     });
   };
 
