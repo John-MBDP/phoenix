@@ -11,7 +11,7 @@ const GetStarted = ({ setHeader, setNavbar }) => {
   // useEffect(() => setHeader({ header: "", hidden: true }), []);
   useEffect(() => {
     setHeader({ header: "", hidden: true });
-    setNavbar({ navbar: "", hidden: false });
+    setNavbar({ navbar: "", hidden: true });
   }, []);
   return (
     <RoundedTopContainer image={"/GetStarted-3.png"} alt={"signup-image"} height="350px">

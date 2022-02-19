@@ -11,12 +11,13 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Button from "../components/Button";
 // import { createTheme } from "@mui/material/styles";
 import { inputLabelClasses } from "@mui/material/InputLabel";
+import { useRouter } from "next/router";
 const SmsVerification = ({ setHeader, setNavbar }) => {
-  // useEffect(() => setHeader({ header: "", hidden: true }), []);
+  const router = useRouter();
 
   useEffect(() => {
     setHeader({ header: "", hidden: true });
-    setNavbar({ navbar: "", hidden: false });
+    setNavbar({ navbar: "", hidden: true });
   }, []);
 
   // const theme = createTheme({
@@ -65,7 +66,7 @@ const SmsVerification = ({ setHeader, setNavbar }) => {
       <Typography paragraph={true} sx={{ fontWeight: "800px", mb: 4, color: "#FF0056" }}>
         Please check your messages for the verification code.
       </Typography>
-      <Button>
+      <Button onClick={() => router.push("/confirmation")}>
         CONFIRM <ArrowRightAltIcon />
       </Button>
     </RoundedTopContainer>
