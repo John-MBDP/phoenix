@@ -1,9 +1,11 @@
 import ScrollableMenu from "../components/ScrollableMenu";
-import { Tabs, Tab, Box, TextField } from "@mui/material";
+import { Tabs, Tab, Box, OutlinedInput, FormControl } from "@mui/material";
 import { useEffect, useState } from "react";
 import SearchCard from "../components/SearchCard";
 import { PrismaClient } from "@prisma/client";
 import getGeoLocation from "../helpers/getGeoLocation";
+import GpsFixedIcon from "@mui/icons-material/GpsFixed";
+import { InputAdornment, InputLabel } from "@material-ui/core";
 const prisma = new PrismaClient();
 
 export const getServerSideProps = async () => {
@@ -93,28 +95,32 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
           type={searchTypes[selectedType].slice(0, -1)}
         />
       );
-    } else if (card) {
     }
   });
 
   return (
-    <Box sx={{ px: "2rem", mt: "5rem" }}>
-      <br />
-      <div>
-        <button onClick={() => getGeoLocation((location) => setCity(location))}>
-          Get Location
-        </button>
-        <form onSubmit={(e) => handleSubmit(e, city, fields[selectedField])}>
-          <TextField
-            fullWidth
+    <div style={{ padding: "1rem 2rem", marginTop: "5rem" }}>
+      <form onSubmit={(e) => handleSubmit(e, city, fields[selectedField])}>
+        <FormControl fullWidth>
+          <OutlinedInput
+            placeholder="Location"
+            id="location"
             value={city}
             onChange={handleInputChange}
-            margin="normal"
             autoComplete="off"
+            endAdornment={
+              <InputAdornment position="end">
+                <GpsFixedIcon
+                  onClick={() =>
+                    getGeoLocation((location) => setCity(location))
+                  }
+                  color="primary"
+                />
+              </InputAdornment>
+            }
           />
-          <button type="submit">submit</button>
-        </form>
-      </div>
+        </FormControl>
+      </form>
       <Tabs
         variant="scrollable"
         scrollButtons="auto"
@@ -135,7 +141,7 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
         {tabs}
       </Tabs>
       {cardArray}
-    </Box>
+    </div>
   );
 };
 

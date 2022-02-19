@@ -7,54 +7,54 @@ async function main() {
       {
         lawyer_id: 1,
         lawfirm_id: 5,
-        joined_on: "1997-07-16T19:20:30.451Z",
+        joined_on: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyer_id: 2,
         lawfirm_id: 5,
-        joined_on: "1997-07-16T19:20:30.451Z",
+        joined_on: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyer_id: 3,
         lawfirm_id: 4,
-        joined_on: "1997-07-16T19:20:30.451Z",
+        joined_on: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyer_id: 4,
         lawfirm_id: 4,
-        joined_on: "1997-07-16T19:20:30.451Z",
+        joined_on: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyer_id: 5,
         lawfirm_id: 3,
-        joined_on: "1997-07-16T19:20:30.451Z",
+        joined_on: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyer_id: 6,
         lawfirm_id: 2,
-        joined_on: "1997-07-16T19:20:30.451Z",
+        joined_on: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyer_id: 7,
         lawfirm_id: 1,
-        joined_on: "1997-07-16T19:20:30.451Z",
+        joined_on: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyer_id: 8,
         lawfirm_id: 1,
-        joined_on: "1997-07-16T19:20:30.451Z",
+        joined_on: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyer_id: 9,
         lawfirm_id: 1,
-        joined_on: "1997-07-16T19:20:30.451Z",
+        joined_on: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyer_id: 10,
         lawfirm_id: 1,
-        joined_on: "1997-07-16T19:20:30.451Z",
-      },
-    ],
+        joined_on: "1997-07-16T19:20:30.451Z"
+      }
+    ]
   });
   const createFieldsOfLaw = await prisma.fields_of_law.createMany({
     data: [
@@ -62,135 +62,135 @@ async function main() {
       { field: "Immigration" },
       { field: "Criminal" },
       { field: "Legal Assistance" },
-      { field: "NFT's" },
-    ],
+      { field: "NFT's" }
+    ]
   });
   const createlawyerFieldData = await prisma.lawyer_fields.createMany({
     data: [
       {
         lawyers_id: 1,
         fields_of_law_id: 1,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 1,
         fields_of_law_id: 2,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 1,
         fields_of_law_id: 3,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 2,
         fields_of_law_id: 1,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 2,
         fields_of_law_id: 2,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 2,
         fields_of_law_id: 5,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 3,
         fields_of_law_id: 3,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 3,
         fields_of_law_id: 4,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 3,
         fields_of_law_id: 5,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 4,
         fields_of_law_id: 3,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 4,
         fields_of_law_id: 4,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       ,
       {
         lawyers_id: 5,
         fields_of_law_id: 4,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 6,
         fields_of_law_id: 5,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 6,
         fields_of_law_id: 4,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 6,
         fields_of_law_id: 1,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 7,
         fields_of_law_id: 4,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 7,
         fields_of_law_id: 2,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 7,
         fields_of_law_id: 1,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 8,
         fields_of_law_id: 3,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 8,
         fields_of_law_id: 4,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 9,
         fields_of_law_id: 4,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 9,
         fields_of_law_id: 2,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 9,
         fields_of_law_id: 5,
-        date_added: "1997-07-16T19:20:30.451Z",
+        date_added: "1997-07-16T19:20:30.451Z"
       },
       {
         lawyers_id: 10,
         fields_of_law_id: 3,
-        date_added: "1997-07-16T19:20:30.451Z",
-      },
-    ],
+        date_added: "1997-07-16T19:20:30.451Z"
+      }
+    ]
   });
-  
+
   const createManyLawyers = await prisma.lawyers.createMany({
     data: [
       {
@@ -217,7 +217,7 @@ async function main() {
         phone_number: "647-789-3344",
         address: "900 Dundas St W, Toronto, ON M6E 9B0",
         rating: 41,
-        profile_pic: ""
+        profile_pic: "/images/lawyers/john.jpg"
       },
       {
         first_name: "Justin",
@@ -303,7 +303,7 @@ async function main() {
 }
 
 main()
-  .catch(e => {
+  .catch((e) => {
     console.error(e);
     process.exit(1);
   })
