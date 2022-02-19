@@ -1,5 +1,6 @@
 import { loadStripe } from "@stripe/stripe-js";
 import { useEffect, useState } from "react";
+import PaymentButton from "../components/PaymentButton";
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
@@ -53,6 +54,7 @@ const Checkout = () => {
         checkout
       </button>
       <button name="potototo" onClick={(e) => console.log(e, price)}></button>
+      <PaymentButton />
     </div>
   );
 };
