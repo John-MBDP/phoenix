@@ -35,7 +35,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const lawfirmMessages = await prisma.messages.findMany({
     where: {
       client_id: {
-        equals: 1,
+        equals: user.id,
       },
       lawyer_id: {
         equals: null,
