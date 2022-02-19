@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 const prisma = new PrismaClient();
 
 export default async (req, res) => {
-  const { quantity, price, paymentType } = req.body;
+  const { quantity, price, paymentType, returnPath, lawyerId } = req.body;
   console.log(quantity, price);
 
   console.log(typeof Number(price));
@@ -29,10 +29,11 @@ export default async (req, res) => {
           quantity
         }
       ],
-      success_url: `${req.headers.origin}/stripe/?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${req.headers.origin}/checkout`
+      success_url: `${req.headers.origin}/stripe/purchase?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${req.headers.origin}${returnPath}`,
+      client_reference_id: lawyerId
     })
     .then((data) => {
-      res.status(200).json({ sessionId: data.id });
+      res.status(200).json({ sessionId: data.id, lawyerId });
     });
 };
