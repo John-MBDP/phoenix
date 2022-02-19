@@ -29,11 +29,9 @@ const RoundedTopContainer = ({ children, image, alt, height, padBottom }) => {
               router.pathname === "/smsverification" ||
               router.pathname === "/confirmation" ||
               router.pathname === "/login" ||
-              router.pathname === "/logout"
+              router.pathname === "/logout" ||
+              router.pathname === "/lawyer/[id]"
             }
-            // onClick={() => {
-            //   router.pathname === "/personal-info" ? router.push("/profile") : router.push("/");
-            // }}
             onClick={() => {
               router.pathname === "/profile" ? router.push("/") : router.push("/profile");
             }}
