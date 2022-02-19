@@ -17,7 +17,7 @@ function MyApp({ Component, pageProps }) {
 
   const [navbar, setNavbar] = useState({
     navbar: "",
-    hidden: true,
+    hidden: false,
   });
 
   const { user } = useUser();
@@ -26,11 +26,12 @@ function MyApp({ Component, pageProps }) {
     <SWRConfig
       value={{
         fetcher: fetchJson,
-        onError: err => {
+        onError: (err) => {
           console.error(err);
         },
       }}
     >
+
       <NotificationsProvider>
         <TopNavBar header={header} user={user} />
         <div className={styles.view}>
@@ -42,6 +43,7 @@ function MyApp({ Component, pageProps }) {
         </div>
         <BottomNav navbar={navbar} />
       </NotificationsProvider>
+
     </SWRConfig>
   );
 }

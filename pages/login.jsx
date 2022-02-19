@@ -6,8 +6,8 @@ import fetchJson, { FetchError } from "../lib/fetchJson";
 
 const Login = ({ setHeader, setNavbar }) => {
   useEffect(() => {
-    setNavbar({ navbar: "", hidden: false });
-    setNavbar({ navbar: "", hidden: false });
+    setHeader({ header: "", hidden: true });
+    setNavbar({ navbar: "", hidden: true });
   }, []);
   const router = useRouter();
 
@@ -27,7 +27,7 @@ const Login = ({ setHeader, setNavbar }) => {
       mutateUser(
         await fetchJson("api/auth/login", {
           method: "POST",
-          headers: { 'Content-Type': 'application/json' },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(inputValues),
         })
       );

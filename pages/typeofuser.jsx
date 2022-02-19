@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 const TypeofUser = ({ setHeader, setNavbar }) => {
   useEffect(() => {
     setHeader({ header: "", hidden: true });
-    setNavbar({ navbar: "", hidden: false });
+    setNavbar({ navbar: "", hidden: true });
   }, []);
 
   const router = useRouter();

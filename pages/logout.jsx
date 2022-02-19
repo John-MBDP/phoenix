@@ -2,20 +2,33 @@ import { Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
 import useUser from "../hooks/useUser";
+import RoundedTopContainer from "../components/RoundedTopContainer";
 
-const Logout = () => {
+const Logout = ({ setHeader, setNavbar }) => {
   const router = useRouter();
   const { user, mutateUser } = useUser();
   useEffect(() => {
-    setTimeout(async() => {
+    setHeader({ header: "", hidden: true });
+    setNavbar({ navbar: "", hidden: true });
+    setTimeout(async () => {
       mutateUser(await fetch("/api/auth/logout", { method: "POST" }), false);
-      router.push("/signup")
+      router.push("/signup");
     }, 2000);
   }, []);
   return (
-    <div>
-      <Typography>See you next time!</Typography>
-    </div>
+    <RoundedTopContainer image={"/Logout-2.png"} alt={"signup-image"} height={"300px"}>
+      <Typography
+        variant="h5"
+        sx={{
+          fontWeight: "800px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        See you next time!
+      </Typography>
+    </RoundedTopContainer>
   );
 };
 
