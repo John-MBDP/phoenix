@@ -34,6 +34,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
     phoneNumber: client.phone_number || "",
     emailAddress: client.email || "",
   });
+  const [updated, setUpdated] = useState(false);
 
   const updateClient = async clientInfo => {
     const client = {
@@ -66,6 +67,8 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
       const updatedClient = await updateClient(formInput);
       setFormInput({...formInput, updatedClient});
       console.log('client info updated!');
+      setUpdated(true);
+      setTimeout(() => setUpdated(false), 2000);
     } catch (err) {
       console.log(err);
     }
@@ -128,8 +131,8 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
           onChange={e => handleInput(e)}
           margin="normal"
         />
-        <Button type="submit" onClick={() => console.log("update")}>
-          Update
+        <Button type="submit" background={updated && 'grey' || null}>
+          {updated && 'Updated!' || 'Update'}
         </Button>
       </form>
     </RoundedTopContainer>
