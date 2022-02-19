@@ -22,6 +22,8 @@ DROP TABLE IF EXISTS lawfirms CASCADE;
 
 DROP TABLE IF EXISTS clients CASCADE;
 
+DROP TABLE IF EXISTS product_prices;
+
 create table articles (
 	id SERIAL PRIMARY KEY,
 	title VARCHAR(255) NOT NULL,
