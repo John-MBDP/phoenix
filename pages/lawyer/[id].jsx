@@ -39,6 +39,12 @@ export const getServerSideProps = withIronSessionSsr(
       },
     });
 
+    const lawyerConnection = await prisma.lawyer_connections.findFirst({
+      where: {
+        lawyer_id: id,
+      },
+    });
+
     const lawyer = await prisma.lawyers.findUnique({
       where: { id },
     });
@@ -47,6 +53,7 @@ export const getServerSideProps = withIronSessionSsr(
       props: {
         user,
         lawyerFavourite,
+        lawyerConnection,
         lawyer: {
           ...lawyer,
           date_certified: `${lawyer.date_certified.getFullYear()}`,
@@ -66,6 +73,7 @@ const Lawyer = ({
   lawfirmId,
   user,
   lawyerFavourite,
+  lawyerConnection,
 }) => {
   const router = useRouter();
   const {
@@ -88,7 +96,36 @@ const Lawyer = ({
   }, []);
 
   const [favourited, setFavourited] = useState(lawyerFavourite ? true : false);
-  const favourite = { client_id: user.id, lawyer_id: lawyer.id };
+  const [connectionRequested, setConnectionRequested] = useState(
+    lawyerConnection ? true : false
+  );
+  const userIds = { client_id: user.id, lawyer_id: lawyer.id };
+
+  const sendConnectionRequest = async connectionIds => {
+    const response = await fetch("/api/connections/lawyers/create", {
+      method: "POST",
+      body: JSON.stringify({ ...connectionIds, date_changed: new Date() }),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    console.log("sent connection request!");
+    return await response.json();
+  };
+
+  const destroyConnectionRequest = async connectionIds => {
+    const response = await fetch("/api/connections/lawyers/create", {
+      method: "POST",
+      body: JSON.stringify({ ...connectionIds }),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    console.log("sent connection request!");
+    return await response.json();
+  };
 
   const saveFavourite = async favourite => {
     const response = await fetch("/api/favourites/lawyers/create", {
@@ -134,7 +171,7 @@ const Lawyer = ({
           sx={{ color: "salmon" }}
           onClick={async () => {
             try {
-              await destroyFavourite(favourite);
+              await destroyFavourite(userIds);
               setFavourited(false);
             } catch (err) {
               console.log(err);
@@ -147,7 +184,7 @@ const Lawyer = ({
           sx={{ color: "salmon" }}
           onClick={async () => {
             try {
-              await saveFavourite(favourite);
+              await saveFavourite(userIds);
               setFavourited(true);
             } catch (err) {
               console.log(err);
@@ -163,12 +200,21 @@ const Lawyer = ({
       <div>
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Button
-            color="#00589B"
+            color={(connectionRequested && "grey") || "#00589B"}
             padding="0.5rem 1rem"
             icon={<AnnouncementIcon />}
-            onClick={() => console.log("button")}
+            onClick={() => {
+              if (!connectionRequested) {
+                try {
+                  sendConnectionRequest(userIds);
+                  setConnectionRequested(true);
+                } catch (err) {
+                  console.log(err);
+                }
+              }
+            }}
           >
-            connect
+            {connectionRequested && 'request sent' || 'connect'}
           </Button>
           <div style={{ width: "0.2rem" }}></div>
           <Button
@@ -294,7 +340,7 @@ const Lawyer = ({
           padding: "0 0.7em",
           marginTop: "1em",
           color: "white",
-          textAlign: 'center'
+          textAlign: "center",
         }}
       >
         <AccordionSummary
@@ -302,7 +348,9 @@ const Lawyer = ({
         >
           <Typography>More About {first_name}</Typography>
         </AccordionSummary>
-        <AccordionDetails sx={{ textAlign: 'left' }}><Typography>{description}</Typography></AccordionDetails>
+        <AccordionDetails sx={{ textAlign: "left" }}>
+          <Typography>{description}</Typography>
+        </AccordionDetails>
       </Accordion>
     </RoundedTopContainer>
   );
