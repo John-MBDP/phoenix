@@ -68,7 +68,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
       setFormInput({...formInput, updatedClient});
       console.log('client info updated!');
       setUpdated(true);
-      setTimeout(() => setUpdated(false), 2000);
+      setTimeout(() => setUpdated(false), 3000);
     } catch (err) {
       console.log(err);
     }
@@ -110,10 +110,11 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
         <TextField
           fullWidth
           label="Email Address"
-          name="emailAdress"
+          name="emailAddress"
           value={formInput.emailAddress}
           onChange={e => handleInput(e)}
           margin="normal"
+          type="email"
         />
         <TextField
           fullWidth
@@ -122,6 +123,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
           value={formInput.phoneNumber}
           onChange={e => handleInput(e)}
           margin="normal"
+          type="tel"
         />
         <TextField
           fullWidth
