@@ -19,3 +19,15 @@
   flex-grow: 1;
   text-align: center;
 }
+
+.messages_ping {
+  color: white;
+  font-size: 0.8rem;
+  background-color: rgb(55, 152, 190);
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

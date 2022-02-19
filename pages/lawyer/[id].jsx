@@ -58,10 +58,10 @@ export const getServerSideProps = withIronSessionSsr(
         user,
         lawyerFavourite,
         lawyer: {
-          ...lawfirmMembers[0].lawyers,
-          date_certified: `${lawfirmMembers[0].lawyers.date_certified.getFullYear()}`
+          ...lawyer,
+          date_certified: `${lawyer.date_certified.getFullYear()}`
         },
-        lawfirmId: lawfirmMembers[0].lawfirm_id
+        lawfirmId: (lawfirmMembers.length > 0 ? lawfirmMembers[0].lawfirm_id : null)
       }
     };
   },
@@ -183,7 +183,7 @@ const Lawyer = ({
             background="#00589B"
             padding="0.5rem 1rem"
             icon={<AnnouncementIcon />}
-            onClick={() => console.log("button")}
+            onClick={() => router.push(`/messages/lawyers/${lawyer.id}`)}
           >
             message
           </Button>

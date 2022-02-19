@@ -4,12 +4,13 @@ import Message from "../../../components/Message";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import SendIcon from "@mui/icons-material/Send";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import timeifyDate from "../../../helpers/timeifyDate";
 import styles from "./index.module.scss";
 import io from "socket.io-client";
 import sessionOptions from "../../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
+import { notificationsContext } from "../../../provider/NotificationsProvider";
 const prisma = new PrismaClient();
 let socket;
 
@@ -35,11 +36,17 @@ export const getServerSideProps = withIronSessionSsr(
         },
       ],
     });
+    const lawyer = await prisma.lawyers.findUnique({
+      where: {
+        id: lawyerId,
+      },
+    });
     return {
       props: {
         lawyerId,
         clientId,
         initialMessages: messages,
+        lawyer,
       },
     };
   },
@@ -50,16 +57,16 @@ const Messages = ({
   initialMessages,
   lawyerId,
   clientId,
+  lawyer,
   setHeader,
   setNavbar,
 }) => {
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
   const [typingIndicator, setTypingIndicator] = useState(false);
-  const lawyerProfilePic = messages ? messages[0].lawyers.profile_pic : null;
-  const headerName = messages
-    ? `${messages[0].lawyers.first_name} ${messages[0].lawyers.last_name}`
-    : "Messages";
+  const { clearNotifications } = useContext(notificationsContext);
+  const lawyerProfilePic = lawyer.profile_pic;
+  const headerName = `${lawyer.first_name} ${lawyer.last_name}`;
 
   useEffect(() => {
     setHeader(() => ({ header: headerName, hidden: false }));
@@ -67,10 +74,31 @@ const Messages = ({
     socketInitializer();
     const closeSocket = () => {
       socket.emit("input-change", false);
+      socket.emit("client-present", false);
       socket.disconnect();
       console.log("Socket closed");
     };
     return closeSocket;
+  }, []);
+
+  useEffect(async () => {
+    try {
+      const seenMessages = await updateSeenMessageStatus({
+        clientId,
+        lawyerId,
+      });
+      setMessages(prev => {
+        const updatedMessages = prev.map(message => ({
+          ...message,
+          seen_client: true,
+        }));
+        return updatedMessages;
+      });
+      socket.emit("client-present", true);
+      clearNotifications();
+    } catch (err) {
+      console.log(err);
+    }
   }, []);
 
   // to stop typing indicator on page refresh
@@ -102,9 +130,21 @@ const Messages = ({
       setTypingIndicator(bool);
     });
 
-    socket.on("update-messages", newMessage => {
-      setMessages([...messages, newMessage]);
+    socket.on("update-client-messages", newMessage => {
+      setMessages([...messages, { ...newMessage, seen_client: true }]);
     });
+  };
+
+  const updateSeenMessageStatus = async messageIds => {
+    const response = await fetch("/api/messages/update", {
+      method: "POST",
+      body: JSON.stringify(messageIds),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return await response.json();
   };
 
   const saveMessage = async message => {
@@ -158,6 +198,11 @@ const Messages = ({
             </div>
           </Message>
         )}
+        {messageArray.length < 1 && (
+          <Message profilePic={"/images/lawyers/bot_icon_still_2x.jpg"}>
+            Welcome to Phoenix Chat! Please feel free to start the conversation!
+          </Message>
+        )}
       </div>
       <div ref={messagesEndRef} />
       <form
@@ -170,11 +215,12 @@ const Messages = ({
             lawyer_id: lawyerId,
             date_sent: new Date(),
             from_client: true,
+            seen_client: true,
           };
           try {
             const newMessage = await saveMessage(message);
             setMessages([...messages, newMessage]);
-            socket.emit("send-message", newMessage);
+            socket.emit("send-message-from-client", newMessage);
             socket.emit("input-change", false);
             setInput("");
           } catch (err) {
