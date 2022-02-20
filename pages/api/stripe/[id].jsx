@@ -9,10 +9,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
 
 export default withIronSessionApiRoute(async function (req, res) {
   const user = req.session.user;
-  console.log(user);
+
   const { id } = req.query;
 
-  console.log(id);
   const session = await stripe.checkout.sessions.retrieve(id, {
     expand: ["payment_intent"]
   });
@@ -22,7 +21,6 @@ export default withIronSessionApiRoute(async function (req, res) {
       session_id: session.id
     }
   });
-  console.log(checkDuplicate);
 
   if (session.payment_status === "paid" && checkDuplicate.length === 0) {
     try {
