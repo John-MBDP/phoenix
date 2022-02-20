@@ -32,4 +32,5 @@
 }
 .scrollSnap {
   scroll-snap-type: y mandatory;
+  position: relative;
 }
