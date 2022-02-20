@@ -1,17 +1,30 @@
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 import useSWR from "swr";
+import RoundedTopContainer from "../../components/RoundedTopContainer";
+import UserStatCard from "../../components/UserStatsCard";
 
-const potato = () => {
+const Purchase = ({ setHeader, setNavbar }) => {
   const router = useRouter();
-
   const { session_id } = router.query;
-  console.log(session_id);
+  const [pageData, setPageData] = useState(null);
 
   const { data, error } = useSWR(
     router.query.session_id ? `/api/stripe/${session_id}` : null,
-    (url) => fetch(url).then((res) => res.json())
+    (url) =>
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          setPageData(data);
+          return data;
+        })
   );
-  // const {} = data;
+
+  useEffect(() => {
+    setHeader({ header: "", hidden: true });
+    setNavbar({ hidden: false });
+  }, []);
+
   /*
     get session
     id , amount_subtotal,currency, customer_details( email), 
@@ -20,20 +33,32 @@ const potato = () => {
                                                 name
                                 reciept_url
 */
-  return (
-    <div>
-      <br />
-      <br />
-      <br />
-      <br />
 
-      <br />
-      <br />
-      <br />
-      <pre>{data ? JSON.stringify(data, null, 2) : "Loading..."}</pre>
-      <h1>Potato</h1>
-    </div>
+  return (
+    <RoundedTopContainer image="/images/book3.jpeg" height="600px">
+      {/* <pre>{JSON.stringify(pageData, null, 2)}</pre> */}
+      <UserStatCard image="/images/accepted.png"> </UserStatCard>
+      <div className="container">
+        <h3>Payment Successful!</h3>
+        <h4>
+          {`An email will be sent to
+          ${pageData ? pageData.session.customer_details.email : null} shortly`}
+        </h4>
+      </div>
+
+      <style jsx>{`
+        .container {
+          padding-top: 2rem;
+          text-align: center;
+          display: flex;
+          align-items: center;
+          justigy-content: center;
+          flex-direction: column;
+          height: 100%;
+        }
+      `}</style>
+    </RoundedTopContainer>
   );
 };
 
-export default potato;
+export default Purchase;
