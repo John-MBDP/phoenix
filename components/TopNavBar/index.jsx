@@ -92,7 +92,7 @@ const TopNavBar = ({ header, user }) => {
           borderRadius: "0  0 2rem 2rem",
           display: header.hidden ? "none" : "block",
           marginTop: open && `${drawerHeight}px`,
-          width: "100%",
+          width: "100%"
         }}
         open={open}
       >
@@ -109,12 +109,12 @@ const TopNavBar = ({ header, user }) => {
             {!open && <MenuIcon />}
             {open && <ArrowUpwardIcon />}
           </IconButton>
-            <h1 className={styles.header_title}>{header.header}</h1>
+          <h1 className={styles.header_title}>{header.header}</h1>
           {/* <div style={{ display: "flex" }}>
             {notifications > 0 && (
               <div className={styles.messages_ping}>{notifications}</div>
             )} */}
-            <NotificationImportantIcon />
+          <NotificationImportantIcon />
           {/* </div> */}
         </Toolbar>
       </AppBar>
@@ -126,8 +126,8 @@ const TopNavBar = ({ header, user }) => {
             height: drawerHeight,
             boxSizing: "border-box",
             backgroundColor: "#1D1F37",
-            color: "white",
-          },
+            color: "white"
+          }
         }}
         variant="persistent"
         transitionDuration={0}
@@ -201,15 +201,30 @@ const TopNavBar = ({ header, user }) => {
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
               />
             </ListItemIcon>
-            <ListItemText primary="Favourites" />
+            <ListItemText
+              primary="Favourites"
+              component="a"
+              href="/favourites"
+              onClick={() => setOpen(false)}
+            />
           </ListItem>
-          <ListItem button>
+          <ListItem
+            button
+            component="a"
+            href="/service-status"
+            onClick={() => setOpen(false)}
+          >
             <ListItemIcon>
               <BusinessCenterIcon
                 sx={{ marginLeft: 3, marginRight: 2, color: "white" }}
               />
             </ListItemIcon>
-            <ListItemText primary="Services Status" />
+            <ListItemText
+              primary="Services Status"
+              component="a"
+              href="/service-status"
+              onClick={() => setOpen(false)}
+            />
           </ListItem>
         </List>
       </Drawer>
