@@ -106,7 +106,7 @@ const Connections = ({
     <RoundedTopContainer image="/images/waves.jpeg" alt="waves" height="600px">
       <UserStatCard />
       <RoundedTopContainer.Header text="Connections" />
-      <List component="nav">{allConnections}</List>
+      <List component="nav">{allConnections} {allConnections.length === 0 && 'You have no connections yet!'}</List>
     </RoundedTopContainer>
   );
 };
