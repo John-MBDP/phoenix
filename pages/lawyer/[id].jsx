@@ -30,9 +30,9 @@ export const getServerSideProps = withIronSessionSsr(
     });
     const lawyerFavourite = await prisma.lawyer_favourites.findFirst({
       where: {
-        lawyer_id: id,
-      },
-    })
+        lawyer_id: id
+      }
+    });
     return {
       props: {
         user,
@@ -44,9 +44,18 @@ export const getServerSideProps = withIronSessionSsr(
         lawfirmId: lawfirmMembers[0].lawfirm_id
       }
     };
-  }, sessionOptions);
+  },
+  sessionOptions
+);
 
-const Lawyer = ({ setHeader, setNavbar, lawyer, lawfirmId, user, lawyerFavourite }) => {
+const Lawyer = ({
+  setHeader,
+  setNavbar,
+  lawyer,
+  lawfirmId,
+  user,
+  lawyerFavourite
+}) => {
   const router = useRouter();
   const {
     last_name,
@@ -69,10 +78,10 @@ const Lawyer = ({ setHeader, setNavbar, lawyer, lawfirmId, user, lawyerFavourite
   const [favourited, setFavourited] = useState(lawyerFavourite ? true : false);
   const favourite = { client_id: user.id, lawyer_id: lawyer.id };
 
-  const saveFavourite = async favourite => {
+  const saveFavourite = async (favourite) => {
     const response = await fetch("/api/favourites/lawyers/create", {
       method: "POST",
-      body: JSON.stringify({ ...favourite, date_created: new Date() }),
+      body: JSON.stringify({ ...favourite, date_created: new Date() })
     });
 
     if (!response.ok) {
@@ -82,10 +91,10 @@ const Lawyer = ({ setHeader, setNavbar, lawyer, lawfirmId, user, lawyerFavourite
     return await response.json();
   };
 
-  const destroyFavourite = async favourite => {
+  const destroyFavourite = async (favourite) => {
     const response = await fetch("/api/favourites/lawyers/delete", {
       method: "POST",
-      body: JSON.stringify(favourite),
+      body: JSON.stringify(favourite)
     });
 
     if (!response.ok) {
@@ -104,7 +113,7 @@ const Lawyer = ({ setHeader, setNavbar, lawyer, lawfirmId, user, lawyerFavourite
     >
       {favourited && (
         <FavoriteIcon
-          sx={{ color: "salmon" }}
+          sx={{ color: "salmon", position: "fixed", zIndex: "10" }}
           onClick={async () => {
             try {
               await destroyFavourite(favourite);
@@ -117,7 +126,7 @@ const Lawyer = ({ setHeader, setNavbar, lawyer, lawfirmId, user, lawyerFavourite
       )}
       {!favourited && (
         <FavoriteBorderIcon
-          sx={{ color: "salmon" }}
+          sx={{ color: "salmon", position: "fixed", zIndex: "10" }}
           onClick={async () => {
             try {
               await saveFavourite(favourite);
