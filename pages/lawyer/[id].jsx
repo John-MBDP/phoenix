@@ -175,7 +175,7 @@ const Lawyer = ({
     >
       {favourited && (
         <FavoriteIcon
-          sx={{ color: "salmon", position: "fixed", zIndex: "10" }}
+          sx={{ color: "salmon", position: "absolute", zIndex: "10", top: "0" }}
           onClick={async () => {
             try {
               await destroyFavourite(userIds);
@@ -188,7 +188,7 @@ const Lawyer = ({
       )}
       {!favourited && (
         <FavoriteBorderIcon
-          sx={{ color: "salmon", position: "fixed", zIndex: "10" }}
+          sx={{ color: "salmon", position: "absolute", zIndex: "10", top: "0" }}
           onClick={async () => {
             try {
               await saveFavourite(userIds);
@@ -267,6 +267,21 @@ const Lawyer = ({
           <strong>Recognized Since: {date_certified}</strong>
         </Typography>
       </div>
+
+      <PaymentButton
+        lawyerId={lawyer.id}
+        header="One time service fee"
+        amount="125"
+        paymentType="payment"
+      />
+
+      <PaymentButton
+        lawyerId={lawyer.id}
+        header="Monthly Fee"
+        amount="550"
+        paymentType="subscription"
+      />
+
       <Widebutton
         color={lawfirmId ? "white" : "#405b6e"}
         padding="1rem 0"
@@ -282,20 +297,6 @@ const Lawyer = ({
           `}</style>
         </div>
       </Widebutton>
-
-      <PaymentButton
-        lawyerId={lawyer.id}
-        header="One time service fee"
-        amount="125"
-        paymentType="payment"
-      />
-
-      <PaymentButton
-        lawyerId={lawyer.id}
-        header="Monthly Fee"
-        amount="550"
-        paymentType="subscription"
-      />
 
       <Widebutton
         color="white"
@@ -338,7 +339,8 @@ const Lawyer = ({
           padding: "0 0.7em",
           marginTop: "1em",
           color: "white",
-          textAlign: "center"
+          textAlign: "center",
+          mb: "2rem"
         }}
       >
         <AccordionSummary

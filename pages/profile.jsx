@@ -10,7 +10,7 @@ import UserStatCard from "../components/UserStatsCard";
 import { Typography, Box } from "@material-ui/core";
 import { useEffect } from "react";
 import ViewLikesCounter from "../components/ViewLikesCounter";
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 
 const Profile = ({ setHeader, setNavbar }) => {
   useEffect(() => {
@@ -22,6 +22,7 @@ const Profile = ({ setHeader, setNavbar }) => {
       image={"/images/articles/forest.jpeg"}
       alt={"forest"}
       height="600px"
+      padBottom
     >
       <UserStatCard name="Hu Tao" />
       <ViewLikesCounter />
