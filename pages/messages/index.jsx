@@ -6,6 +6,7 @@ import timeifyDate from "../../helpers/timeifyDate";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import { notificationsContext } from "../../provider/NotificationsProvider";
+import Typography from "@mui/material/Typography";
 import io from "socket.io-client";
 let socket;
 
@@ -66,7 +67,8 @@ const MessagesIndex = ({
 }) => {
   const [messageCards, setMessageCards] = useState(lawyerMessages);
   const [value, setValue] = useState(0);
-  const { addNotification, clearNotifications } = useContext(notificationsContext);
+  const { addNotification, clearNotifications } =
+    useContext(notificationsContext);
 
   const socketInitializer = async () => {
     await fetch("/api/socket");
@@ -157,7 +159,7 @@ const MessagesIndex = ({
   };
 
   return (
-    <div style={{ marginTop: "5rem" }}>
+    <div style={{ marginTop: "5rem", marginLeft: "1em", marginRight: "1em" }}>
       <Tabs
         value={value}
         indicatorColor="secondary"
@@ -173,6 +175,19 @@ const MessagesIndex = ({
         />
       </Tabs>
       {parseMessageCards(messageCards)}
+      {messageCards.length === 0 && (
+        <Typography
+          style={{
+            marginTop: "1em",
+            padding: "1.5em 2em",
+            backgroundColor: "grey",
+            color: "white",
+            borderRadius: "2em",
+          }}
+        >
+          Nothing to see here. You have no messages yet!
+        </Typography>
+      )}
     </div>
   );
 };
