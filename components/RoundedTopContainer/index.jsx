@@ -29,11 +29,10 @@ const RoundedTopContainer = ({ children, image, alt, height, padBottom }) => {
               router.pathname === "/smsverification" ||
               router.pathname === "/confirmation" ||
               router.pathname === "/login" ||
-              router.pathname === "/logout" ||
-              router.pathname === "/lawyer/[id]"
+              router.pathname === "/logout"
             }
             onClick={() => {
-              router.pathname === "/profile" ? router.push("/") : router.push("/profile");
+              router.back();
             }}
           >
             <ArrowBackIcon />
