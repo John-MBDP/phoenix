@@ -31,7 +31,6 @@ function MyApp({ Component, pageProps }) {
         },
       }}
     >
-
       <NotificationsProvider>
         <TopNavBar header={header} user={user} />
         <div className={styles.view}>
@@ -43,7 +42,6 @@ function MyApp({ Component, pageProps }) {
         </div>
         <BottomNav navbar={navbar} />
       </NotificationsProvider>
-
     </SWRConfig>
   );
 }

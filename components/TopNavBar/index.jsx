@@ -109,13 +109,7 @@ const TopNavBar = ({ header, user }) => {
             {!open && <MenuIcon />}
             {open && <ArrowUpwardIcon />}
           </IconButton>
-          <Typography
-            variant="h5"
-            component="div"
-            sx={{ flexgrow: 1, fontWeight: "bold" }}
-          >
-            {header.header}
-          </Typography>
+            <h1 className={styles.header_title}>{header.header}</h1>
           {/* <div style={{ display: "flex" }}>
             {notifications > 0 && (
               <div className={styles.messages_ping}>{notifications}</div>
