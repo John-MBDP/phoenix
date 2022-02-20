@@ -66,8 +66,6 @@ const Connections = ({
     setNavbar({ navbar: "", hidden: false });
   }, []);
 
-  console.log(lawyerConnections);
-
   const parsedlawyerConnections = lawyerConnections.map(connection => {
     if (connection) {
       const name = `${connection.lawyers.first_name} ${connection.lawyers.last_name}`;
@@ -102,9 +100,7 @@ const Connections = ({
     }
   });
 
-  const allConnections = parsedlawyerConnections
-    .concat(parsedLawfirmConnections)
-    .sort();
+  const allConnections = parsedlawyerConnections.concat(parsedLawfirmConnections);
 
   return (
     <RoundedTopContainer image="/images/waves.jpeg" alt="waves" height="600px">
