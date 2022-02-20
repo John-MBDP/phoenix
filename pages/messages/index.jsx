@@ -158,7 +158,7 @@ const MessagesIndex = ({
   };
 
   return (
-    <div style={{ marginTop: "5rem", marginLeft: "1em", marginRight: "1em" }}>
+    <div style={{ marginTop: "5rem" }}>
       <Tabs
         value={value}
         indicatorColor="secondary"
