@@ -29,25 +29,25 @@ export const getServerSideProps = withIronSessionSsr(
 
     const lawfirmFromId = await prisma.lawfirms.findUnique({
       where: {
-        id,
-      },
+        id
+      }
     });
 
     const lawfirmFavourite = await prisma.lawfirm_favourites.findFirst({
       where: {
-        lawfirm_id: id,
-      },
+        lawfirm_id: id
+      }
     });
 
     const lawfirmConnection = await prisma.lawfirm_connections.findFirst({
       where: {
-        lawfirm_id: id,
+        lawfirm_id: id
       },
       orderBy: [
         {
-          date_changed: "desc",
-        },
-      ],
+          date_changed: "desc"
+        }
+      ]
     });
 
     return {
@@ -55,8 +55,8 @@ export const getServerSideProps = withIronSessionSsr(
         user,
         lawfirmFavourite,
         lawfirmConnection,
-        lawfirm: lawfirmFromId,
-      },
+        lawfirm: lawfirmFromId
+      }
     };
   },
   sessionOptions
@@ -68,7 +68,7 @@ const Lawyer = ({
   lawfirm,
   user,
   lawfirmFavourite,
-  lawfirmConnection,
+  lawfirmConnection
 }) => {
   const router = useRouter();
   const {
@@ -82,24 +82,24 @@ const Lawyer = ({
     registration_date,
     views,
     likes,
-    rating,
+    rating
   } = lawfirm;
   useEffect(() => {
-    setHeader(prev => ({ ...prev, hidden: true }));
+    setHeader((prev) => ({ ...prev, hidden: true }));
     setNavbar({ navbar: "", hidden: false });
   }, []);
 
   const [favourited, setFavourited] = useState(lawfirmFavourite ? true : false);
   const [connection, setConnection] = useState({
     pending: lawfirmConnection ? lawfirmConnection.pending : false,
-    accepted: lawfirmConnection ? lawfirmConnection.accepted : false,
+    accepted: lawfirmConnection ? lawfirmConnection.accepted : false
   });
   const userIds = { client_id: user.id, lawfirm_id: lawfirm.id };
 
-  const sendConnectionRequest = async connectionIds => {
+  const sendConnectionRequest = async (connectionIds) => {
     const response = await fetch("/api/connections/lawfirms/create", {
       method: "POST",
-      body: JSON.stringify({ ...connectionIds, date_changed: new Date() }),
+      body: JSON.stringify({ ...connectionIds, date_changed: new Date() })
     });
 
     if (!response.ok) {
@@ -109,10 +109,10 @@ const Lawyer = ({
     return await response.json();
   };
 
-  const destroyConnectionRequest = async connectionIds => {
+  const destroyConnectionRequest = async (connectionIds) => {
     const response = await fetch("/api/connections/lawfirms/delete", {
       method: "POST",
-      body: JSON.stringify({ ...connectionIds }),
+      body: JSON.stringify({ ...connectionIds })
     });
 
     if (!response.ok) {
@@ -122,10 +122,10 @@ const Lawyer = ({
     return await response.json();
   };
 
-  const saveFavourite = async favourite => {
+  const saveFavourite = async (favourite) => {
     const response = await fetch("/api/favourites/lawfirms/create", {
       method: "POST",
-      body: JSON.stringify({ ...favourite, date_created: new Date() }),
+      body: JSON.stringify({ ...favourite, date_created: new Date() })
     });
 
     if (!response.ok) {
@@ -135,10 +135,10 @@ const Lawyer = ({
     return await response.json();
   };
 
-  const destroyFavourite = async favourite => {
+  const destroyFavourite = async (favourite) => {
     const response = await fetch("/api/favourites/lawfirms/delete", {
       method: "POST",
-      body: JSON.stringify(favourite),
+      body: JSON.stringify(favourite)
     });
 
     if (!response.ok) {
@@ -153,10 +153,11 @@ const Lawyer = ({
       image="/images/articles/forest.jpeg"
       height="600px"
       alt="forest"
+      padBottom
     >
       {favourited && (
         <FavoriteIcon
-          sx={{ color: "salmon", position: "fixed", zIndex: "10" }}
+          sx={{ color: "salmon", position: "absolute", zIndex: "10" }}
           onClick={async () => {
             try {
               await destroyFavourite(userIds);
@@ -169,7 +170,7 @@ const Lawyer = ({
       )}
       {!favourited && (
         <FavoriteBorderIcon
-          sx={{ color: "salmon", position: "fixed", zIndex: "10" }}
+          sx={{ color: "salmon", position: "absolute", zIndex: "10" }}
           onClick={async () => {
             try {
               await saveFavourite(userIds);
@@ -213,7 +214,7 @@ const Lawyer = ({
                   destroyConnectionRequest(userIds);
                   setConnection({
                     pending: false,
-                    accepted: false,
+                    accepted: false
                   });
                 } catch (err) {
                   console.log(err);
@@ -276,7 +277,7 @@ const Lawyer = ({
           padding: "0 0.7em",
           marginTop: "1em",
           color: "white",
-          textAlign: "center",
+          textAlign: "center"
         }}
       >
         <AccordionSummary
