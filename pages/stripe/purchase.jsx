@@ -39,11 +39,17 @@ const Purchase = ({ setHeader, setNavbar }) => {
       {/* <pre>{JSON.stringify(pageData, null, 2)}</pre> */}
       <UserStatCard image="/images/accepted.png"> </UserStatCard>
       <div className="container">
-        <h3>Payment Successful!</h3>
-        <h4>
-          {`An email will be sent to
-          ${pageData ? pageData.session.customer_details.email : null} shortly`}
-        </h4>
+        {pageData ? (
+          <>
+            <h3>Payment Successful!</h3>
+            <h4>
+              {`An email will be sent to
+          ${pageData.session.customer_details.email} shortly`}
+            </h4>
+          </>
+        ) : (
+          <h4>Loading...</h4>
+        )}
       </div>
 
       <style jsx>{`
