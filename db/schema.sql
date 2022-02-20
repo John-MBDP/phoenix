@@ -14,6 +14,12 @@ DROP TABLE IF EXISTS fields_of_law CASCADE;
 
 DROP TABLE IF EXISTS payments CASCADE;
 
+DROP TABLE IF EXISTS product_prices CASCADE;
+
+DROP TABLE IF EXISTS lawyer_connections;
+
+DROP TABLE IF EXISTS lawfirm_connections;
+
 DROP TABLE IF EXISTS messages CASCADE;
 
 DROP TABLE IF EXISTS articles CASCADE;
@@ -23,8 +29,6 @@ DROP TABLE IF EXISTS lawyers CASCADE;
 DROP TABLE IF EXISTS lawfirms CASCADE;
 
 DROP TABLE IF EXISTS clients CASCADE;
-
-DROP TABLE IF EXISTS product_prices;
 
 create table articles (
 	id SERIAL PRIMARY KEY,
