@@ -82,9 +82,9 @@ const MessagesIndex = ({
       // do something with message card
     });
 
-    // socket.on("update-client-messages", newMessage => {
-    //   addNotification();
-    // });
+    socket.on("update-client-messages", newMessage => {
+      addNotification();
+    });
   };
 
   useEffect(() => {
@@ -107,8 +107,7 @@ const MessagesIndex = ({
         addNotification();
       }
     });
-    return clearNotifications;
-  }, [messageCards]);
+  }, []);
 
   const handleChange = (e, value) => {
     setValue(value);
