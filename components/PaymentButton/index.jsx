@@ -1,17 +1,13 @@
 import Widebutton from "../WideButton";
 import { Typography } from "@material-ui/core";
 import { loadStripe } from "@stripe/stripe-js";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
 );
 
 const PaymentButton = ({ header, amount, paymentType, lawyerId }) => {
-  const router = useRouter();
-  const returnPath = router.pathname;
-
   const handleClick = async (e, paymentType, price) => {
+    const returnPath = `/lawyer/${lawyerId}`;
     if (price) {
       const { sessionId } = await fetch("/api/stripe/session", {
         method: "POST",
