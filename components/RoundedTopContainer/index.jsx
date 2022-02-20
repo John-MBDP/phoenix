@@ -13,11 +13,17 @@ const RoundedTopContainer = ({ children, image, alt, height, padBottom }) => {
 
   return (
     <>
-      <Card className={styles.image} sx={{ boxShadow: "none" }}>
+      <Card
+        className={styles.image}
+        sx={{ boxShadow: "none", borderRadius: "0" }}
+      >
         <CardMedia component="img" width="390" image={image} alt={alt} />
       </Card>
       <div className={styles.pane}>
-        <Stack direction="row" sx={{ mt: 2, ml: 2 }}>
+        <Stack
+          direction="row"
+          sx={{ position: "absolute", top: "1rem", left: "1rem" }}
+        >
           <Button
             back={true}
             hidden={
@@ -38,9 +44,14 @@ const RoundedTopContainer = ({ children, image, alt, height, padBottom }) => {
             <ArrowBackIcon />
           </Button>
         </Stack>
-        <div className={styles.card} style={{ height: height ? `${height}` : null }}>
-          <div className={styles.scrollSnap} style={{ paddingBottom: `${padBottom && "5rem"}` }}>
-            {" "}
+        <div
+          className={styles.card}
+          style={{ height: height ? `${height}` : null }}
+        >
+          <div
+            className={styles.scrollSnap}
+            style={{ paddingBottom: `${padBottom && "3rem"}` }}
+          >
             {children}
           </div>
         </div>
