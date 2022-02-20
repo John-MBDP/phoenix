@@ -17,8 +17,26 @@ export default withIronSessionApiRoute(async function (req, res) {
     expand: ["payment_intent"]
   });
 
-  if (session.payment_status === "paid") {
-    console.log(session.client_reference_id);
+  const checkDuplicate = await prisma.payments.findMany({
+    where: {
+      session_id: session.id
+    }
+  });
+  console.log(checkDuplicate);
+
+  if (session.payment_status === "paid" && checkDuplicate.length === 0) {
+    try {
+      const addUser = await prisma.payments.create({
+        data: {
+          session_id: session.id,
+          amount_cents: Number(session.amount_total),
+          lawyer_id: Number(session.client_reference_id),
+          client_id: Number(user.id)
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   res.status(200).json({ session });
