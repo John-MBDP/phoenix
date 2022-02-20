@@ -34,6 +34,6 @@ export default async (req, res) => {
       client_reference_id: lawyerId
     })
     .then((data) => {
-      res.status(200).json({ sessionId: data.id, lawyerId });
+      res.status(200).json({ sessionId: data.id });
     });
 };
