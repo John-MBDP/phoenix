@@ -73,7 +73,7 @@ const Messages = ({
     socketInitializer();
     const closeSocket = () => {
       socket.emit("input-change", false);
-      socket.emit("client-present", false);
+      // socket.emit("client-present", false);
       socket.disconnect();
       console.log("Socket closed");
     };
@@ -93,7 +93,7 @@ const Messages = ({
         }));
         return updatedMessages;
       });
-      socket.emit("client-present", true);
+      // socket.emit("client-present", true);
       clearNotifications();
     } catch (err) {
       console.log(err);
@@ -130,7 +130,7 @@ const Messages = ({
     });
 
     socket.on("update-client-messages", newMessage => {
-      setMessages([...messages, { ...newMessage, seen_client: true }]);
+      setMessages(prev => [...prev, { ...newMessage, seen_client: true }]);
     });
   };
 

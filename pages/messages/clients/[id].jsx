@@ -57,7 +57,7 @@ const Messages = ({
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
   const [typingIndicator, setTypingIndicator] = useState(false);
-  const [clientPresence, setClientPresence] = useState(false);
+  // const [clientPresence, setClientPresence] = useState(false);
   const { clearNotifications } = useContext(notificationsContext);
   const headerName =
     messages.length > 0
@@ -106,12 +106,13 @@ const Messages = ({
     });
 
     socket.on("update-lawyer-messages", newMessage => {
-      setMessages([...messages, newMessage]);
+      setMessages(prev => [...prev, newMessage]);
     });
 
-    socket.on("update-client-presence", bool => {
-      setClientPresence(bool);
-    });
+    // socket.on("update-client-presence", bool => {
+    //   setClientPresence(prev => bool);
+    //   console.log(clientPresence);
+    // });
   };
 
   const saveMessage = async message => {
@@ -176,7 +177,7 @@ const Messages = ({
             lawyer_id: lawyerId,
             date_sent: new Date(),
             from_client: false,
-            seen_client: clientPresence,
+            seen_client: false,
           };
           try {
             const newMessage = await saveMessage(message);

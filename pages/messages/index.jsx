@@ -82,9 +82,9 @@ const MessagesIndex = ({
       // do something with message card
     });
 
-    socket.on("update-client-messages", newMessage => {
-      addNotification();
-    });
+    // socket.on("update-client-messages", newMessage => {
+    //   addNotification();
+    // });
   };
 
   useEffect(() => {
