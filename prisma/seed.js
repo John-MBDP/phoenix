@@ -300,6 +300,34 @@ async function main() {
       }
     ]
   });
+  const insertPrices = await prisma.product_prices.createMany({
+    data: [
+      {
+        price_id: "price_1KUj1UC92AcJPbGeqX65kMsi",
+        price: 50
+      },
+      {
+        price_id: "price_1KUj1UC92AcJPbGeajS1Vtrk",
+        price: 125
+      },
+      {
+        price_id: "price_1KUj1UC92AcJPbGekgGRwLSO",
+        price: 200
+      },
+      {
+        price_id: "price_1KUj2ZC92AcJPbGeBebPXPNF",
+        price: 550
+      },
+      {
+        price_id: "price_1KUj2ZC92AcJPbGecv0Yx1w0",
+        price: 750
+      },
+      {
+        price_id: "price_1KUj2ZC92AcJPbGeJi6AEF58",
+        price: 1000
+      }
+    ]
+  });
 }
 
 main()
