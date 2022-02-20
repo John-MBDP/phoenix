@@ -21,7 +21,6 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import PaymentButton from "../../components/PaymentButton";
-import { FastRewindTwoTone } from "@mui/icons-material";
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {
