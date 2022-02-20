@@ -113,6 +113,22 @@ const Favourites = ({
         phone={favourite.lawyers.phone_number}
         image={favourite.lawyers.profile_pic}
         id={favourite.lawyers.id}
+        type="lawyer"
+      />
+    );
+  });
+
+  const parsedLawfirmFavourites = lawfirmFavourites.map(favourite => {
+    return (
+      <SearchCard
+        key={favourite.id}
+        fullName={favourite.lawfirms.name}
+        location={favourite.lawfirms.location}
+        certified={favourite.lawfirms.registration_date.getFullYear()}
+        phone={favourite.lawfirms.phone_number}
+        image={favourite.lawfirms.profile_pic}
+        id={favourite.lawfirms.id}
+        type="lawfirm"
       />
     );
   });
@@ -136,6 +152,7 @@ const Favourites = ({
       </Tabs>
       {favourites === ARTICLES && parsedArticleFavourites}
       {favourites === LAWYERS && parsedLawyerFavourites}
+      {favourites === LAWFIRMS && parsedLawfirmFavourites}
     </div>
   );
 };
