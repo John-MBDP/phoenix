@@ -101,25 +101,35 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
   return (
     <div style={{ padding: "1rem 2rem", marginTop: "5rem" }}>
       <form onSubmit={(e) => handleSubmit(e, city, fields[selectedField])}>
-        <FormControl fullWidth>
-          <OutlinedInput
+        <div style={{ display: "flex", position: "relative" }}>
+          <input
             placeholder="Location"
-            id="location"
             value={city}
             onChange={handleInputChange}
             autoComplete="off"
-            endAdornment={
-              <InputAdornment position="end">
-                <GpsFixedIcon
-                  onClick={() =>
-                    getGeoLocation((location) => setCity(location))
-                  }
-                  color="primary"
-                />
-              </InputAdornment>
-            }
           />
-        </FormControl>
+          <GpsFixedIcon
+            onClick={() => getGeoLocation((location) => setCity(location))}
+            color="primary"
+            sx={{ position: "absolute", top: "12px", right: "12px" }}
+          />
+          <style jsx>{`
+            input {
+              font-family: roboto;
+              flex-grow: 40;
+              height: 3rem;
+              padding-left: 1rem;
+              font-size: 1em;
+              border-radius: 5px;
+              border: 1px solid lightgrey;
+            }
+            input:focus {
+              border: 1px solid #5593d1;
+              outline: 1px solid #5593d1;
+              border-radius: 5px;
+            }
+          `}</style>
+        </div>
       </form>
       <Tabs
         variant="scrollable"
