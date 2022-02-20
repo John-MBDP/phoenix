@@ -339,7 +339,8 @@ const Lawyer = ({
           padding: "0 0.7em",
           marginTop: "1em",
           color: "white",
-          textAlign: "center"
+          textAlign: "center",
+          mb: "2rem"
         }}
       >
         <AccordionSummary
