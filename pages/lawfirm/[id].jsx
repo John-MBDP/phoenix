@@ -29,28 +29,47 @@ export const getServerSideProps = withIronSessionSsr(
 
     const lawfirmFromId = await prisma.lawfirms.findUnique({
       where: {
-        id
-      }
+        id,
+      },
     });
 
     const lawfirmFavourite = await prisma.lawfirm_favourites.findFirst({
       where: {
-        lawfirm_id: id
-      }
+        lawfirm_id: id,
+      },
     });
-    console.log(lawfirmFromId);
+
+    const lawfirmConnection = await prisma.lawfirm_connections.findFirst({
+      where: {
+        lawfirm_id: id,
+      },
+      orderBy: [
+        {
+          date_changed: "desc",
+        },
+      ],
+    });
+
     return {
       props: {
         user,
         lawfirmFavourite,
-        lawfirm: lawfirmFromId
-      }
+        lawfirmConnection,
+        lawfirm: lawfirmFromId,
+      },
     };
   },
   sessionOptions
 );
 
-const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
+const Lawyer = ({
+  setHeader,
+  setNavbar,
+  lawfirm,
+  user,
+  lawfirmFavourite,
+  lawfirmConnection,
+}) => {
   const router = useRouter();
   const {
     name,
@@ -63,20 +82,50 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
     registration_date,
     views,
     likes,
-    rating
+    rating,
   } = lawfirm;
   useEffect(() => {
-    setHeader((prev) => ({ ...prev, hidden: true }));
+    setHeader(prev => ({ ...prev, hidden: true }));
     setNavbar({ navbar: "", hidden: false });
   }, []);
 
   const [favourited, setFavourited] = useState(lawfirmFavourite ? true : false);
-  const favourite = { client_id: user.id, lawyer_id: lawfirm.id };
+  const [connection, setConnection] = useState({
+    pending: lawfirmConnection ? lawfirmConnection.pending : false,
+    accepted: lawfirmConnection ? lawfirmConnection.accepted : false,
+  });
+  const userIds = { client_id: user.id, lawfirm_id: lawfirm.id };
 
-  const saveFavourite = async (favourite) => {
-    const response = await fetch("/api/favourites/lawyers/create", {
+  const sendConnectionRequest = async connectionIds => {
+    const response = await fetch("/api/connections/lawfirms/create", {
       method: "POST",
-      body: JSON.stringify({ ...favourite, date_created: new Date() })
+      body: JSON.stringify({ ...connectionIds, date_changed: new Date() }),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    console.log("sent connection request!");
+    return await response.json();
+  };
+
+  const destroyConnectionRequest = async connectionIds => {
+    const response = await fetch("/api/connections/lawfirms/delete", {
+      method: "POST",
+      body: JSON.stringify({ ...connectionIds }),
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    console.log("destroyed connection!");
+    return await response.json();
+  };
+
+  const saveFavourite = async favourite => {
+    const response = await fetch("/api/favourites/lawfirms/create", {
+      method: "POST",
+      body: JSON.stringify({ ...favourite, date_created: new Date() }),
     });
 
     if (!response.ok) {
@@ -86,10 +135,10 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
     return await response.json();
   };
 
-  const destroyFavourite = async (favourite) => {
-    const response = await fetch("/api/favourites/lawyers/delete", {
+  const destroyFavourite = async favourite => {
+    const response = await fetch("/api/favourites/lawfirms/delete", {
       method: "POST",
-      body: JSON.stringify(favourite)
+      body: JSON.stringify(favourite),
     });
 
     if (!response.ok) {
@@ -110,7 +159,7 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
           sx={{ color: "salmon", position: "fixed", zIndex: "10" }}
           onClick={async () => {
             try {
-              await destroyFavourite(favourite);
+              await destroyFavourite(userIds);
               setFavourited(false);
             } catch (err) {
               console.log(err);
@@ -123,7 +172,7 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
           sx={{ color: "salmon", position: "fixed", zIndex: "10" }}
           onClick={async () => {
             try {
-              await saveFavourite(favourite);
+              await saveFavourite(userIds);
               setFavourited(true);
             } catch (err) {
               console.log(err);
@@ -147,10 +196,34 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
           <Button
             color="#00589B"
             padding="0.5rem 1rem"
+            background={
+              connection.pending || connection.accepted ? "grey" : null
+            }
             icon={<AnnouncementIcon />}
-            onClick={() => console.log("button")}
+            onClick={() => {
+              if (!connection.pending && !connection.accepted) {
+                try {
+                  sendConnectionRequest(userIds);
+                  setConnection({ ...connection, pending: true });
+                } catch (err) {
+                  console.log(err);
+                }
+              } else {
+                try {
+                  destroyConnectionRequest(userIds);
+                  setConnection({
+                    pending: false,
+                    accepted: false,
+                  });
+                } catch (err) {
+                  console.log(err);
+                }
+              }
+            }}
           >
-            connect
+            {(connection.pending && "request sent") ||
+              (connection.accepted && "connected") ||
+              "connect"}
           </Button>
           <div style={{ width: "0.2rem" }}></div>
           <Button
@@ -203,7 +276,7 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
           padding: "0 0.7em",
           marginTop: "1em",
           color: "white",
-          textAlign: 'center'
+          textAlign: "center",
         }}
       >
         <AccordionSummary
@@ -211,7 +284,9 @@ const Lawyer = ({ setHeader, setNavbar, lawfirm, user, lawfirmFavourite }) => {
         >
           <Typography variant="body2">More About {name}</Typography>
         </AccordionSummary>
-        <AccordionDetails sx={{ textAlign: 'left' }}>{description}</AccordionDetails>
+        <AccordionDetails sx={{ textAlign: "left" }}>
+          {description}
+        </AccordionDetails>
       </Accordion>
       <style jsx>{`
         .flex-center {
