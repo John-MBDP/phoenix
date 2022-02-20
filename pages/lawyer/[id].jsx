@@ -16,6 +16,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
+import PaymentButton from "../../components/PaymentButton";
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {
@@ -181,44 +182,7 @@ const Lawyer = ({
           <strong>Recognized Since: {date_certified}</strong>
         </Typography>
       </div>
-      <Widebutton
-        color="black"
-        outLineColor="#1B4463"
-        padding=" 0.3rem 0"
-        outline
-        strong
-        ammount="$550"
-      >
-        <div>
-          <Typography variant="button">
-            <strong>ONE TIME SERVICE FEE</strong>
-          </Typography>
-          <Typography variant="caption">click to see more</Typography>
-          <style jsx>{`
-            display: flex;
-            flex-direction: column;
-          `}</style>
-        </div>
-      </Widebutton>
-      <Widebutton
-        color="black"
-        outLineColor="#00589B"
-        padding="0.3rem 0"
-        outline
-        strong
-        ammount="$550"
-      >
-        <div>
-          <Typography variant="button">
-            <strong>Monthly Fee</strong>
-          </Typography>
-          <Typography variant="caption">click to see more</Typography>
-          <style jsx>{`
-            display: flex;
-            flex-direction: column;
-          `}</style>
-        </div>
-      </Widebutton>
+
       <Widebutton
         color="white"
         padding="1rem 0"
@@ -234,6 +198,21 @@ const Lawyer = ({
           `}</style>
         </div>
       </Widebutton>
+
+      <PaymentButton
+        lawyerId={lawyer.id}
+        header="One time service fee"
+        amount="125"
+        paymentType="payment"
+      />
+
+      <PaymentButton
+        lawyerId={lawyer.id}
+        header="Monthly Fee"
+        amount="550"
+        paymentType="subscription"
+      />
+
       <Widebutton
         color="white"
         padding="0.4rem 0"
