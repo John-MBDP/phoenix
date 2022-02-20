@@ -10,6 +10,7 @@ import UserStatCard from "../components/UserStatsCard";
 import { Typography, Box } from "@material-ui/core";
 import { useEffect } from "react";
 import ViewLikesCounter from "../components/ViewLikesCounter";
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 const Profile = ({ setHeader, setNavbar }) => {
   useEffect(() => {
@@ -37,6 +38,9 @@ const Profile = ({ setHeader, setNavbar }) => {
       <List component="nav">
         <MenuItem heading="Personal Information" path="/personal-info">
           <FaceIcon sx={{ color: "black" }} />
+        </MenuItem>
+        <MenuItem heading="Connections" path="/connections">
+          <PersonAddIcon sx={{ color: "black" }} />
         </MenuItem>
         <MenuItem heading="Notifications" path="/notifications">
           <NotificationImportantIcon sx={{ color: "black" }} />

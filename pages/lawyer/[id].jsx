@@ -3,13 +3,17 @@ const prisma = new PrismaClient();
 import { useEffect, useState } from "react";
 import RoundedTopContainer from "../../components/RoundedTopContainer";
 import UserStatsCard from "../../components/UserStatsCard";
-import { Typography } from "@material-ui/core";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import PhoneIcon from "@mui/icons-material/Phone";
 import Button from "../../components/Button";
 import AnnouncementIcon from "@mui/icons-material/Announcement";
 import EmailIcon from "@mui/icons-material/Email";
 import Widebutton from "../../components/WideButton";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRouter } from "next/router";
 import ViewLikesCounter from "../../components/ViewLikesCounter";
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -17,6 +21,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import PaymentButton from "../../components/PaymentButton";
+import { FastRewindTwoTone } from "@mui/icons-material";
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {
@@ -29,20 +34,39 @@ export const getServerSideProps = withIronSessionSsr(
         lawyers: true
       }
     });
+
     const lawyerFavourite = await prisma.lawyer_favourites.findFirst({
       where: {
         lawyer_id: id
       }
     });
+
+    const lawyerConnection = await prisma.lawyer_connections.findFirst({
+      where: {
+        lawyer_id: id
+      },
+      orderBy: [
+        {
+          date_changed: "desc"
+        }
+      ]
+    });
+
+    const lawyer = await prisma.lawyers.findUnique({
+      where: { id }
+    });
+
     return {
       props: {
         user,
         lawyerFavourite,
+        lawyerConnection,
         lawyer: {
-          ...lawfirmMembers[0].lawyers,
-          date_certified: `${lawfirmMembers[0].lawyers.date_certified.getFullYear()}`
+          ...lawyer,
+          date_certified: `${lawyer.date_certified.getFullYear()}`
         },
-        lawfirmId: lawfirmMembers[0].lawfirm_id
+        lawfirmId:
+          lawfirmMembers.length > 0 ? lawfirmMembers[0].lawfirm_id : null
       }
     };
   },
@@ -55,7 +79,8 @@ const Lawyer = ({
   lawyer,
   lawfirmId,
   user,
-  lawyerFavourite
+  lawyerFavourite,
+  lawyerConnection
 }) => {
   const router = useRouter();
   const {
@@ -65,6 +90,7 @@ const Lawyer = ({
     phone_number,
     location,
     email,
+    description,
     profile_pic,
     education,
     date_certified,
@@ -77,7 +103,37 @@ const Lawyer = ({
   }, []);
 
   const [favourited, setFavourited] = useState(lawyerFavourite ? true : false);
-  const favourite = { client_id: user.id, lawyer_id: lawyer.id };
+  const [connection, setConnection] = useState({
+    pending: lawyerConnection ? lawyerConnection.pending : false,
+    accepted: lawyerConnection ? lawyerConnection.accepted : false
+  });
+  const userIds = { client_id: user.id, lawyer_id: lawyer.id };
+
+  const sendConnectionRequest = async (connectionIds) => {
+    const response = await fetch("/api/connections/lawyers/create", {
+      method: "POST",
+      body: JSON.stringify({ ...connectionIds, date_changed: new Date() })
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    console.log("sent connection request!");
+    return await response.json();
+  };
+
+  const destroyConnectionRequest = async (connectionIds) => {
+    const response = await fetch("/api/connections/lawyers/delete", {
+      method: "POST",
+      body: JSON.stringify({ ...connectionIds })
+    });
+
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    console.log("destroyed connection!");
+    return await response.json();
+  };
 
   const saveFavourite = async (favourite) => {
     const response = await fetch("/api/favourites/lawyers/create", {
@@ -88,7 +144,7 @@ const Lawyer = ({
     if (!response.ok) {
       throw new Error(response.statusText);
     }
-    console.log("saved!");
+    console.log("saved favourite!");
     return await response.json();
   };
 
@@ -101,8 +157,14 @@ const Lawyer = ({
     if (!response.ok) {
       throw new Error(response.statusText);
     }
-    console.log("destroyed!");
+    console.log("destroyed favourite!");
     return await response.json();
+  };
+
+  const handleLawfirmClick = () => {
+    if (lawfirmId) {
+      router.push(`/lawfirm/${lawfirmId}`);
+    }
   };
 
   return (
@@ -117,7 +179,7 @@ const Lawyer = ({
           sx={{ color: "salmon", position: "fixed", zIndex: "10" }}
           onClick={async () => {
             try {
-              await destroyFavourite(favourite);
+              await destroyFavourite(userIds);
               setFavourited(false);
             } catch (err) {
               console.log(err);
@@ -130,7 +192,7 @@ const Lawyer = ({
           sx={{ color: "salmon", position: "fixed", zIndex: "10" }}
           onClick={async () => {
             try {
-              await saveFavourite(favourite);
+              await saveFavourite(userIds);
               setFavourited(true);
             } catch (err) {
               console.log(err);
@@ -147,18 +209,42 @@ const Lawyer = ({
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Button
             color="#00589B"
+            background={
+              connection.pending || connection.accepted ? "grey" : null
+            }
             padding="0.5rem 1rem"
             icon={<AnnouncementIcon />}
-            onClick={() => console.log("button")}
+            onClick={() => {
+              if (!connection.pending && !connection.accepted) {
+                try {
+                  sendConnectionRequest(userIds);
+                  setConnection({ ...connection, pending: true });
+                } catch (err) {
+                  console.log(err);
+                }
+              } else {
+                try {
+                  destroyConnectionRequest(userIds);
+                  setConnection({
+                    pending: false,
+                    accepted: false
+                  });
+                } catch (err) {
+                  console.log(err);
+                }
+              }
+            }}
           >
-            connect
+            {(connection.pending && "request sent") ||
+              (connection.accepted && "connected") ||
+              "connect"}
           </Button>
           <div style={{ width: "0.2rem" }}></div>
           <Button
             background="#00589B"
             padding="0.5rem 1rem"
             icon={<AnnouncementIcon />}
-            onClick={() => console.log("button")}
+            onClick={() => router.push(`/messages/lawyers/${lawyer.id}`)}
           >
             message
           </Button>
@@ -182,13 +268,12 @@ const Lawyer = ({
           <strong>Recognized Since: {date_certified}</strong>
         </Typography>
       </div>
-
       <Widebutton
-        color="white"
+        color={lawfirmId ? "white" : "#405b6e"}
         padding="1rem 0"
         strong
-        backgroundColor="#1B4463"
-        onClick={() => router.push(`/lawfirm/${lawfirmId}`)}
+        backgroundColor={lawfirmId ? "#1B4463" : "#0c1f2e"}
+        onClick={handleLawfirmClick}
       >
         <div>
           <Typography variant="button">Firm Affiliation</Typography>
@@ -248,6 +333,24 @@ const Lawyer = ({
           `}</style>
         </div>
       </Widebutton>
+      <Accordion
+        sx={{
+          backgroundColor: "#1B4463",
+          padding: "0 0.7em",
+          marginTop: "1em",
+          color: "white",
+          textAlign: "center"
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+        >
+          <Typography>More About {first_name}</Typography>
+        </AccordionSummary>
+        <AccordionDetails sx={{ textAlign: "left" }}>
+          <Typography>{description}</Typography>
+        </AccordionDetails>
+      </Accordion>
     </RoundedTopContainer>
   );
 };

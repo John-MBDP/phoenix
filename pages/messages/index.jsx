@@ -1,10 +1,14 @@
 import { PrismaClient } from "@prisma/client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import MessageCard from "../../components/MessageCard";
 import { Tabs, Tab } from "@material-ui/core";
 import timeifyDate from "../../helpers/timeifyDate";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
+import { notificationsContext } from "../../provider/NotificationsProvider";
+import Typography from "@mui/material/Typography";
+import io from "socket.io-client";
+let socket;
 
 const prisma = new PrismaClient();
 
@@ -32,7 +36,7 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const lawfirmMessages = await prisma.messages.findMany({
     where: {
       client_id: {
-        equals: 1,
+        equals: user.id,
       },
       lawyer_id: {
         equals: null,
@@ -55,14 +59,56 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   };
 }, sessionOptions);
 
-const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader, setNavbar }) => {
+const MessagesIndex = ({
+  lawyerMessages,
+  lawfirmMessages,
+  setHeader,
+  setNavbar,
+}) => {
   const [messageCards, setMessageCards] = useState(lawyerMessages);
   const [value, setValue] = useState(0);
+  const { addNotification, clearNotifications } =
+    useContext(notificationsContext);
+
+  const socketInitializer = async () => {
+    await fetch("/api/socket");
+    socket = io();
+
+    socket.on("connect", () => {
+      console.log("connected");
+    });
+
+    socket.on("update-typing-status", bool => {
+      // do something with message card
+    });
+
+    socket.on("update-client-messages", newMessage => {
+      addNotification();
+    });
+  };
 
   useEffect(() => {
     setHeader({ header: "MESSAGES", hidden: false });
     setNavbar({ navbar: "", hidden: false });
+    socketInitializer();
+    const closeSocket = () => {
+      socket.disconnect();
+      console.log("Socket closed");
+    };
+    return () => {
+      closeSocket();
+      clearNotifications();
+    };
   }, []);
+
+  useEffect(() => {
+    messageCards.forEach(message => {
+      if (message.seen_client === false) {
+        addNotification();
+      }
+    });
+    return clearNotifications;
+  }, [messageCards]);
 
   const handleChange = (e, value) => {
     setValue(value);
@@ -113,7 +159,7 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader, setNavbar }
   };
 
   return (
-    <div style={{ marginTop: "5rem" }}>
+    <div style={{ marginTop: "5rem", marginLeft: "1em", marginRight: "1em" }}>
       <Tabs
         value={value}
         indicatorColor="secondary"
@@ -129,6 +175,19 @@ const MessagesIndex = ({ lawyerMessages, lawfirmMessages, setHeader, setNavbar }
         />
       </Tabs>
       {parseMessageCards(messageCards)}
+      {messageCards.length === 0 && (
+        <Typography
+          style={{
+            marginTop: "1em",
+            padding: "1.5em 2em",
+            backgroundColor: "grey",
+            color: "white",
+            borderRadius: "2em",
+          }}
+        >
+          Nothing to see here. You have no messages yet!
+        </Typography>
+      )}
     </div>
   );
 };

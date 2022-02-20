@@ -217,7 +217,7 @@ async function main() {
         phone_number: "647-789-3344",
         address: "900 Dundas St W, Toronto, ON M6E 9B0",
         rating: 41,
-        profile_pic: ""
+        profile_pic: "/images/lawyers/john.jpg"
       },
       {
         first_name: "Justin",

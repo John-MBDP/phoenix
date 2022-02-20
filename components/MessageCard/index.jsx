@@ -1,6 +1,8 @@
 import { Typography, Card, Avatar } from "@mui/material";
 import Link from "next/link";
 import styles from "./index.module.scss";
+import { useContext } from "react";
+import { notificationsContext } from "../../provider/NotificationsProvider";
 
 const MessageCard = ({
   route,
@@ -11,6 +13,8 @@ const MessageCard = ({
   dateSent,
   profilePic,
 }) => {
+  const { notifications } = useContext(notificationsContext);
+
   return (
     <Link href={`/messages/${route}/${id}`} passHref>
       <Card className={styles.message_card}>
@@ -43,7 +47,7 @@ const MessageCard = ({
             >
               {dateSent}
             </Typography>
-            <div className={styles.messages_ping}>1</div>
+            {notifications > 0 && <div className={styles.messages_ping}>{notifications}</div>}
           </div>
         </div>
       </Card>

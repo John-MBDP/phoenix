@@ -6,11 +6,10 @@ import { useState, useEffect } from "react";
 import { SWRConfig } from "swr";
 import fetchJson from "../lib/fetchJson";
 import useUser from "../hooks/useUser";
+import NotificationsProvider from "../provider/NotificationsProvider";
 
 // eslint-disable-next-line func-style
 function MyApp({ Component, pageProps }) {
-
-
   const [header, setHeader] = useState({
     header: "NEWS FEED",
     hidden: false,
@@ -18,27 +17,32 @@ function MyApp({ Component, pageProps }) {
 
   const [navbar, setNavbar] = useState({
     navbar: "",
-    hidden: true,
+    hidden: false,
   });
 
   const { user } = useUser();
 
   return (
-
     <SWRConfig
       value={{
         fetcher: fetchJson,
-        onError: err => {
+        onError: (err) => {
           console.error(err);
         },
       }}
     >
-      <TopNavBar header={header} user={user} />
-      <div className={styles.view}>
-        <Component {...pageProps} setHeader={setHeader} setNavbar={setNavbar} />
-      </div>
-      <BottomNav navbar={navbar} />
-      </SWRConfig>
+      <NotificationsProvider>
+        <TopNavBar header={header} user={user} />
+        <div className={styles.view}>
+          <Component
+            {...pageProps}
+            setHeader={setHeader}
+            setNavbar={setNavbar}
+          />
+        </div>
+        <BottomNav navbar={navbar} />
+      </NotificationsProvider>
+    </SWRConfig>
   );
 }
 export default MyApp;

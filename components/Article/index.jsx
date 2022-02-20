@@ -56,30 +56,36 @@ const Article = ({
             #{articleId} in Popular
           </Typography>
           {favourited && (
-            <FavoriteIcon
-              sx={{ color: "salmon" }}
-              onClick={async () => {
-                try {
-                  await destroyFavourite(favourite);
-                  setFavourited(false);
-                } catch (err) {
-                  console.log(err);
-                }
-              }}
-            />
+            <div className={styles.favourite}>
+              <span style={{ marginRight: 5 }}>Favourited!</span>
+              <FavoriteIcon
+                sx={{ color: "salmon" }}
+                onClick={async () => {
+                  try {
+                    await destroyFavourite(favourite);
+                    setFavourited(false);
+                  } catch (err) {
+                    console.log(err);
+                  }
+                }}
+              />
+            </div>
           )}
           {!favourited && (
-            <FavoriteBorderIcon
-              sx={{ color: "salmon" }}
-              onClick={async () => {
-                try {
-                  await saveFavourite(favourite);
-                  setFavourited(true);
-                } catch (err) {
-                  console.log(err);
-                }
-              }}
-            />
+            <div className={styles.favourite}>
+              <span style={{ marginRight: 5 }}>Favourite Me!</span>
+              <FavoriteBorderIcon
+                sx={{ color: "salmon" }}
+                onClick={async () => {
+                  try {
+                    await saveFavourite(favourite);
+                    setFavourited(true);
+                  } catch (err) {
+                    console.log(err);
+                  }
+                }}
+              />
+            </div>
           )}
         </header>
         <Typography
