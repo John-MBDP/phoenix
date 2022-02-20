@@ -73,9 +73,10 @@ const Messages = ({
     socketInitializer();
     const closeSocket = () => {
       socket.emit("input-change", false);
-      socket.emit("client-present", false);
+      // socket.emit("client-present", false);
       socket.disconnect();
       console.log("Socket closed");
+      clearNotifications();
     };
     return closeSocket;
   }, []);
@@ -93,7 +94,7 @@ const Messages = ({
         }));
         return updatedMessages;
       });
-      socket.emit("client-present", true);
+      // socket.emit("client-present", true);
       clearNotifications();
     } catch (err) {
       console.log(err);
@@ -129,8 +130,17 @@ const Messages = ({
       setTypingIndicator(bool);
     });
 
-    socket.on("update-client-messages", newMessage => {
-      setMessages([...messages, { ...newMessage, seen_client: true }]);
+    socket.on("update-client-messages", async newMessage => {
+      try {
+        const seenMessages = await updateSeenMessageStatus({
+          clientId,
+          lawyerId,
+        });
+        setMessages(prev => [...prev, { ...newMessage, seen_client: true }]);
+        // socket.emit("client-present", true);
+      } catch (err) {
+        console.log(err);
+      }
     });
   };
 

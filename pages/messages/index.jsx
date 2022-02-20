@@ -107,8 +107,7 @@ const MessagesIndex = ({
         addNotification();
       }
     });
-    return clearNotifications;
-  }, [messageCards]);
+  }, []);
 
   const handleChange = (e, value) => {
     setValue(value);
@@ -159,7 +158,7 @@ const MessagesIndex = ({
   };
 
   return (
-    <div style={{ marginTop: "5rem", marginLeft: "1em", marginRight: "1em" }}>
+    <div style={{ marginTop: "5rem" }}>
       <Tabs
         value={value}
         indicatorColor="secondary"
