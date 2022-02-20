@@ -1,6 +1,6 @@
 import RoundedTopContainer from "../components/RoundedTopContainer";
 import Typography from "@mui/material/Typography";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Stack from "@mui/material/Stack";
 import Button from "../components/Button";
 import Box from "@mui/material/Box";
@@ -12,6 +12,25 @@ import { useRouter } from "next/router";
 
 const Confirmation = ({ setHeader, setNavbar }) => {
   const router = useRouter();
+  const textInput = useRef(null);
+  const textInputTwo = useRef(null);
+  const textInputThree = useRef(null);
+
+  const handleClick = (input) => {
+    input.current.childNodes[0].children[0].focus();
+    // console.log("HERE ========", textInput.current.children[0]);
+    // console.log("CURRENT ", textInput);
+    // console.log("TEST ===", textInput.current.childNodes[0].children[0]);
+    // console.log("HELLO CLICKED!");
+  };
+  const cardStyles = {
+    width: "50px",
+    height: "50px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
   useEffect(() => {
     setHeader({ header: "", hidden: true }), setNavbar({ navbar: "", hidden: true });
   }, []);
@@ -36,49 +55,17 @@ const Confirmation = ({ setHeader, setNavbar }) => {
             alignItems: "center",
           }}
         >
-          <Card
-            sx={{
-              width: "50px",
-              height: "50px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <TextField />
+          <Card sx={cardStyles}>
+            <TextField onChange={() => handleClick(textInput)} />
           </Card>
-          <Card
-            sx={{
-              width: "50px",
-              height: "50px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <TextField />
+          <Card sx={cardStyles}>
+            <TextField ref={textInput} onChange={() => handleClick(textInputTwo)} />
           </Card>
-          <Card
-            sx={{
-              width: "50px",
-              height: "50px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <TextField />
+          <Card sx={cardStyles}>
+            <TextField ref={textInputTwo} onChange={() => handleClick(textInputThree)} />
           </Card>
-          <Card
-            sx={{
-              width: "50px",
-              height: "50px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <TextField />
+          <Card sx={cardStyles}>
+            <TextField ref={textInputThree} />
           </Card>
         </Box>
         <Typography paragraph fontWeight sx={{ color: "#FF0056" }}>

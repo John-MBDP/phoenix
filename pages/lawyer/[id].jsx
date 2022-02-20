@@ -20,7 +20,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
-import { FastRewindTwoTone } from "@mui/icons-material";
+import PaymentButton from "../../components/PaymentButton";
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {
@@ -30,29 +30,29 @@ export const getServerSideProps = withIronSessionSsr(
     const lawfirmMembers = await prisma.lawfirm_members.findMany({
       where: { lawyer_id: id },
       include: {
-        lawyers: true,
-      },
+        lawyers: true
+      }
     });
 
     const lawyerFavourite = await prisma.lawyer_favourites.findFirst({
       where: {
-        lawyer_id: id,
-      },
+        lawyer_id: id
+      }
     });
 
     const lawyerConnection = await prisma.lawyer_connections.findFirst({
       where: {
-        lawyer_id: id,
+        lawyer_id: id
       },
       orderBy: [
         {
-          date_changed: "desc",
-        },
-      ],
+          date_changed: "desc"
+        }
+      ]
     });
 
     const lawyer = await prisma.lawyers.findUnique({
-      where: { id },
+      where: { id }
     });
 
     return {
@@ -62,11 +62,11 @@ export const getServerSideProps = withIronSessionSsr(
         lawyerConnection,
         lawyer: {
           ...lawyer,
-          date_certified: `${lawyer.date_certified.getFullYear()}`,
+          date_certified: `${lawyer.date_certified.getFullYear()}`
         },
         lawfirmId:
-          lawfirmMembers.length > 0 ? lawfirmMembers[0].lawfirm_id : null,
-      },
+          lawfirmMembers.length > 0 ? lawfirmMembers[0].lawfirm_id : null
+      }
     };
   },
   sessionOptions
@@ -79,7 +79,7 @@ const Lawyer = ({
   lawfirmId,
   user,
   lawyerFavourite,
-  lawyerConnection,
+  lawyerConnection
 }) => {
   const router = useRouter();
   const {
@@ -94,24 +94,24 @@ const Lawyer = ({
     education,
     date_certified,
     views,
-    likes,
+    likes
   } = lawyer;
   useEffect(() => {
-    setHeader(prev => ({ ...prev, hidden: true }));
+    setHeader((prev) => ({ ...prev, hidden: true }));
     setNavbar({ navbar: "", hidden: false });
   }, []);
 
   const [favourited, setFavourited] = useState(lawyerFavourite ? true : false);
   const [connection, setConnection] = useState({
     pending: lawyerConnection ? lawyerConnection.pending : false,
-    accepted: lawyerConnection ? lawyerConnection.accepted : false,
+    accepted: lawyerConnection ? lawyerConnection.accepted : false
   });
   const userIds = { client_id: user.id, lawyer_id: lawyer.id };
 
-  const sendConnectionRequest = async connectionIds => {
+  const sendConnectionRequest = async (connectionIds) => {
     const response = await fetch("/api/connections/lawyers/create", {
       method: "POST",
-      body: JSON.stringify({ ...connectionIds, date_changed: new Date() }),
+      body: JSON.stringify({ ...connectionIds, date_changed: new Date() })
     });
 
     if (!response.ok) {
@@ -121,10 +121,10 @@ const Lawyer = ({
     return await response.json();
   };
 
-  const destroyConnectionRequest = async connectionIds => {
+  const destroyConnectionRequest = async (connectionIds) => {
     const response = await fetch("/api/connections/lawyers/delete", {
       method: "POST",
-      body: JSON.stringify({ ...connectionIds }),
+      body: JSON.stringify({ ...connectionIds })
     });
 
     if (!response.ok) {
@@ -134,10 +134,10 @@ const Lawyer = ({
     return await response.json();
   };
 
-  const saveFavourite = async favourite => {
+  const saveFavourite = async (favourite) => {
     const response = await fetch("/api/favourites/lawyers/create", {
       method: "POST",
-      body: JSON.stringify({ ...favourite, date_created: new Date() }),
+      body: JSON.stringify({ ...favourite, date_created: new Date() })
     });
 
     if (!response.ok) {
@@ -147,10 +147,10 @@ const Lawyer = ({
     return await response.json();
   };
 
-  const destroyFavourite = async favourite => {
+  const destroyFavourite = async (favourite) => {
     const response = await fetch("/api/favourites/lawyers/delete", {
       method: "POST",
-      body: JSON.stringify(favourite),
+      body: JSON.stringify(favourite)
     });
 
     if (!response.ok) {
@@ -175,7 +175,7 @@ const Lawyer = ({
     >
       {favourited && (
         <FavoriteIcon
-          sx={{ color: "salmon" }}
+          sx={{ color: "salmon", position: "fixed", zIndex: "10" }}
           onClick={async () => {
             try {
               await destroyFavourite(userIds);
@@ -188,7 +188,7 @@ const Lawyer = ({
       )}
       {!favourited && (
         <FavoriteBorderIcon
-          sx={{ color: "salmon" }}
+          sx={{ color: "salmon", position: "fixed", zIndex: "10" }}
           onClick={async () => {
             try {
               await saveFavourite(userIds);
@@ -208,7 +208,9 @@ const Lawyer = ({
         <div style={{ display: "flex", justifyContent: "center" }}>
           <Button
             color="#00589B"
-            background={(connection.pending || connection.accepted) ? "grey" : null}
+            background={
+              connection.pending || connection.accepted ? "grey" : null
+            }
             padding="0.5rem 1rem"
             icon={<AnnouncementIcon />}
             onClick={() => {
@@ -224,7 +226,7 @@ const Lawyer = ({
                   destroyConnectionRequest(userIds);
                   setConnection({
                     pending: false,
-                    accepted: false,
+                    accepted: false
                   });
                 } catch (err) {
                   console.log(err);
@@ -266,45 +268,6 @@ const Lawyer = ({
         </Typography>
       </div>
       <Widebutton
-        color="black"
-        outLineColor="#1B4463"
-        padding=" 0.3rem 0"
-        outline
-        strong
-        ammount="$550"
-      >
-        <div>
-          <Typography variant="button">
-            <strong>ONE TIME SERVICE FEE</strong>
-          </Typography>
-          <Typography variant="caption">click to see more</Typography>
-          <style jsx>{`
-            display: flex;
-            flex-direction: column;
-          `}</style>
-        </div>
-      </Widebutton>
-      <Widebutton
-        hidden={!lawfirmId}
-        color="black"
-        outLineColor="#00589B"
-        padding="0.3rem 0"
-        outline
-        strong
-        ammount="$550"
-      >
-        <div>
-          <Typography variant="button">
-            <strong>Monthly Fee</strong>
-          </Typography>
-          <Typography variant="caption">click to see more</Typography>
-          <style jsx>{`
-            display: flex;
-            flex-direction: column;
-          `}</style>
-        </div>
-      </Widebutton>
-      <Widebutton
         color={lawfirmId ? "white" : "#405b6e"}
         padding="1rem 0"
         strong
@@ -319,6 +282,21 @@ const Lawyer = ({
           `}</style>
         </div>
       </Widebutton>
+
+      <PaymentButton
+        lawyerId={lawyer.id}
+        header="One time service fee"
+        amount="125"
+        paymentType="payment"
+      />
+
+      <PaymentButton
+        lawyerId={lawyer.id}
+        header="Monthly Fee"
+        amount="550"
+        paymentType="subscription"
+      />
+
       <Widebutton
         color="white"
         padding="0.4rem 0"
@@ -343,7 +321,7 @@ const Lawyer = ({
         strong
         backgroundColor="#1B4463"
         textAlign="left"
-        onClick={e => console.log("potato")}
+        onClick={(e) => console.log("potato")}
       >
         <div>
           <Typography variant="body2">Education:</Typography>
@@ -360,7 +338,7 @@ const Lawyer = ({
           padding: "0 0.7em",
           marginTop: "1em",
           color: "white",
-          textAlign: "center",
+          textAlign: "center"
         }}
       >
         <AccordionSummary

@@ -12,6 +12,14 @@ DROP TABLE IF EXISTS lawfirm_members CASCADE;
 
 DROP TABLE IF EXISTS fields_of_law CASCADE;
 
+DROP TABLE IF EXISTS payments CASCADE;
+
+DROP TABLE IF EXISTS product_prices CASCADE;
+
+DROP TABLE IF EXISTS lawyer_connections;
+
+DROP TABLE IF EXISTS lawfirm_connections;
+
 DROP TABLE IF EXISTS messages CASCADE;
 
 DROP TABLE IF EXISTS articles CASCADE;
