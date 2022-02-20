@@ -7,7 +7,7 @@ import { BsPaypal } from "react-icons/bs";
 import Box from "@mui/material/Box";
 import CircleOutlinedIcon from "@mui/icons-material/CircleOutlined";
 
-import { FaCcPaypal, FaCcVisa } from "react-icons/fa";
+import { FaCcVisa, FaCcAmex } from "react-icons/fa";
 import Button from "../components/Button";
 
 import Widebutton from "../components/WideButton";
@@ -28,15 +28,18 @@ const Payments = ({ setHeader, setNavbar }) => {
           }}
         >
           {" "}
-          <BsPaypal size={70} />
+          <BsPaypal size={50} />
         </Typography>
-        {/* <BsPaypal /> */}
       </Widebutton>
       <Widebutton color="black" outLineColor="#00589B" padding=" 1rem 0" outline strong>
         <Typography sx={{ fontWeight: "800px" }}>
-          <FaCcVisa size={70} />
+          <FaCcVisa size={50} />
         </Typography>
-        {/* <BsPaypal /> */}
+      </Widebutton>
+      <Widebutton color="black" outLineColor="#00589B" padding=" 1rem 0" outline strong>
+        <Typography sx={{ fontWeight: "800px" }}>
+          <FaCcAmex size={50} />
+        </Typography>
       </Widebutton>
       {/* <Box
         sx={{
