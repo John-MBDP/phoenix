@@ -163,11 +163,12 @@ const MessagesIndex = ({
   };
 
   return (
-    <div style={{ marginTop: "5rem" }}>
+    <div style={{ marginTop: "5.5em" }}>
       <Tabs
         value={value}
         textColor="secondary"
         onChange={handleChange}
+        style={{ marginLeft: '1em', marginBottom: '0.7em' }}
         TabIndicatorProps={{
           style: {
             backgroundColor: "white",
