@@ -15,6 +15,11 @@ export default withIronSessionApiRoute(async function (req, res) {
     expand: ["payment_intent"]
   });
 
+  const item = await stripe.checkout.sessions.listLineItems(session.id);
+  console.log(item);
+  const description = item.data[0].description;
+  console.log(description);
+
   const checkDuplicate = await prisma.payments.findMany({
     where: {
       session_id: session.id
@@ -28,7 +33,8 @@ export default withIronSessionApiRoute(async function (req, res) {
           session_id: session.id,
           amount_cents: Number(session.amount_total),
           lawyer_id: Number(session.client_reference_id),
-          client_id: Number(user.id)
+          client_id: Number(user.id),
+          description: description
         }
       });
     } catch (err) {
