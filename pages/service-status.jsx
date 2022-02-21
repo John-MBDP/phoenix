@@ -4,6 +4,7 @@ import sessionOptions from "../lib/session";
 import RoundedTopContainer from "../components/RoundedTopContainer";
 import { withIronSessionSsr } from "iron-session/next";
 import Payment from "../components/Payment";
+import Alert from "../components/Alert";
 
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const { id } = req.session.user;
@@ -42,7 +43,11 @@ const SericeStatus = ({ setHeader, payments }) => {
   return (
     <RoundedTopContainer height="600px" image="/images/book3.jpeg">
       <RoundedTopContainer.Header text="Service Status" />
+      {paymentArray.length === 0 ? (
+        <Alert message="Nothing to see here yet." />
+      ) : null}
       <div className="container">{paymentArray}</div>
+
       <style jsx>{`
         .container {
           padding: 1rem 0 6rem 0;
