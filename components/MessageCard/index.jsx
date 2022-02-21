@@ -28,7 +28,7 @@ const MessageCard = ({
         <div className={styles.message_card_info}>
           <div className={styles.name_and_body}>
             <Typography
-              sx={{ fontWeight: "bold" }}
+              style={{ fontWeight: "bold" }}
               gutterBottom
               variant="body1"
               component="div"
@@ -41,9 +41,9 @@ const MessageCard = ({
           </div>
           <div className={styles.time_and_ping}>
             <Typography
-              sx={{ fontWeight: "bold" }}
               gutterBottom
               variant="body2"
+              color="text.secondary"
               component="div"
             >
               {dateSent}
