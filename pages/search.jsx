@@ -131,21 +131,35 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
         </div>
       </form>
       <Tabs
+        style={{ marginTop: "0.3em" }}
         variant="scrollable"
         scrollButtons="auto"
+        textColor="secondary"
         aria-label="scrollable auto tabs example"
         value={selectedType}
         onChange={handleSearchTypeChange}
+        TabIndicatorProps={{
+          style: {
+            backgroundColor: "white",
+          },
+        }}
       >
         <Tab label="Lawyers" />
         <Tab label="Lawfirms" />
       </Tabs>
       <Tabs
+        style={{ marginTop: "-0.5em", marginBottom: '-0.3em' }}
         variant="scrollable"
         scrollButtons="auto"
+        textColor="secondary"
         aria-label="scrollable auto tabs example"
         value={selectedField}
         onChange={handleFieldChange}
+        TabIndicatorProps={{
+          style: {
+            backgroundColor: "white",
+          },
+        }}
       >
         {tabs}
       </Tabs>
