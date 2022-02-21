@@ -2,7 +2,14 @@ import { Avatar } from "@material-ui/core";
 import Link from "next/link";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-const Payment = ({ id, profile_pic, session_id, amount_cents, name }) => {
+const Payment = ({
+  id,
+  profile_pic,
+  session_id,
+  amount_cents,
+  name,
+  description
+}) => {
   return (
     <div>
       <div className="card">
@@ -17,6 +24,7 @@ const Payment = ({ id, profile_pic, session_id, amount_cents, name }) => {
           <div className="header">
             <h4>{`Transaction #${id}`}</h4>
           </div>
+          <p>{description}</p>
           <p>{name}</p>
         </div>
         <div className="price">
