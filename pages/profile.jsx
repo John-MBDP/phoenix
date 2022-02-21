@@ -14,6 +14,7 @@ import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { withIronSessionSsr } from "iron-session/next";
 import sessionOptions from "../lib/session";
 import { prisma } from "../lib/prisma";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const user = req.session.user;
@@ -65,7 +66,7 @@ const Profile = ({ setHeader, setNavbar, firstName, lastName }) => {
           <PersonAddIcon sx={{ color: "black" }} />
         </MenuItem>
         <MenuItem heading="Favourites" path="/favourites">
-          <LogoutIcon sx={{ color: "black" }} />
+          <FavoriteIcon sx={{ color: "black" }} />
         </MenuItem>
         <MenuItem heading="Service Status" path="/service-status">
           <LocalMallIcon sx={{ color: "black" }} />
