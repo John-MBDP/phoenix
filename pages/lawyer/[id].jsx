@@ -174,7 +174,7 @@ const Lawyer = ({
     >
       {favourited && (
         <FavoriteIcon
-          sx={{ color: "salmon", position: "absolute", zIndex: "10", top: "0" }}
+          sx={{ color: "#ff0056", position: "absolute", zIndex: "10", top: "0" }}
           onClick={async () => {
             try {
               await destroyFavourite(userIds);
@@ -187,7 +187,7 @@ const Lawyer = ({
       )}
       {!favourited && (
         <FavoriteBorderIcon
-          sx={{ color: "salmon", position: "absolute", zIndex: "10", top: "0" }}
+          sx={{ color: "#ff0056", position: "absolute", zIndex: "10", top: "0" }}
           onClick={async () => {
             try {
               await saveFavourite(userIds);
