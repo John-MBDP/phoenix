@@ -179,9 +179,11 @@ const MessagesIndex = ({
         />
       </Tabs>
       {parseMessageCards(messageCards)}
-      {messageCards.length === 0 && (
-        <Alert message="Nothing to see here. You have no messages yet!" />
-      )}
+      <div style={{ margin: "0 2rem" }}>
+        {messageCards.length === 0 && (
+          <Alert message="Nothing to see here. You have no messages yet!" />
+        )}
+      </div>
     </div>
   );
 };
