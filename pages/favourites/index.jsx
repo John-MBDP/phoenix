@@ -138,6 +138,7 @@ const Favourites = ({
         value={value}
         textColor="secondary"
         onChange={handleChange}
+        centered
         TabIndicatorProps={{
           style: {
             backgroundColor: "white",

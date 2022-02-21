@@ -74,9 +74,9 @@ const Signup = ({ setHeader, setNavbar }) => {
     });
   };
 
-  const refreshPage = () => {
-    window.location.reload(false);
-  };
+  // const refreshPage = () => {
+  //   window.location.reload(false);
+  // };
 
   const handleSubmit = async (inputValues) => {
     if (
@@ -97,7 +97,7 @@ const Signup = ({ setHeader, setNavbar }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(inputValues),
       });
-      refreshPage();
+      router.push('/');
     } catch (error) {
       if (error instanceof FetchError) {
         setErrorMsg(error.data.message);
@@ -127,7 +127,7 @@ const Signup = ({ setHeader, setNavbar }) => {
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <AccountBoxIcon sx={{ color: "black" }} />
+              <AccountBoxIcon style={{ color: "black" }} />
             </InputAdornment>
           ),
         }}
@@ -150,7 +150,7 @@ const Signup = ({ setHeader, setNavbar }) => {
         InputProps={{
           endAdornment: (
             <MailIcon position="end">
-              <AccountBoxIcon sx={{ color: "black" }} />
+              <AccountBoxIcon style={{ color: "black" }} />
             </MailIcon>
           ),
         }}
@@ -176,7 +176,7 @@ const Signup = ({ setHeader, setNavbar }) => {
         InputProps={{
           endAdornment: (
             <LockIcon position="end">
-              <AccountBoxIcon sx={{ color: "black" }} />
+              <AccountBoxIcon style={{ color: "black" }} />
             </LockIcon>
           ),
         }}
