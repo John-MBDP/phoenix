@@ -7,13 +7,16 @@ export default function NotificationsProvider({ children }) {
     initialSender: { id: "initial sender", pings: 0 },
   });
 
+  let pings = 0;
+
   const addNotification = senderId => {
+    pings += 1;
     setNotifications(prev => {
       if (prev[senderId] && prev[senderId].id === senderId) {
-        prev[senderId].pings += 1;
+        prev[senderId].pings = pings;
         return prev;
       } else {
-        return { ...notifications, [senderId]: { id: senderId, pings: 0 } };
+        return { ...prev, [senderId]: { id: senderId, pings: pings } };
       }
     });
   };
