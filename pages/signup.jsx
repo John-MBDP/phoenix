@@ -15,6 +15,7 @@ import fetchJson, { FetchError } from "../lib/fetchJson";
 import useUser from "../hooks/useUser";
 import Link from "next/link";
 import { inputLabelClasses } from "@mui/material/InputLabel";
+import InputError from "../components/InputError";
 
 const btnMain = {
   alignItems: "right",
@@ -111,7 +112,7 @@ const Signup = ({ setHeader, setNavbar }) => {
       <Typography variant="h4" component="h1">
         Signup
       </Typography>
-      {errorMsg && <p>{errorMsg}</p>}
+      <InputError message={errorMsg} />
       <TextField
         sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
         id="input-with-icon-textfield"

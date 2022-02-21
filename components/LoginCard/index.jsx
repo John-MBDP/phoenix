@@ -11,6 +11,7 @@ import Button from "../Button";
 import ArrowRightAltIcon from "@mui/icons-material/ArrowRightAlt";
 import Stack from "@mui/material/Stack";
 import { inputLabelClasses } from "@mui/material/InputLabel";
+import InputError from "../InputError";
 
 const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
   const [formInput, setFormInput] = useState({ email: "", password: "" });
@@ -42,7 +43,7 @@ const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
       <Typography variant="h4" component="h1">
         Login
       </Typography>
-      {errorMessage && <p>{errorMessage}</p>}
+      <InputError message={errorMessage} />
       <form
         onSubmit={(e) => {
           e.preventDefault();
