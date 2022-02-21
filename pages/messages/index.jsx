@@ -166,9 +166,13 @@ const MessagesIndex = ({
     <div style={{ marginTop: "5rem" }}>
       <Tabs
         value={value}
-        indicatorColor="secondary"
         textColor="secondary"
         onChange={handleChange}
+        TabIndicatorProps={{
+          style: {
+            backgroundColor: "white",
+          },
+        }}
       >
         <Tab label="Lawyers" onClick={() => setMessageCards(lawyerMessages)} />
         <Tab

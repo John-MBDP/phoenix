@@ -1,11 +1,9 @@
-import ScrollableMenu from "../components/ScrollableMenu";
-import { Tabs, Tab, Box, OutlinedInput, FormControl } from "@mui/material";
+import { Tabs, Tab } from "@mui/material";
 import { useEffect, useState } from "react";
 import SearchCard from "../components/SearchCard";
 import { prisma } from "../lib/prisma";
 import getGeoLocation from "../helpers/getGeoLocation";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
-import { InputAdornment, InputLabel } from "@material-ui/core";
 
 export const getServerSideProps = async () => {
   const lawyers = await prisma.lawyers.findMany();
@@ -131,21 +129,35 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
         </div>
       </form>
       <Tabs
+        style={{ marginTop: "0.3em" }}
         variant="scrollable"
         scrollButtons="auto"
+        textColor="secondary"
         aria-label="scrollable auto tabs example"
         value={selectedType}
         onChange={handleSearchTypeChange}
+        TabIndicatorProps={{
+          style: {
+            backgroundColor: "white",
+          },
+        }}
       >
         <Tab label="Lawyers" />
         <Tab label="Lawfirms" />
       </Tabs>
       <Tabs
+        style={{ marginTop: "-0.5em", marginBottom: '-0.3em' }}
         variant="scrollable"
         scrollButtons="auto"
+        textColor="secondary"
         aria-label="scrollable auto tabs example"
         value={selectedField}
         onChange={handleFieldChange}
+        TabIndicatorProps={{
+          style: {
+            backgroundColor: "white",
+          },
+        }}
       >
         {tabs}
       </Tabs>

@@ -136,9 +136,13 @@ const Favourites = ({
     <div className={styles.container}>
       <Tabs
         value={value}
-        indicatorColor="secondary"
         textColor="secondary"
         onChange={handleChange}
+        TabIndicatorProps={{
+          style: {
+            backgroundColor: "white",
+          },
+        }}
       >
         <Tab label="Articles" onClick={() => setFavourites(ARTICLES)} />
         <Tab label="Lawyers" onClick={() => setFavourites(LAWYERS)} />
