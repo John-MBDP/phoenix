@@ -45,11 +45,11 @@ const Article = ({
   };
 
   return (
-    <Card sx={{ padding: "1em" }}>
+    <Card style={{ padding: "1.5em 1em" }}>
       <CardContent>
         <header className={styles.header}>
           <Typography
-            sx={{ fontSize: 14, fontWeight: "bold" }}
+            style={{ fontSize: 14, fontWeight: "bold" }}
             color="text.secondary"
             className={styles.popular}
           >
@@ -59,7 +59,7 @@ const Article = ({
             <div className={styles.favourite}>
               <span style={{ marginRight: 5 }}>Favourited!</span>
               <FavoriteIcon
-                sx={{ color: "#ff0056" }}
+                style={{ color: "#ff0056" }}
                 onClick={async () => {
                   try {
                     await destroyFavourite(favourite);
@@ -75,7 +75,7 @@ const Article = ({
             <div className={styles.favourite}>
               <span style={{ marginRight: 5 }}>Favourite Me!</span>
               <FavoriteBorderIcon
-                sx={{ color: "#ff0056" }}
+                style={{ color: "#ff0056" }}
                 onClick={async () => {
                   try {
                     await saveFavourite(favourite);
@@ -89,19 +89,20 @@ const Article = ({
           )}
         </header>
         <Typography
-          sx={{ fontWeight: "bold", margin: "0.5em 0" }}
-          variant="h5"
+          style={{ fontWeight: "bold", marginBottom: '1em' }}
+          variant="h4"
           component="div"
+          gutterBottom
         >
           {title}
         </Typography>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <Typography style={{ fontSize: 14 }} color="text.secondary" gutterBottom>
           {date} - 5 min read
         </Typography>
-        <Typography sx={{ mb: 2, fontSize: 14, fontWeight: "bold" }}>
+        <Typography style={{ marginBottom: '2em', fontSize: 14, fontWeight: "bold" }}>
           {author}
         </Typography>
-        <Typography variant="body1">
+        <Typography variant="body1" style={{ lineHeight: '2rem', marginBottom: '3em' }}>
           {body}
           <br />
         </Typography>

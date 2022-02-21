@@ -2,6 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 1.5em;
 }
 
 .popular {
@@ -11,5 +12,6 @@
 .favourite {
   display: flex;
   align-items: center;
-  font-size: 0.9rem;
+  font-size: 0.8rem;
+  color: #ff0056;
 }
