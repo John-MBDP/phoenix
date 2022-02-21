@@ -6,6 +6,7 @@ import Button from "../components/Button";
 import { prisma } from "../lib/prisma";
 import { withIronSessionSsr } from "iron-session/next";
 import sessionOptions from "../lib/session";
+import fetchJson from "../lib/fetchJson";
 
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const user = req.session.user;
@@ -20,6 +21,8 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
 }, sessionOptions);
 
 const PersonalInfo = ({ setHeader, setNavbar, client }) => {
+  const [errorMsg, setErrorMsg] = useState('');
+
   useEffect(() => {
     setHeader({ header: "", hidden: true });
     setNavbar({ navbar: "", hidden: false });
@@ -49,6 +52,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
     });
 
     if (!response.ok) {
+      setErrorMsg(response.statusText);
       throw new Error(response.statusText);
     }
     return await response.json();
@@ -67,8 +71,12 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
       console.log('client info updated!');
       setUpdated(true);
       setTimeout(() => setUpdated(false), 3000);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      if (error) {
+        setErrorMsg(error.data.message);
+      } else {
+        console.error("An unexpected error happened:", error);
+      }
     }
   };
 
@@ -89,6 +97,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
           }
         }}
       >
+        {errorMsg && <p>{errorMsg}</p>}
         <TextField
           fullWidth
           label="First Name"
