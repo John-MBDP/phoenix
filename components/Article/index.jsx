@@ -90,7 +90,7 @@ const Article = ({
         </header>
         <Typography
           style={{ fontWeight: "bold", marginBottom: '1em' }}
-          variant="h5"
+          variant="h4"
           component="div"
           gutterBottom
         >
