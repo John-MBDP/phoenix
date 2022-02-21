@@ -53,6 +53,7 @@ const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
           sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
           id="input-with-icon-textfield"
           label="Email Address"
+          type="email"
           InputLabelProps={{
             sx: {
               [`&.${inputLabelClasses.shrink}`]: {
