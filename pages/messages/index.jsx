@@ -65,7 +65,7 @@ const MessagesIndex = ({
 }) => {
   const [messageCards, setMessageCards] = useState(lawyerMessages);
   const [value, setValue] = useState(0);
-  const { addNotification, clearNotifications } =
+  const { notifications, addNotification, clearNotifications } =
     useContext(notificationsContext);
 
   const socketInitializer = async () => {
@@ -81,7 +81,12 @@ const MessagesIndex = ({
     });
 
     socket.on("update-client-messages", newMessage => {
-      addNotification();
+      if (newMessage.lawyer_id) {
+        addNotification(newMessage.lawyer_id);
+      } else if (newMessage.law_firm_id) {
+        addNotification(newMessage.law_firm_id);
+      }
+      setMessageCards(prev => [...prev, newMessage]);
     });
   };
 
@@ -89,6 +94,15 @@ const MessagesIndex = ({
     setHeader({ header: "MESSAGES", hidden: false });
     setNavbar({ navbar: "", hidden: false });
     socketInitializer();
+    messageCards.forEach(message => {
+      if (message.seen_client === false) {
+        if (message.lawyer_id) {
+          addNotification(message.lawyer_id);
+        } else if (message.law_firm_id) {
+          addNotification(message.law_firm_id);
+        }
+      }
+    });
     const closeSocket = () => {
       socket.disconnect();
       console.log("Socket closed");
@@ -97,15 +111,7 @@ const MessagesIndex = ({
       closeSocket();
       clearNotifications();
     };
-  }, []);
-
-  useEffect(() => {
-    messageCards.forEach(message => {
-      if (message.seen_client === false) {
-        addNotification();
-      }
-    });
-  }, []);
+  }, [messageCards]);
 
   const handleChange = (e, value) => {
     setValue(value);

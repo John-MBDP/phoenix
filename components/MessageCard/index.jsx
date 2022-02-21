@@ -14,6 +14,7 @@ const MessageCard = ({
   profilePic,
 }) => {
   const { notifications } = useContext(notificationsContext);
+  const pings = notifications[id] ? notifications[id].pings : 0;
 
   return (
     <Link href={`/messages/${route}/${id}`} passHref>
@@ -47,7 +48,7 @@ const MessageCard = ({
             >
               {dateSent}
             </Typography>
-            {notifications > 0 && <div className={styles.messages_ping}>{notifications}</div>}
+            {pings > 0 && <div className={styles.messages_ping}>{pings}</div>}
           </div>
         </div>
       </Card>
