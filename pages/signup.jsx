@@ -74,9 +74,9 @@ const Signup = ({ setHeader, setNavbar }) => {
     });
   };
 
-  const refreshPage = () => {
-    window.location.reload(false);
-  };
+  // const refreshPage = () => {
+  //   window.location.reload(false);
+  // };
 
   const handleSubmit = async (inputValues) => {
     if (
