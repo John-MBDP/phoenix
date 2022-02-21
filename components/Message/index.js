@@ -1,5 +1,4 @@
 import { Avatar } from "@mui/material";
-import ReactTimeago from "react-timeago";
 import styles from "./Index.module.css";
 
 const Message = ({ children, fromClient, date, profilePic }) => {

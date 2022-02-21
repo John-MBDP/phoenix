@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import styles from "../styles/Home.module.css";
 import TopNavBar from "../components/TopNavBar";
 import BottomNav from "../components/BottomNavigation";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { SWRConfig } from "swr";
 import fetchJson from "../lib/fetchJson";
 import useUser from "../hooks/useUser";

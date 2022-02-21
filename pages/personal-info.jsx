@@ -1,11 +1,12 @@
 import RoundedTopContainer from "../components/RoundedTopContainer";
 import UserStatCard from "../components/UserStatsCard";
-import { Typography, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
 import { prisma } from "../lib/prisma";
 import { withIronSessionSsr } from "iron-session/next";
 import sessionOptions from "../lib/session";
+import InputError from "../components/InputError";
 
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const user = req.session.user;
@@ -20,6 +21,8 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
 }, sessionOptions);
 
 const PersonalInfo = ({ setHeader, setNavbar, client }) => {
+  const [errorMsg, setErrorMsg] = useState("");
+
   useEffect(() => {
     setHeader({ header: "", hidden: true });
     setNavbar({ navbar: "", hidden: false });
@@ -49,6 +52,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
     });
 
     if (!response.ok) {
+      setErrorMsg("That email is already in use");
       throw new Error(response.statusText);
     }
     return await response.json();
@@ -63,12 +67,12 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
   const handleSubmit = async formInput => {
     try {
       const updatedClient = await updateClient(formInput);
-      setFormInput({...formInput, updatedClient});
-      console.log('client info updated!');
+      setFormInput({ ...formInput, updatedClient });
+      console.log("client info updated!");
       setUpdated(true);
       setTimeout(() => setUpdated(false), 3000);
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.error("An unexpected error happened:", error);
     }
   };
 
@@ -89,6 +93,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
           }
         }}
       >
+        <InputError message={errorMsg} />
         <TextField
           fullWidth
           label="First Name"
@@ -133,8 +138,8 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
           onChange={e => handleInput(e)}
           margin="normal"
         />
-        <Button type="submit" background={updated && 'grey' || null}>
-          {updated && 'Updated!' || 'Update'}
+        <Button type="submit" background={(updated && "grey") || null}>
+          {(updated && "Updated!") || "Update"}
         </Button>
       </form>
     </RoundedTopContainer>
