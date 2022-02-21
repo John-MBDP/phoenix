@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../lib/prisma";
 import { useState, useEffect, useContext } from "react";
 import MessageCard from "../../components/MessageCard";
 import { Tabs, Tab } from "@material-ui/core";
@@ -9,8 +9,6 @@ import { notificationsContext } from "../../provider/NotificationsProvider";
 import Typography from "@mui/material/Typography";
 import io from "socket.io-client";
 let socket;
-
-const prisma = new PrismaClient();
 
 // COOKIE GRAB EXAMPLE
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {

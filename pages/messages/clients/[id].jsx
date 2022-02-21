@@ -1,5 +1,4 @@
-import { Box, InputAdornment, Paper, Typography } from "@material-ui/core";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../lib/prisma";
 import Message from "../../../components/Message";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -11,7 +10,6 @@ import io from "socket.io-client";
 import sessionOptions from "../../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import { notificationsContext } from "../../../provider/NotificationsProvider";
-const prisma = new PrismaClient();
 let socket;
 
 export const getServerSideProps = withIronSessionSsr(

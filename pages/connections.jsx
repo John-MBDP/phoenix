@@ -5,10 +5,7 @@ import { Typography, List } from "@mui/material";
 import { withIronSessionSsr } from "iron-session/next";
 import sessionOptions from "../lib/session";
 import { useEffect, useState } from "react";
-import { PrismaClient } from "@prisma/client";
-import Link from "next/link";
-
-const prisma = new PrismaClient();
+import { prisma } from "../lib/prisma";
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {

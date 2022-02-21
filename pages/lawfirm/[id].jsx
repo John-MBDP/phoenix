@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { prisma } from "../../lib/prisma";
 import { useEffect, useState } from "react";
 import RoundedTopContainer from "../../components/RoundedTopContainer";
 import UserStatsCard from "../../components/UserStatsCard";

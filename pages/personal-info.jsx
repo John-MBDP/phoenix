@@ -3,11 +3,9 @@ import UserStatCard from "../components/UserStatsCard";
 import { Typography, TextField } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../lib/prisma";
 import { withIronSessionSsr } from "iron-session/next";
 import sessionOptions from "../lib/session";
-
-const prisma = new PrismaClient();
 
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const user = req.session.user;
