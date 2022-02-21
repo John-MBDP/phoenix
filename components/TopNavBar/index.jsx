@@ -142,7 +142,7 @@ const TopNavBar = ({ header, user }) => {
           >
             <Avatar
               sx={{ marginTop: 2, marginLeft: 2 }}
-              src={"/images/huTao.png"}
+              style={{ backgroundColor: "#ff8bb2" }}
             />
           </IconButton>
           <span className={styles.profile}>Profile</span>

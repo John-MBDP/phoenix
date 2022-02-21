@@ -11,8 +11,29 @@ import { useEffect } from "react";
 import ViewLikesCounter from "../components/ViewLikesCounter";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import LocalMallIcon from "@mui/icons-material/LocalMall";
+import { withIronSessionSsr } from "iron-session/next";
+import sessionOptions from "../lib/session";
+import { prisma } from "../lib/prisma";
 
-const Profile = ({ setHeader, setNavbar }) => {
+export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
+  const user = req.session.user;
+  console.log(user);
+  const clientInfo = await prisma.clients.findUnique({
+    where: {
+      id: user.id
+    }
+  });
+  console.log(clientInfo);
+
+  return {
+    props: {
+      firstName: clientInfo.first_name,
+      lastName: clientInfo.last_name
+    }
+  };
+}, sessionOptions);
+
+const Profile = ({ setHeader, setNavbar, firstName, lastName }) => {
   useEffect(() => {
     setHeader({ header: "", hidden: true });
     setNavbar({ navbar: "", hidden: false });
@@ -24,7 +45,7 @@ const Profile = ({ setHeader, setNavbar }) => {
       height="600px"
       padBottom
     >
-      <UserStatCard name="Hu Tao" />
+      <UserStatCard name={`${firstName} ${lastName}`} />
       <ViewLikesCounter />
       <div style={{ paddingTop: "1rem" }}>
         <Typography

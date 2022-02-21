@@ -6,10 +6,20 @@ const UserStatCard = ({ children, name, image }) => {
     <div className={styles.container}>
       <div className={styles.image}>
         <Avatar
-          alt="Remy Sharp"
-          src={image || "/images/huTao.png"}
-          style={{ height: "130px", width: "130px" }}
-        />
+          style={{
+            height: "130px",
+            width: "130px",
+            backgroundColor: "#ff8bb2",
+            fontSize: "4rem"
+          }}
+        >
+          {name
+            ? name
+                .split(" ")
+                .map((item) => item[0].toUpperCase())
+                .join("")
+            : null}
+        </Avatar>
       </div>
       <Typography
         className={styles.username}
