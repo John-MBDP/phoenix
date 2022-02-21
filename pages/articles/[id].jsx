@@ -51,7 +51,7 @@ const ArticleShow = ({ setNavbar, article, user, articleFavourite }) => {
       <section className="article-container">
         <style jsx>{`
           .article-container {
-            height: 550px;
+            height: 650px;
             overflow: scroll;
             position: fixed;
             bottom: 0;
