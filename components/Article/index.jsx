@@ -45,7 +45,7 @@ const Article = ({
   };
 
   return (
-    <Card style={{ padding: "1em" }}>
+    <Card style={{ padding: "1.5em 1em" }}>
       <CardContent>
         <header className={styles.header}>
           <Typography
