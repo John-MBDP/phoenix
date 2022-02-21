@@ -9,11 +9,12 @@ const UserStatCard = ({ children, name, image }) => {
           style={{
             height: "130px",
             width: "130px",
-            backgroundColor: "#ff8bb2",
+            backgroundColor: `${!image ? "#ff8bb2" : "white"}`,
             fontSize: "4rem"
           }}
+          src={image}
         >
-          {name
+          {name && !image
             ? name
                 .split(" ")
                 .map((item) => item[0].toUpperCase())
