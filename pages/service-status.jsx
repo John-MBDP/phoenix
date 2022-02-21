@@ -41,8 +41,12 @@ const SericeStatus = ({ setHeader, payments }) => {
   return (
     <RoundedTopContainer height="600px" image="/images/book3.jpeg">
       <RoundedTopContainer.Header text="Service Status" />
-      <br />
-      {paymentArray}
+      <div className="container">{paymentArray}</div>
+      <style jsx>{`
+        .container {
+          padding: 1rem 0 6rem 0;
+        }
+      `}</style>
     </RoundedTopContainer>
   );
 };
