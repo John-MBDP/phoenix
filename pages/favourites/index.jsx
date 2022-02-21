@@ -1,5 +1,5 @@
 import { Tab, Tabs } from "@material-ui/core";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import { prisma } from "../../lib/prisma";
@@ -7,61 +7,62 @@ import styles from "../../styles/Home.module.css";
 import ArticleCard from "../../components/ArticleCard";
 import SearchCard from "../../components/SearchCard";
 import Timeago from "react-timeago";
+import Alert from "../../components/Alert";
 
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const user = req.session.user;
   const articleFavourites = await prisma.article_favourites.findMany({
     where: {
       client_id: {
-        equals: user.id,
-      },
+        equals: user.id
+      }
     },
     include: {
-      articles: true,
+      articles: true
     },
     orderBy: [
       {
-        date_created: "desc",
-      },
-    ],
+        date_created: "desc"
+      }
+    ]
   });
   const lawyerFavourites = await prisma.lawyer_favourites.findMany({
     where: {
       client_id: {
-        equals: user.id,
-      },
+        equals: user.id
+      }
     },
     include: {
-      lawyers: true,
+      lawyers: true
     },
     orderBy: [
       {
-        date_created: "desc",
-      },
-    ],
+        date_created: "desc"
+      }
+    ]
   });
   const lawfirmFavourites = await prisma.lawfirm_favourites.findMany({
     where: {
       client_id: {
-        equals: user.id,
-      },
+        equals: user.id
+      }
     },
     include: {
-      lawfirms: true,
+      lawfirms: true
     },
     orderBy: [
       {
-        date_created: "desc",
-      },
-    ],
+        date_created: "desc"
+      }
+    ]
   });
   return {
     props: {
       articleFavourites,
       lawyerFavourites,
       lawfirmFavourites,
-      user,
-    },
+      user
+    }
   };
 }, sessionOptions);
 
@@ -70,7 +71,7 @@ const Favourites = ({
   setNavbar,
   articleFavourites,
   lawyerFavourites,
-  lawfirmFavourites,
+  lawfirmFavourites
 }) => {
   const ARTICLES = "ARTICLES";
   const LAWYERS = "LAWYERS";
@@ -88,7 +89,7 @@ const Favourites = ({
     setValue(value);
   };
 
-  const parsedArticleFavourites = articleFavourites.map(favourite => {
+  const parsedArticleFavourites = articleFavourites.map((favourite) => {
     return (
       <ArticleCard
         key={favourite.id}
@@ -101,7 +102,7 @@ const Favourites = ({
     );
   });
 
-  const parsedLawyerFavourites = lawyerFavourites.map(favourite => {
+  const parsedLawyerFavourites = lawyerFavourites.map((favourite) => {
     return (
       <SearchCard
         key={favourite.id}
@@ -116,7 +117,7 @@ const Favourites = ({
     );
   });
 
-  const parsedLawfirmFavourites = lawfirmFavourites.map(favourite => {
+  const parsedLawfirmFavourites = lawfirmFavourites.map((favourite) => {
     return (
       <SearchCard
         key={favourite.id}
@@ -149,8 +150,17 @@ const Favourites = ({
         />
       </Tabs>
       {favourites === ARTICLES && parsedArticleFavourites}
+      {favourites === ARTICLES && parsedArticleFavourites.length === 0 ? (
+        <Alert message="You have not liked any articles yet." />
+      ) : null}
       {favourites === LAWYERS && parsedLawyerFavourites}
+      {favourites === LAWYERS && parsedLawyerFavourites.length === 0 ? (
+        <Alert message="You have not liked any lawyers yet." />
+      ) : null}
       {favourites === LAWFIRMS && parsedLawfirmFavourites}
+      {favourites === LAWFIRMS && parsedLawfirmFavourites.length === 0 ? (
+        <Alert message="You have not liked any lawfirms yet." />
+      ) : null}
     </div>
   );
 };

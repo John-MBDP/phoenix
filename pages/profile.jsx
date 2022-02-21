@@ -1,16 +1,16 @@
 import RoundedTopContainer from "../components/RoundedTopContainer";
 import MenuItem from "../components/MenuItem";
 import List from "@mui/material/List";
-import NotificationImportantIcon from "@mui/icons-material/NotificationImportant";
 import FaceIcon from "@mui/icons-material/Face";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import ReportIcon from "@mui/icons-material/Report";
 import LogoutIcon from "@mui/icons-material/Logout";
 import UserStatCard from "../components/UserStatsCard";
-import { Typography, Box } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { useEffect } from "react";
 import ViewLikesCounter from "../components/ViewLikesCounter";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import LocalMallIcon from "@mui/icons-material/LocalMall";
 
 const Profile = ({ setHeader, setNavbar }) => {
   useEffect(() => {
@@ -43,8 +43,11 @@ const Profile = ({ setHeader, setNavbar }) => {
         <MenuItem heading="Connections" path="/connections">
           <PersonAddIcon sx={{ color: "black" }} />
         </MenuItem>
-        <MenuItem heading="Notifications" path="/notifications">
-          <NotificationImportantIcon sx={{ color: "black" }} />
+        <MenuItem heading="Favourites" path="/favourites">
+          <LogoutIcon sx={{ color: "black" }} />
+        </MenuItem>
+        <MenuItem heading="Service Status" path="/service-status">
+          <LocalMallIcon sx={{ color: "black" }} />
         </MenuItem>
         <MenuItem heading="Payments" path="/payments">
           <LocalAtmIcon sx={{ color: "black" }} />
