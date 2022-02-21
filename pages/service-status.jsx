@@ -21,7 +21,8 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
       id: payment.id,
       profile_pic: payment.lawyers.profile_pic,
       session_id: payment.session_id,
-      amount_cents: payment.amount_cents
+      amount_cents: payment.amount_cents,
+      description: payment.description
     };
   });
   return {
@@ -35,7 +36,7 @@ const SericeStatus = ({ setHeader, payments }) => {
   useEffect(() => setHeader({ hidden: true }), []);
 
   const paymentArray = payments.map((payment) => {
-    return <Payment {...payment} />;
+    return <Payment key={payment.id} {...payment} />;
   });
 
   return (
