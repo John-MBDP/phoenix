@@ -89,7 +89,7 @@ const Article = ({
           )}
         </header>
         <Typography
-          style={{ fontWeight: "bold", marginBottom: '1em' }}
+          style={{ fontWeight: "bold", marginBottom: '0.5em' }}
           variant="h4"
           component="div"
           gutterBottom
@@ -102,7 +102,7 @@ const Article = ({
         <Typography style={{ marginBottom: '2em', fontSize: 14, fontWeight: "bold" }}>
           {author}
         </Typography>
-        <Typography variant="body1" style={{ lineHeight: '2rem', marginBottom: '3em' }}>
+        <Typography variant="body1" style={{ lineHeight: '2rem', marginBottom: '3em', fontSize: 14 }}>
           {body}
           <br />
         </Typography>

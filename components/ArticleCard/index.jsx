@@ -12,7 +12,7 @@ export default function ArticleCard(props) {
       <Card
         sx={{
           maxWidth: 345,
-          margin: "2em 0",
+          margin: "1em 0 2em 0",
           boxShadow: "rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;",
           "&:hover": {
             boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px;",
@@ -23,7 +23,7 @@ export default function ArticleCard(props) {
         <CardMedia component="img" height="140" image={image} alt={image} />
         <CardContent>
           <Typography
-            sx={{ fontWeight: "bold" }}
+            style={{ fontWeight: "bold" }}
             gutterBottom
             variant="h5"
             component="div"
@@ -31,14 +31,14 @@ export default function ArticleCard(props) {
             {title}
           </Typography>
           <Typography
-            sx={{ margin: "0.5em 0" }}
+            style={{ margin: "0.5em 0" }}
             variant="body2"
             color="text.secondary"
           >
             {body}
           </Typography>
           <Typography
-            sx={{ marginBottom: "-0.5em" }}
+            style={{ marginBottom: "-0.5em" }}
             variant="subtitle2"
             component="div"
           >
