@@ -7,13 +7,29 @@ export default async function handler(req, res) {
   try {
     const client = JSON.parse(req.body);
     const { id, first_name, last_name, email, phone_number, address } = client;
-    const updatedClient = await prisma.clients.update({
+    const clientWithSameEmail = await prisma.clients.findMany({
       where: {
-        id
+        email,
+        NOT: {
+          id: {
+            equals: id
+          }
+        }
       },
-      data: { first_name, last_name, email, phone_number, address },
     });
-    res.status(200).json(updatedClient);
+    if (clientWithSameEmail.length > 0) {
+      return res
+        .status(409)
+        .json({ error: "That email is already being used" });
+    } else {
+      const updatedClient = await prisma.clients.update({
+        where: {
+          id,
+        },
+        data: { first_name, last_name, email, phone_number, address },
+      });
+      return res.status(200).json(updatedClient);
+    }
   } catch {
     res.status(400).json({ error: "failed to load data" });
   }
