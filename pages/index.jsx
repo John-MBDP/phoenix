@@ -1,7 +1,6 @@
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { useEffect, useState, useContext } from "react";
+import { useEffect } from "react";
 import ArticleCard from "../components/ArticleCard";
 import Timeago from "react-timeago";
 import { prisma } from "../lib/prisma";
@@ -10,14 +9,14 @@ export const getServerSideProps = async () => {
   const articles = await prisma.articles.findMany({
     orderBy: [
       {
-        date: "desc",
-      },
-    ],
+        date: "desc"
+      }
+    ]
   });
   return {
     props: {
-      initialArticles: articles,
-    },
+      initialArticles: articles
+    }
   };
 };
 
@@ -37,7 +36,7 @@ export default function Home({ setHeader, initialArticles, setNavbar }) {
 
   useEffect(() => {
     setHeader({ header: "NEWS FEED", hidden: false });
-    setNavbar({ navbar: '', hidden: false });
+    setNavbar({ navbar: "", hidden: false });
   }, []);
 
   return (

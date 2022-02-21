@@ -11,7 +11,11 @@ const Notifications = ({ setHeader, setNavbar }) => {
     setNavbar({ navbar: "", hidden: false });
   }, []);
   return (
-    <RoundedTopContainer image="/images/waves.jpeg" alt="waves" height="600px">
+    <RoundedTopContainer
+      image="/images/backgrounds/waves.jpeg"
+      alt="waves"
+      height="600px"
+    >
       <UserStatCard />
       <RoundedTopContainer.Header text="Notifications" />
       <List component="nav">

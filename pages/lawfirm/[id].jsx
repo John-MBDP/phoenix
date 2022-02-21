@@ -149,7 +149,7 @@ const Lawyer = ({
 
   return (
     <RoundedTopContainer
-      image="/images/articles/forest.jpeg"
+      image="/images/backgrounds/forest.jpeg"
       height="600px"
       alt="forest"
       padBottom

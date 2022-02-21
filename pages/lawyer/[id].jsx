@@ -167,14 +167,19 @@ const Lawyer = ({
 
   return (
     <RoundedTopContainer
-      image="/images/articles/forest.jpeg"
+      image="/images/backgrounds/forest.jpeg"
       height="600px"
       alt="forest"
       padBottom
     >
       {favourited && (
         <FavoriteIcon
-          sx={{ color: "#ff0056", position: "absolute", zIndex: "10", top: "0" }}
+          sx={{
+            color: "#ff0056",
+            position: "absolute",
+            zIndex: "10",
+            top: "0"
+          }}
           onClick={async () => {
             try {
               await destroyFavourite(userIds);
@@ -187,7 +192,12 @@ const Lawyer = ({
       )}
       {!favourited && (
         <FavoriteBorderIcon
-          sx={{ color: "#ff0056", position: "absolute", zIndex: "10", top: "0" }}
+          sx={{
+            color: "#ff0056",
+            position: "absolute",
+            zIndex: "10",
+            top: "0"
+          }}
           onClick={async () => {
             try {
               await saveFavourite(userIds);

@@ -41,7 +41,7 @@ const SericeStatus = ({ setHeader, payments }) => {
   });
 
   return (
-    <RoundedTopContainer height="600px" image="/images/book3.jpeg">
+    <RoundedTopContainer height="600px" image="/images/backgrounds/book3.jpeg">
       <RoundedTopContainer.Header text="Service Status" />
       {paymentArray.length === 0 ? (
         <Alert message="Nothing to see here yet." />

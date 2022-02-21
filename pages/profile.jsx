@@ -19,7 +19,7 @@ const Profile = ({ setHeader, setNavbar }) => {
   }, []);
   return (
     <RoundedTopContainer
-      image={"/images/articles/forest.jpeg"}
+      image={"/images/backgrounds/forest.jpeg"}
       alt={"forest"}
       height="600px"
       padBottom
