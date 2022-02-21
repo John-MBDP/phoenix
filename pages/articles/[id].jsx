@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import Timeago from "react-timeago";
 import Article from "../../components/Article";
 import Card from "@mui/material/Card";
@@ -7,8 +6,7 @@ import styles from "./index";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import { useEffect } from "react";
-
-const prisma = new PrismaClient();
+import { prisma } from "../../lib/prisma";
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {

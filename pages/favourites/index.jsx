@@ -2,13 +2,11 @@ import { Tab, Tabs } from "@material-ui/core";
 import { useState, useEffect, useContext } from "react";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../lib/prisma";
 import styles from "../../styles/Home.module.css";
 import ArticleCard from "../../components/ArticleCard";
 import SearchCard from "../../components/SearchCard";
 import Timeago from "react-timeago";
-
-const prisma = new PrismaClient();
 
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const user = req.session.user;

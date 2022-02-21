@@ -59,7 +59,7 @@ const Article = ({
             <div className={styles.favourite}>
               <span style={{ marginRight: 5 }}>Favourited!</span>
               <FavoriteIcon
-                sx={{ color: "salmon" }}
+                sx={{ color: "#ff0056" }}
                 onClick={async () => {
                   try {
                     await destroyFavourite(favourite);
@@ -75,7 +75,7 @@ const Article = ({
             <div className={styles.favourite}>
               <span style={{ marginRight: 5 }}>Favourite Me!</span>
               <FavoriteBorderIcon
-                sx={{ color: "salmon" }}
+                sx={{ color: "#ff0056" }}
                 onClick={async () => {
                   try {
                     await saveFavourite(favourite);
@@ -89,7 +89,7 @@ const Article = ({
           )}
         </header>
         <Typography
-          sx={{ fontWeight: "bold", color: "salmon", margin: "0.5em 0" }}
+          sx={{ fontWeight: "bold", margin: "0.5em 0" }}
           variant="h5"
           component="div"
         >

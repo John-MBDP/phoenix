@@ -2,13 +2,9 @@ import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { useEffect, useState, useContext } from "react";
-import io from "socket.io-client";
-let socket;
 import ArticleCard from "../components/ArticleCard";
 import Timeago from "react-timeago";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../lib/prisma";
 
 export const getServerSideProps = async () => {
   const articles = await prisma.articles.findMany({
@@ -43,27 +39,6 @@ export default function Home({ setHeader, initialArticles, setNavbar }) {
     setHeader({ header: "NEWS FEED", hidden: false });
     setNavbar({ navbar: '', hidden: false });
   }, []);
-
-  // useEffect(() => socketInitializer(), []);
-
-  // const socketInitializer = async () => {
-  //   await fetch("/api/socket");
-  //   socket = io();
-
-  //   socket.on("connect", () => {
-  //     console.log("connected");
-  //   });
-
-  //   socket.on("update-input", msg => {
-  //     setInput(msg);
-  //     console.log("changed");
-  //   });
-  // };
-
-  // const onChangeHandler = e => {
-  //   setInput(e.target.value);
-  //   socket.emit("input-change", e.target.value);
-  // };
 
   return (
     <div className={styles.container}>

@@ -2,11 +2,10 @@ import ScrollableMenu from "../components/ScrollableMenu";
 import { Tabs, Tab, Box, OutlinedInput, FormControl } from "@mui/material";
 import { useEffect, useState } from "react";
 import SearchCard from "../components/SearchCard";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../lib/prisma";
 import getGeoLocation from "../helpers/getGeoLocation";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import { InputAdornment, InputLabel } from "@material-ui/core";
-const prisma = new PrismaClient();
 
 export const getServerSideProps = async () => {
   const lawyers = await prisma.lawyers.findMany();

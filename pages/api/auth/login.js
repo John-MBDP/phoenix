@@ -1,9 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../lib/prisma";
 import sessionOptions from "../../../lib/session";
 import bcrypt from "bcrypt";
 import { withIronSessionApiRoute } from "iron-session/next";
-
-const prisma = new PrismaClient();
 
 export default withIronSessionApiRoute(async (req, res) => {
   const { email, password } = await req.body;

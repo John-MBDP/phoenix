@@ -1,12 +1,10 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../lib/prisma";
 import { useState, useEffect } from "react";
 import MessageCard from "../../../components/MessageCard";
 import { Tabs, Tab } from "@material-ui/core";
 import timeifyDate from "../../../helpers/timeifyDate";
 import sessionOptions from "../../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
-
-const prisma = new PrismaClient();
 
 // COOKIE GRAB EXAMPLE
 export const getServerSideProps = withIronSessionSsr(

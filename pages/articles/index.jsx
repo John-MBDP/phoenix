@@ -1,8 +1,6 @@
 import ArticleCard from "../../components/ArticleCard";
 import Timeago from "react-timeago";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prisma } from "../../lib/prisma";
 
 export const getServerSideProps = async () => {
   const articles = await prisma.articles.findMany({

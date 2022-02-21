@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../lib/prisma";
 import { useEffect } from "react";
 import sessionOptions from "../lib/session";
-const prisma = new PrismaClient();
 import RoundedTopContainer from "../components/RoundedTopContainer";
 import { withIronSessionSsr } from "iron-session/next";
 import Payment from "../components/Payment";

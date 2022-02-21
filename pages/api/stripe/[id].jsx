@@ -1,7 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../../../lib/prisma";
 import sessionOptions from "../../../lib/session";
 import { withIronSessionApiRoute } from "iron-session/next";
-const prisma = new PrismaClient();
 import Stripe from "stripe";
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
   apiVersion: "2020-08-27"

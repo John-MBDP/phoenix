@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-const prisma = new PrismaClient();
+import { prisma } from "../../lib/prisma";
 import { useEffect, useState } from "react";
 import RoundedTopContainer from "../../components/RoundedTopContainer";
 import UserStatsCard from "../../components/UserStatsCard";
@@ -157,7 +156,7 @@ const Lawyer = ({
     >
       {favourited && (
         <FavoriteIcon
-          sx={{ color: "salmon", position: "absolute", zIndex: "10" }}
+          sx={{ color: "#ff0056", position: "absolute", zIndex: "10" }}
           onClick={async () => {
             try {
               await destroyFavourite(userIds);
@@ -170,7 +169,7 @@ const Lawyer = ({
       )}
       {!favourited && (
         <FavoriteBorderIcon
-          sx={{ color: "salmon", position: "absolute", zIndex: "10" }}
+          sx={{ color: "#ff0056", position: "absolute", zIndex: "10" }}
           onClick={async () => {
             try {
               await saveFavourite(userIds);
