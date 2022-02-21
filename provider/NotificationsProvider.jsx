@@ -4,7 +4,7 @@ export const notificationsContext = createContext();
 
 export default function NotificationsProvider({ children }) {
   const [notifications, setNotifications] = useState({
-    hello: { id: "hello", pings: 0 },
+    initialSender: { id: "initial sender", pings: 0 },
   });
 
   const addNotification = senderId => {
@@ -13,7 +13,7 @@ export default function NotificationsProvider({ children }) {
         prev[senderId].pings += 1;
         return prev;
       } else {
-        return { ...notifications, [senderId]: { id: senderId, pings: 1 } };
+        return { ...notifications, [senderId]: { id: senderId, pings: 0 } };
       }
     });
   };
