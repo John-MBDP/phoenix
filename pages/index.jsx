@@ -1,7 +1,6 @@
 import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Home.module.css";
-import { useEffect, useState, useContext } from "react";
+import { useEffect } from "react";
 import ArticleCard from "../components/ArticleCard";
 import Timeago from "react-timeago";
 import { prisma } from "../lib/prisma";

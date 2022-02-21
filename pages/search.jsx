@@ -1,11 +1,9 @@
-import ScrollableMenu from "../components/ScrollableMenu";
-import { Tabs, Tab, Box, OutlinedInput, FormControl } from "@mui/material";
+import { Tabs, Tab } from "@mui/material";
 import { useEffect, useState } from "react";
 import SearchCard from "../components/SearchCard";
 import { prisma } from "../lib/prisma";
 import getGeoLocation from "../helpers/getGeoLocation";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
-import { InputAdornment, InputLabel } from "@material-ui/core";
 
 export const getServerSideProps = async () => {
   const lawyers = await prisma.lawyers.findMany();

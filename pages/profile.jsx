@@ -7,7 +7,7 @@ import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import ReportIcon from "@mui/icons-material/Report";
 import LogoutIcon from "@mui/icons-material/Logout";
 import UserStatCard from "../components/UserStatsCard";
-import { Typography, Box } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { useEffect } from "react";
 import ViewLikesCounter from "../components/ViewLikesCounter";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";

@@ -1,6 +1,6 @@
 import RoundedTopContainer from "../components/RoundedTopContainer";
 import UserStatCard from "../components/UserStatsCard";
-import { Typography, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
 import { prisma } from "../lib/prisma";
