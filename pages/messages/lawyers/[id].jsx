@@ -244,9 +244,10 @@ const Messages = ({
           value={input}
           fullWidth
           autoComplete="off"
+          multiline
         />
         <Button type="submit">
-          <SendIcon />
+          <SendIcon style={{ color: "#ff0056" }} />
         </Button>
       </form>
     </>
