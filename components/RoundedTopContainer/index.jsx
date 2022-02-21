@@ -18,7 +18,7 @@ const RoundedTopContainer = ({ children, image, alt, height, padBottom }) => {
         sx={{ boxShadow: "none", borderRadius: "0" }}
       >
         <div style={{ backgroundColor: "black" }}>
-          <Image width={390} height={450} src={image} alt={alt} />
+          <Image width={500} height={550} src={image} alt={alt} />
         </div>
       </Card>
       <div className={styles.pane}>
