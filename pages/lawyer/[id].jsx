@@ -32,6 +32,15 @@ export const getServerSideProps = withIronSessionSsr(
         lawyers: true
       }
     });
+    const lawyerFields = await prisma.lawyer_fields.findMany({
+      where: {
+        lawyers_id: id
+      },
+      include: {
+        fields_of_law: true
+      }
+    });
+    console.log(lawyerFields);
 
     const lawyerFavourite = await prisma.lawyer_favourites.findFirst({
       where: {
@@ -53,6 +62,9 @@ export const getServerSideProps = withIronSessionSsr(
     const lawyer = await prisma.lawyers.findUnique({
       where: { id }
     });
+    const parsedLawyerFields = lawyerFields.map(
+      (item) => item.fields_of_law.field
+    );
 
     return {
       props: {
@@ -64,7 +76,8 @@ export const getServerSideProps = withIronSessionSsr(
           date_certified: `${lawyer.date_certified.getFullYear()}`
         },
         lawfirmId:
-          lawfirmMembers.length > 0 ? lawfirmMembers[0].lawfirm_id : null
+          lawfirmMembers.length > 0 ? lawfirmMembers[0].lawfirm_id : null,
+        fieldsOfLaw: parsedLawyerFields
       }
     };
   },
@@ -78,7 +91,8 @@ const Lawyer = ({
   lawfirmId,
   user,
   lawyerFavourite,
-  lawyerConnection
+  lawyerConnection,
+  fieldsOfLaw
 }) => {
   const router = useRouter();
   const {
@@ -167,14 +181,19 @@ const Lawyer = ({
 
   return (
     <RoundedTopContainer
-      image="/images/articles/forest.jpeg"
+      image="/images/backgrounds/forest.jpeg"
       height="600px"
       alt="forest"
       padBottom
     >
       {favourited && (
         <FavoriteIcon
-          sx={{ color: "#ff0056", position: "absolute", zIndex: "10", top: "0" }}
+          sx={{
+            color: "#ff0056",
+            position: "absolute",
+            zIndex: "10",
+            top: "0"
+          }}
           onClick={async () => {
             try {
               await destroyFavourite(userIds);
@@ -187,7 +206,12 @@ const Lawyer = ({
       )}
       {!favourited && (
         <FavoriteBorderIcon
-          sx={{ color: "#ff0056", position: "absolute", zIndex: "10", top: "0" }}
+          sx={{
+            color: "#ff0056",
+            position: "absolute",
+            zIndex: "10",
+            top: "0"
+          }}
           onClick={async () => {
             try {
               await saveFavourite(userIds);
@@ -307,7 +331,7 @@ const Lawyer = ({
         <div>
           <Typography variant="body2">Expertise:</Typography>
           <Typography variant="caption">
-            Mining, Criminal, Administrative
+            {fieldsOfLaw ? `${fieldsOfLaw.join(", ")}` : null}
           </Typography>
           <style jsx>{`
             display: flex;

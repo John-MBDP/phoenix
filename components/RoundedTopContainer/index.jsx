@@ -17,7 +17,9 @@ const RoundedTopContainer = ({ children, image, alt, height, padBottom }) => {
         className={styles.image}
         sx={{ boxShadow: "none", borderRadius: "0" }}
       >
-        <CardMedia component="img" width="390" image={image} alt={alt} />
+        <div style={{ backgroundColor: "black" }}>
+          <Image width={500} height={550} src={image} alt={alt} />
+        </div>
       </Card>
       <div className={styles.pane}>
         <Stack

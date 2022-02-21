@@ -11,12 +11,12 @@ import InputError from "../components/InputError";
 export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const user = req.session.user;
   const client = await prisma.clients.findUnique({
-    where: { id: user.id },
+    where: { id: user.id }
   });
   return {
     props: {
-      client,
-    },
+      client
+    }
   };
 }, sessionOptions);
 
@@ -33,22 +33,22 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
     lastName: client.last_name || "",
     address: client.address || "",
     phoneNumber: client.phone_number || "",
-    emailAddress: client.email || "",
+    emailAddress: client.email || ""
   });
   const [updated, setUpdated] = useState(false);
 
-  const updateClient = async clientInfo => {
+  const updateClient = async (clientInfo) => {
     const client = {
       id: clientInfo.id,
       first_name: clientInfo.firstName,
       last_name: clientInfo.lastName,
       email: clientInfo.emailAddress,
       phone_number: clientInfo.phoneNumber,
-      address: clientInfo.address,
+      address: clientInfo.address
     };
     const response = await fetch("/api/clients/update", {
       method: "POST",
-      body: JSON.stringify(client),
+      body: JSON.stringify(client)
     });
 
     if (!response.ok) {
@@ -58,13 +58,13 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
     return await response.json();
   };
 
-  const handleInput = e => {
-    setFormInput(prev => {
+  const handleInput = (e) => {
+    setFormInput((prev) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
 
-  const handleSubmit = async formInput => {
+  const handleSubmit = async (formInput) => {
     try {
       const updatedClient = await updateClient(formInput);
       setFormInput({ ...formInput, updatedClient });
@@ -78,7 +78,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
 
   return (
     <RoundedTopContainer
-      image={"/images/articles/forest.jpeg"}
+      image={"/images/backgrounds/forest.jpeg"}
       alt={"forest"}
       height="600px"
     >
@@ -86,7 +86,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
       <RoundedTopContainer.Header text="Personal Information" />
 
       <form
-        onSubmit={e => {
+        onSubmit={(e) => {
           e.preventDefault();
           if (!updated) {
             handleSubmit(formInput);
@@ -100,7 +100,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
           id="first-name"
           name="firstName"
           value={formInput.firstName}
-          onChange={e => handleInput(e)}
+          onChange={(e) => handleInput(e)}
           margin="normal"
         />
 
@@ -109,7 +109,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
           label="Last Name"
           name="lastName"
           value={formInput.lastName}
-          onChange={e => handleInput(e)}
+          onChange={(e) => handleInput(e)}
           margin="normal"
         />
         <TextField
@@ -117,7 +117,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
           label="Email Address"
           name="emailAddress"
           value={formInput.emailAddress}
-          onChange={e => handleInput(e)}
+          onChange={(e) => handleInput(e)}
           margin="normal"
           type="email"
         />
@@ -126,7 +126,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
           label="Phone Number"
           name="phoneNumber"
           value={formInput.phoneNumber}
-          onChange={e => handleInput(e)}
+          onChange={(e) => handleInput(e)}
           margin="normal"
           type="tel"
         />
@@ -135,7 +135,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
           label="Address"
           name="address"
           value={formInput.address}
-          onChange={e => handleInput(e)}
+          onChange={(e) => handleInput(e)}
           margin="normal"
         />
         <Button type="submit" background={(updated && "grey") || null}>

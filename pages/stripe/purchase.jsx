@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import useSWR from "swr";
@@ -25,18 +26,8 @@ const Purchase = ({ setHeader, setNavbar }) => {
     setNavbar({ hidden: false });
   }, []);
 
-  /*
-    get session
-    id , amount_subtotal,currency, customer_details( email), 
-
-    payment_intent.charges.data.billing_details.address / country postal code
-                                                name
-                                reciept_url
-*/
-
   return (
     <RoundedTopContainer image="/images/book3.jpeg" height="600px">
-      {/* <pre>{JSON.stringify(pageData, null, 2)}</pre> */}
       <UserStatCard image="/images/accepted.png"> </UserStatCard>
       <div className="container">
         {pageData ? (
@@ -46,6 +37,9 @@ const Purchase = ({ setHeader, setNavbar }) => {
               {`An email will be sent to
           ${pageData.session.customer_details.email} shortly`}
             </h4>
+            <Link href="/">
+              <a>Go back home</a>
+            </Link>
           </>
         ) : (
           <h4>Loading...</h4>
@@ -61,6 +55,10 @@ const Purchase = ({ setHeader, setNavbar }) => {
           justigy-content: center;
           flex-direction: column;
           height: 100%;
+        }
+        a {
+          color: #ff0056;
+          text-decoration: underline;
         }
       `}</style>
     </RoundedTopContainer>

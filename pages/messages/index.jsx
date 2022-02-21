@@ -8,6 +8,7 @@ import { withIronSessionSsr } from "iron-session/next";
 import { notificationsContext } from "../../provider/NotificationsProvider";
 import Typography from "@mui/material/Typography";
 import io from "socket.io-client";
+import Alert from "../../components/Alert";
 let socket;
 
 // COOKIE GRAB EXAMPLE
@@ -16,44 +17,44 @@ export const getServerSideProps = withIronSessionSsr(async ({ req, res }) => {
   const lawyerMessages = await prisma.messages.findMany({
     where: {
       client_id: {
-        equals: user.id,
+        equals: user.id
       },
       law_firm_id: {
-        equals: null,
-      },
+        equals: null
+      }
     },
     include: {
-      lawyers: true,
+      lawyers: true
     },
     orderBy: [
       {
-        date_sent: "desc",
-      },
-    ],
+        date_sent: "desc"
+      }
+    ]
   });
   const lawfirmMessages = await prisma.messages.findMany({
     where: {
       client_id: {
-        equals: user.id,
+        equals: user.id
       },
       lawyer_id: {
-        equals: null,
-      },
+        equals: null
+      }
     },
     include: {
-      lawfirms: true,
+      lawfirms: true
     },
     orderBy: [
       {
-        date_sent: "desc",
-      },
-    ],
+        date_sent: "desc"
+      }
+    ]
   });
   return {
     props: {
       lawyerMessages,
-      lawfirmMessages,
-    },
+      lawfirmMessages
+    }
   };
 }, sessionOptions);
 
@@ -61,7 +62,7 @@ const MessagesIndex = ({
   lawyerMessages,
   lawfirmMessages,
   setHeader,
-  setNavbar,
+  setNavbar
 }) => {
   const [messageCards, setMessageCards] = useState(lawyerMessages);
   const [value, setValue] = useState(0);
@@ -76,17 +77,17 @@ const MessagesIndex = ({
       console.log("connected");
     });
 
-    socket.on("update-typing-status", bool => {
+    socket.on("update-typing-status", (bool) => {
       // do something with message card
     });
 
-    socket.on("update-client-messages", newMessage => {
+    socket.on("update-client-messages", (newMessage) => {
       if (newMessage.lawyer_id) {
         addNotification(newMessage.lawyer_id);
       } else if (newMessage.law_firm_id) {
         addNotification(newMessage.law_firm_id);
       }
-      setMessageCards(prev => [...prev, newMessage]);
+      setMessageCards((prev) => [...prev, newMessage]);
     });
   };
 
@@ -94,7 +95,7 @@ const MessagesIndex = ({
     setHeader({ header: "MESSAGES", hidden: false });
     setNavbar({ navbar: "", hidden: false });
     socketInitializer();
-    messageCards.forEach(message => {
+    messageCards.forEach((message) => {
       if (message.seen_client === false) {
         if (message.lawyer_id) {
           addNotification(message.lawyer_id);
@@ -117,17 +118,17 @@ const MessagesIndex = ({
     setValue(value);
   };
 
-  const parseMessageCards = messageCards => {
+  const parseMessageCards = (messageCards) => {
     return (
       messageCards
         // to just grab the first most recent message
         .filter((value, index, self) => {
           return (
             index ===
-            self.findIndex(message => message.lawyer_id === value.lawyer_id)
+            self.findIndex((message) => message.lawyer_id === value.lawyer_id)
           );
         })
-        .map(message => {
+        .map((message) => {
           if (message.from_client && !message.body.includes("You: "))
             message.body = `You: ${message.body}`;
           if (message.lawyers) {
@@ -182,19 +183,11 @@ const MessagesIndex = ({
         />
       </Tabs>
       {parseMessageCards(messageCards)}
-      {messageCards.length === 0 && (
-        <Typography
-          style={{
-            marginTop: "1em",
-            padding: "1.5em 2em",
-            backgroundColor: "grey",
-            color: "white",
-            borderRadius: "2em",
-          }}
-        >
-          Nothing to see here. You have no messages yet!
-        </Typography>
-      )}
+      <div style={{ margin: "0 2rem" }}>
+        {messageCards.length === 0 && (
+          <Alert message="Nothing to see here. You have no messages yet!" />
+        )}
+      </div>
     </div>
   );
 };

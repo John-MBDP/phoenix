@@ -13,38 +13,38 @@ export const getServerSideProps = withIronSessionSsr(
 
     const lawyerConnections = await prisma.lawyer_connections.findMany({
       where: {
-        client_id: user.id,
+        client_id: user.id
       },
       include: {
-        lawyers: true,
+        lawyers: true
       },
       orderBy: [
         {
-          date_changed: "desc",
-        },
-      ],
+          date_changed: "desc"
+        }
+      ]
     });
 
     const lawfirmConnections = await prisma.lawfirm_connections.findMany({
       where: {
-        client_id: user.id,
+        client_id: user.id
       },
       include: {
-        lawfirms: true,
+        lawfirms: true
       },
       orderBy: [
         {
-          date_changed: "desc",
-        },
-      ],
+          date_changed: "desc"
+        }
+      ]
     });
 
     return {
       props: {
         user,
         lawfirmConnections,
-        lawyerConnections,
-      },
+        lawyerConnections
+      }
     };
   },
   sessionOptions
@@ -56,20 +56,20 @@ const Connections = ({
   lawfirmConnections,
   lawyerConnections,
   lawyers,
-  lawfirms,
+  lawfirms
 }) => {
   useEffect(() => {
     setHeader({ header: "", hidden: true });
     setNavbar({ navbar: "", hidden: false });
   }, []);
 
-  const parsedlawyerConnections = lawyerConnections.map(connection => {
+  const parsedlawyerConnections = lawyerConnections.map((connection) => {
     if (connection) {
       const name = `${connection.lawyers.first_name} ${connection.lawyers.last_name}`;
       const photo = connection.lawyers.profile_pic;
       return (
         <Connection
-          key={connection.lawyer_id}
+          key={"lawyer" + connection.lawyer_id}
           id={connection.lawyer_id}
           route="lawyer"
           name={name}
@@ -81,11 +81,11 @@ const Connections = ({
     }
   });
 
-  const parsedLawfirmConnections = lawfirmConnections.map(connection => {
+  const parsedLawfirmConnections = lawfirmConnections.map((connection) => {
     if (connection) {
       return (
         <Connection
-          key={connection.lawfirm_id}
+          key={"lawfirm" + connection.lawfirm_id}
           id={connection.lawfirm_id}
           route="lawfirm"
           name={connection.lawfirms.name}
@@ -97,13 +97,22 @@ const Connections = ({
     }
   });
 
-  const allConnections = parsedlawyerConnections.concat(parsedLawfirmConnections);
+  const allConnections = parsedlawyerConnections.concat(
+    parsedLawfirmConnections
+  );
 
   return (
-    <RoundedTopContainer image="/images/waves.jpeg" alt="waves" height="600px">
+    <RoundedTopContainer
+      image="/images/backgrounds/waves.jpeg"
+      alt="waves"
+      height="600px"
+    >
       <UserStatCard />
       <RoundedTopContainer.Header text="Connections" />
-      <List component="nav">{allConnections} {allConnections.length === 0 && 'You have no connections yet!'}</List>
+      <List component="nav">
+        {allConnections}{" "}
+        {allConnections.length === 0 && "You have no connections yet!"}
+      </List>
     </RoundedTopContainer>
   );
 };
