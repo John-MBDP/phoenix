@@ -82,11 +82,11 @@ const MessagesIndex = ({
     });
 
     socket.on("update-client-messages", (newMessage) => {
-      if (newMessage.lawyer_id) {
-        addNotification(newMessage.lawyer_id);
-      } else if (newMessage.law_firm_id) {
-        addNotification(newMessage.law_firm_id);
-      }
+      // if (newMessage.lawyer_id) {
+      //   addNotification(newMessage.lawyer_id);
+      // } else if (newMessage.law_firm_id) {
+      //   addNotification(newMessage.law_firm_id);
+      // }
       setMessageCards((prev) => [...prev, newMessage]);
     });
   };
@@ -95,22 +95,22 @@ const MessagesIndex = ({
     setHeader({ header: "MESSAGES", hidden: false });
     setNavbar({ navbar: "", hidden: false });
     socketInitializer();
-    messageCards.forEach((message) => {
-      if (message.seen_client === false) {
-        if (message.lawyer_id) {
-          addNotification(message.lawyer_id);
-        } else if (message.law_firm_id) {
-          addNotification(message.law_firm_id);
-        }
-      }
-    });
+    // messageCards.forEach((message) => {
+    //   if (message.seen_client === false) {
+    //     if (message.lawyer_id) {
+    //       addNotification(message.lawyer_id);
+    //     } else if (message.law_firm_id) {
+    //       addNotification(message.law_firm_id);
+    //     }
+    //   }
+    // });
     const closeSocket = () => {
       socket.disconnect();
       console.log("Socket closed");
     };
     return () => {
       closeSocket();
-      clearNotifications();
+      // clearNotifications();
     };
   }, [messageCards]);
 

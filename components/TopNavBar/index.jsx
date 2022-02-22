@@ -4,7 +4,6 @@ import Drawer from "@mui/material/Drawer";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ListItem from "@mui/material/ListItem";
@@ -18,43 +17,79 @@ import MessageIcon from "@mui/icons-material/Message";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import BusinessCenterIcon from "@mui/icons-material/BusinessCenter";
 import styles from "./index.module.scss";
+import Link from "next/link";
 import { notificationsContext } from "../../provider/NotificationsProvider";
 import io from "socket.io-client";
 let socket;
 
-const TopNavBar = ({ header, user }) => {
+const TopNavBar = ({ header, lawyerMessages, lawfirmMessages }) => {
   const [open, setOpen] = useState(false);
-  // const { notifications, addNotification } = useContext(notificationsContext);
+  const { notifications, addNotification } = useContext(notificationsContext);
+  const [messages, setMessages] = useState([]);
   const drawerHeight = 240;
+  const allNotifications = notifications => {
+    let total = 0;
+    for (const key in notifications) {
+      total += notifications[key].pings;
+    }
+    return total;
+  };
 
-  // const socketInitializer = async () => {
-  //   await fetch("/api/socket");
-  //   socket = io();
+  const grabAllMessages = async () => {
+    const response = await fetch("/api/messages", {
+      method: "GET",
+    });
 
-  //   socket.on("connect", () => {
-  //     console.log("connected");
-  //   });
+    if (!response.ok) {
+      throw new Error(response.statusText);
+    }
+    return await response.json();
+  };
 
-  //   socket.on("update-client-messages", ping => {
-  //     if (!clientPresence) {
-  //       addNotification();
-  //     }
-  //   });
+  const socketInitializer = async () => {
+    await fetch("/api/socket");
+    socket = io();
 
-  //   socket.on("update-client-presence", bool => {
-  //     setClientPresence(bool);
-  //     console.log(clientPresence);
-  //   });
-  // };
+    socket.on("connect", () => {
+      console.log("connected");
+    });
 
-  // useEffect(() => {
-  //   socketInitializer();
-  //   const closeSocket = () => {
-  //     socket.disconnect();
-  //     console.log("Socket closed");
-  //   };
-  //   return closeSocket;
-  // }, []);
+    socket.on("update-typing-status", bool => {
+      // do something with message card
+    });
+
+    socket.on("update-client-messages", newMessage => {
+      if (newMessage.lawyer_id) {
+        addNotification(newMessage.lawyer_id);
+      } else if (newMessage.law_firm_id) {
+        addNotification(newMessage.law_firm_id);
+      }
+    });
+  };
+
+  useEffect(async () => {
+    socketInitializer();
+    try {
+      const allMessages = await grabAllMessages();
+      setMessages(prev => [...prev, allMessages]);
+      allMessages.forEach(message => {
+        if (message.seen_client === false) {
+          if (message.lawyer_id) {
+            addNotification(message.lawyer_id);
+          } else if (message.law_firm_id) {
+            addNotification(message.law_firm_id);
+          }
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    const closeSocket = () => {
+      socket.disconnect();
+      console.log("Socket closed");
+    };
+    return closeSocket;
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -92,7 +127,7 @@ const TopNavBar = ({ header, user }) => {
           borderRadius: "0  0 2rem 2rem",
           display: header.hidden ? "none" : "block",
           marginTop: open && `${drawerHeight}px`,
-          width: "100%"
+          width: "100%",
         }}
         open={open}
       >
@@ -110,12 +145,15 @@ const TopNavBar = ({ header, user }) => {
             {open && <ArrowUpwardIcon />}
           </IconButton>
           <h1 className={styles.header_title}>{header.header}</h1>
-          {/* <div style={{ display: "flex" }}>
-            {notifications > 0 && (
-              <div className={styles.messages_ping}>{notifications}</div>
-            )} */}
-          <NotificationImportantIcon />
-          {/* </div> */}
+          <div style={{ width: "25px" }}></div>
+          <Link href="/messages">
+            <div style={{ display: "flex", position: "fixed", right: "5%" }}>
+              {allNotifications(notifications) > 0 && (
+                <div className={styles.messages_ping}>{""}</div>
+              )}
+              <NotificationImportantIcon />
+            </div>
+          </Link>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -126,8 +164,8 @@ const TopNavBar = ({ header, user }) => {
             height: drawerHeight,
             boxSizing: "border-box",
             backgroundColor: "#1D1F37",
-            color: "white"
-          }
+            color: "white",
+          },
         }}
         variant="persistent"
         transitionDuration={0}

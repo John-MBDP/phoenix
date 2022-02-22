@@ -13,8 +13,6 @@ import { notificationsContext } from "../../../provider/NotificationsProvider";
 import filterBadWords from "../../../lib/filter";
 let socket;
 
-const filter = new Filter();
-
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {
     const lawyerId = req.session.user.lawyer_id;

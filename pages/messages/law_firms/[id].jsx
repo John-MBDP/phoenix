@@ -71,9 +71,9 @@ const Messages = ({
     setHeader(() => ({ header: headerName, hidden: false }));
     setNavbar({ navbar: "", hidden: false });
     socketInitializer();
+    clearNotifications();
     const closeSocket = () => {
       socket.emit("input-change", false);
-      // socket.emit("client-present", false);
       socket.disconnect();
       console.log("Socket closed");
       clearNotifications();
@@ -94,7 +94,6 @@ const Messages = ({
         }));
         return updatedMessages;
       });
-      // socket.emit("client-present", true);
       clearNotifications();
     } catch (err) {
       console.log(err);
@@ -159,7 +158,7 @@ const Messages = ({
   const saveMessage = async message => {
     const response = await fetch("/api/messages/create", {
       method: "POST",
-      body: JSON.stringify({...message, body: filterBadWords(message.body)}),
+      body: JSON.stringify({ ...message, body: filterBadWords(message.body) }),
     });
 
     if (!response.ok) {
@@ -174,9 +173,13 @@ const Messages = ({
     e.target.value
       ? socket.emit("input-change", true)
       : socket.emit("input-change", false);
+    if (e.nativeEvent.inputType === "insertLineBreak") {
+      messageFormSend.current && messageFormSend.current.click();
+    }
   };
 
   const messagesEndRef = useRef(null);
+  const messageFormSend = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
@@ -186,9 +189,11 @@ const Messages = ({
     return (
       <Message
         key={item.id}
+        senderId={lawfirmId}
         fromClient={item.from_client}
         date={timeifyDate(item.date_sent)}
         profilePic={lawfirmProfilePic}
+        route="lawfirm"
       >
         {item.body}
       </Message>
@@ -209,7 +214,7 @@ const Messages = ({
         )}
         {messageArray.length < 1 && (
           <Message profilePic={"/images/lawyers/bot_icon_still_2x.jpg"}>
-            Welcome to Law Aid Chat! Please feel free to start the conversation!
+            Welcome to Phoenix Chat! Please feel free to start the conversation!
           </Message>
         )}
       </div>
@@ -246,8 +251,8 @@ const Messages = ({
           fullWidth
           autoComplete="off"
         />
-        <Button type="submit">
-          <SendIcon />
+        <Button type="submit" ref={messageFormSend}>
+          <SendIcon style={{ color: "#ff0056" }}/>
         </Button>
       </form>
     </>

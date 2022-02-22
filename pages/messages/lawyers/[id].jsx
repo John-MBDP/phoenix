@@ -71,9 +71,9 @@ const Messages = ({
     setHeader(() => ({ header: headerName, hidden: false }));
     setNavbar({ navbar: "", hidden: false });
     socketInitializer();
+    clearNotifications();
     const closeSocket = () => {
       socket.emit("input-change", false);
-      // socket.emit("client-present", false);
       socket.disconnect();
       console.log("Socket closed");
       clearNotifications();
@@ -94,7 +94,6 @@ const Messages = ({
         }));
         return updatedMessages;
       });
-      // socket.emit("client-present", true);
       clearNotifications();
     } catch (err) {
       console.log(err);
@@ -174,9 +173,9 @@ const Messages = ({
     e.target.value
       ? socket.emit("input-change", true)
       : socket.emit("input-change", false);
-    if (e.nativeEvent.inputType === "insertLineBreak") {
-      messageFormSend.current && messageFormSend.current.click();
-    }
+    // if (e.nativeEvent.inputType === "insertLineBreak") {
+    //   messageFormSend.current && messageFormSend.current.click();
+    // }
   };
 
   const messagesEndRef = useRef(null);
@@ -190,9 +189,11 @@ const Messages = ({
     return (
       <Message
         key={item.id}
+        senderId={lawyerId}
         fromClient={item.from_client}
         date={timeifyDate(item.date_sent)}
         profilePic={lawyerProfilePic}
+        route="lawyer"
       >
         {item.body}
       </Message>
@@ -213,7 +214,7 @@ const Messages = ({
         )}
         {messageArray.length < 1 && (
           <Message profilePic={"/images/lawyers/bot_icon_still_2x.jpg"}>
-            Welcome to Law Aid Chat! Please feel free to start the conversation!
+            Welcome to Phoenix Chat! Please feel free to start the conversation!
           </Message>
         )}
       </div>
@@ -248,8 +249,8 @@ const Messages = ({
           onChange={onChangeHandler}
           value={input}
           fullWidth
+          // multiline
           autoComplete="off"
-          multiline
         />
         <Button type="submit" ref={messageFormSend}>
           <SendIcon style={{ color: "#ff0056" }} />
