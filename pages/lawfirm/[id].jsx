@@ -167,15 +167,10 @@ const Lawyer = ({
 
   const lawyerArray = lawyers.map((item) => {
     return (
-      <Link href={`/lawyer/${item.id}`}>
-        <Image
-          className="image"
-          height={100}
-          width={100}
-          src={item.image}
-          key={item.id}
-          lawyerId={item.id}
-        />
+      <Link key={item.id} href={`/lawyer/${item.id}`}>
+        <div>
+          <Image className="image" height={100} width={100} src={item.image} />
+        </div>
       </Link>
     );
   });
