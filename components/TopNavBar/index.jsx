@@ -145,7 +145,8 @@ const TopNavBar = ({ header, lawyerMessages, lawfirmMessages }) => {
             {open && <ArrowUpwardIcon />}
           </IconButton>
           <h1 className={styles.header_title}>{header.header}</h1>
-          <div style={{ display: "flex" }}>
+          <div style={{width: '20px'}}></div>
+          <div style={{ display: "flex", position: 'fixed', right: '5%' }}>
             {allNotifications(notifications) > 0 && (
               <div className={styles.messages_ping}>{''}</div>
             )}
