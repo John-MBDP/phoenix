@@ -21,6 +21,7 @@ import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import { Rating } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {
@@ -46,7 +47,6 @@ export const getServerSideProps = withIronSessionSsr(
       id: member.lawyers.id,
       image: member.lawyers.profile_pic
     }));
-    console.log(parsedMembers);
 
     const lawfirmFavourite = await prisma.lawfirm_favourites.findFirst({
       where: {
@@ -167,14 +167,16 @@ const Lawyer = ({
 
   const lawyerArray = lawyers.map((item) => {
     return (
-      <Image
-        className="image"
-        height={100}
-        width={100}
-        src={item.image}
-        key={item.id}
-        lawyerId={item.id}
-      />
+      <Link href={`/lawyer/${item.id}`}>
+        <Image
+          className="image"
+          height={100}
+          width={100}
+          src={item.image}
+          key={item.id}
+          lawyerId={item.id}
+        />
+      </Link>
     );
   });
 
