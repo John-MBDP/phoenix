@@ -18,30 +18,54 @@ const Payments = ({ setHeader, setNavbar }) => {
     setNavbar({ navbar: "", hidden: false });
   }, []);
   return (
-    <RoundedTopContainer image="/images/paint.jpeg" alt="paint" height="600px">
+    <RoundedTopContainer image="/images/paint.jpeg" alt="paint" height="80%">
       <UserStatsCard />
       <RoundedTopContainer.Header text="Choose Payment Option" />
-      <Widebutton color="black" outLineColor="#00589B" padding=" 1rem 0" outline strong>
+      <Widebutton
+        color="black"
+        outLineColor="#00589B"
+        padding=" 1rem 0"
+        outline
+        strong
+      >
         <Typography
           sx={{
-            fontWeight: "800px",
+            fontWeight: "800px"
           }}
         >
           {" "}
           <BsPaypal size={50} />
         </Typography>
       </Widebutton>
-      <Widebutton color="black" outLineColor="#00589B" padding=" 1rem 0" outline strong>
+      <Widebutton
+        color="black"
+        outLineColor="#00589B"
+        padding=" 1rem 0"
+        outline
+        strong
+      >
         <Typography sx={{ fontWeight: "800px" }}>
           <FaCcVisa size={50} />
         </Typography>
       </Widebutton>
-      <Widebutton color="black" outLineColor="#00589B" padding=" 1rem 0" outline strong>
+      <Widebutton
+        color="black"
+        outLineColor="#00589B"
+        padding=" 1rem 0"
+        outline
+        strong
+      >
         <Typography sx={{ fontWeight: "800px" }}>
           <FaCcAmex size={50} />
         </Typography>
       </Widebutton>
-      <Widebutton color="black" outLineColor="#00589B" padding=" 1rem 0" outline strong>
+      <Widebutton
+        color="black"
+        outLineColor="#00589B"
+        padding=" 1rem 0"
+        outline
+        strong
+      >
         <Typography sx={{ fontWeight: "800px" }}>
           <FaBtc size={50} />
         </Typography>

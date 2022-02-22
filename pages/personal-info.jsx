@@ -80,7 +80,7 @@ const PersonalInfo = ({ setHeader, setNavbar, client }) => {
     <RoundedTopContainer
       image={"/images/backgrounds/forest.jpeg"}
       alt={"forest"}
-      height="600px"
+      height="80%"
     >
       <UserStatCard />
       <RoundedTopContainer.Header text="Personal Information" />

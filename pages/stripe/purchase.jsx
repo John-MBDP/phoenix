@@ -27,7 +27,7 @@ const Purchase = ({ setHeader, setNavbar }) => {
   }, []);
 
   return (
-    <RoundedTopContainer image="/images/book3.jpeg" height="600px">
+    <RoundedTopContainer image="/images/book3.jpeg" height="80%">
       <UserStatCard image="/images/accepted.png"> </UserStatCard>
       <div className="container">
         {pageData ? (

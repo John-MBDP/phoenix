@@ -13,7 +13,7 @@ const AboutUs = ({ setHeader, setNavbar }) => {
     <RoundedTopContainer
       image="/images/backgrounds/book3.jpeg"
       alt="books"
-      height="600px"
+      height="80%"
     >
       <UserStatsCard />
       <RoundedTopContainer.Header text="How Does Phoenix Work?" />

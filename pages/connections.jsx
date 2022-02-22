@@ -105,7 +105,7 @@ const Connections = ({
     <RoundedTopContainer
       image="/images/backgrounds/waves.jpeg"
       alt="waves"
-      height="600px"
+      height="80%"
     >
       <UserStatCard />
       <RoundedTopContainer.Header text="Connections" />

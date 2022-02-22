@@ -43,7 +43,7 @@ const Profile = ({ setHeader, setNavbar, firstName, lastName }) => {
     <RoundedTopContainer
       image={"/images/backgrounds/forest.jpeg"}
       alt={"forest"}
-      height="600px"
+      height="80%"
       padBottom
     >
       <UserStatCard name={`${firstName} ${lastName}`} />

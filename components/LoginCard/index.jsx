@@ -24,7 +24,7 @@ const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
     setFormInput((prev) => {
       return {
         ...prev,
-        email: e.target.value,
+        email: e.target.value
       };
     });
   };
@@ -33,13 +33,17 @@ const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
     setFormInput((prev) => {
       return {
         ...prev,
-        password: e.target.value,
+        password: e.target.value
       };
     });
   };
 
   return (
-    <RoundedTopContainer image={"/login-1.png"} alt={"signup-image"} height="350px">
+    <RoundedTopContainer
+      image={"/login-1.png"}
+      alt={"signup-image"}
+      height="50%"
+    >
       <Typography variant="h4" component="h1">
         Login
       </Typography>
@@ -51,46 +55,52 @@ const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
         }}
       >
         <TextField
-          sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
+          sx={{
+            mb: 2,
+            "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" }
+          }}
           id="input-with-icon-textfield"
           label="Email Address"
           type="email"
           InputLabelProps={{
             sx: {
               [`&.${inputLabelClasses.shrink}`]: {
-                color: "#FF0056",
-              },
-            },
+                color: "#FF0056"
+              }
+            }
           }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <MailIcon sx={{ color: "black" }} />
               </InputAdornment>
-            ),
+            )
           }}
           fullWidth
           variant="standard"
           onChange={onEmailChangeHandler}
         />
         <TextField
-          sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
+          sx={{
+            mb: 2,
+            "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" }
+          }}
           id="input-with-icon-textfield"
           label="Password"
           type="password"
           InputLabelProps={{
             sx: {
               [`&.${inputLabelClasses.shrink}`]: {
-                color: "#FF0056",
-              },
-            },
+                color: "#FF0056"
+              }
+            }
           }}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
                 <LockIcon sx={{ color: "black" }} />
               </InputAdornment>
-            ),
+            )
           }}
           variant="standard"
           fullWidth
@@ -117,7 +127,7 @@ const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
                 justifyContent: "flex-end",
                 color: "#ff0056",
                 mb: 4,
-                fontWeight: "500",
+                fontWeight: "500"
               }}
               variant="h7"
             >
