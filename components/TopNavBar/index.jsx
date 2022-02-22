@@ -22,7 +22,7 @@ import { notificationsContext } from "../../provider/NotificationsProvider";
 import io from "socket.io-client";
 let socket;
 
-const TopNavBar = ({ header, lawyerMessages, lawfirmMessages }) => {
+const TopNavBar = ({ header }) => {
   const [open, setOpen] = useState(false);
   const { notifications, addNotification } = useContext(notificationsContext);
   const [messages, setMessages] = useState([]);
@@ -59,37 +59,38 @@ const TopNavBar = ({ header, lawyerMessages, lawfirmMessages }) => {
     });
 
     socket.on("update-client-messages", newMessage => {
-      if (newMessage.lawyer_id) {
-        addNotification(newMessage.lawyer_id);
-      } else if (newMessage.law_firm_id) {
-        addNotification(newMessage.law_firm_id);
-      }
+      setMessages(prev => [...prev, newMessage]);
     });
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     socketInitializer();
-    try {
-      const allMessages = await grabAllMessages();
-      setMessages(prev => [...prev, allMessages]);
-      allMessages.forEach(message => {
-        if (message.seen_client === false) {
-          if (message.lawyer_id) {
-            addNotification(message.lawyer_id);
-          } else if (message.law_firm_id) {
-            addNotification(message.law_firm_id);
-          }
-        }
-      });
-    } catch (err) {
-      console.log(err);
-    }
     const closeSocket = () => {
       socket.disconnect();
       console.log("Socket closed");
     };
     return closeSocket;
   }, []);
+
+  useEffect(async () => {
+    try {
+      const delayGrabMessages = setTimeout(async() => {
+        const allMessages = await grabAllMessages();
+        allMessages.forEach(message => {
+          if (message.seen_client === false) {
+            if (message.lawyer_id) {
+              addNotification(message.lawyer_id);
+            } else if (message.law_firm_id) {
+              addNotification(message.law_firm_id);
+            }
+          }
+        });
+      }, 3000);
+      return () => clearTimeout(delayGrabMessages);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [messages]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
