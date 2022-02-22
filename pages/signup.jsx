@@ -18,7 +18,7 @@ import { inputLabelClasses } from "@mui/material/InputLabel";
 import InputError from "../components/InputError";
 
 const btnMain = {
-  alignItems: "right",
+  alignItems: "right"
 };
 
 const Signup = ({ setHeader, setNavbar }) => {
@@ -28,14 +28,14 @@ const Signup = ({ setHeader, setNavbar }) => {
     firstName: "",
     lastName: "",
     email: "",
-    password: "",
+    password: ""
   });
   const [checked, setChecked] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
 
   const { mutateUser } = useUser({
     redirectTo: "/smsverification",
-    redirectIfFound: true,
+    redirectIfFound: true
   });
 
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
@@ -48,7 +48,7 @@ const Signup = ({ setHeader, setNavbar }) => {
     setFormInput((prev) => {
       return {
         ...prev,
-        email: e.target.value,
+        email: e.target.value
       };
     });
   };
@@ -57,7 +57,7 @@ const Signup = ({ setHeader, setNavbar }) => {
     setFormInput((prev) => {
       return {
         ...prev,
-        password: e.target.value,
+        password: e.target.value
       };
     });
   };
@@ -69,7 +69,7 @@ const Signup = ({ setHeader, setNavbar }) => {
       return {
         ...prev,
         firstName,
-        lastName,
+        lastName
       };
     });
   };
@@ -95,9 +95,9 @@ const Signup = ({ setHeader, setNavbar }) => {
       await fetchJson("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(inputValues),
+        body: JSON.stringify(inputValues)
       });
-      router.push('/');
+      router.push("/");
     } catch (error) {
       if (error instanceof FetchError) {
         setErrorMsg(error.data.message);
@@ -108,51 +108,61 @@ const Signup = ({ setHeader, setNavbar }) => {
   };
 
   return (
-    <RoundedTopContainer image={"/SignUp.png"} alt={"signup-image"} height={"430px"}>
+    <RoundedTopContainer
+      image={"/SignUp.png"}
+      alt={"signup-image"}
+      height="60%"
+    >
       <Typography variant="h4" component="h1">
         Signup
       </Typography>
       <InputError message={errorMsg} />
       <TextField
-        sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
+        sx={{
+          mb: 2,
+          "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" }
+        }}
         id="input-with-icon-textfield"
         label="Full Name"
         InputLabelProps={{
           sx: {
             [`&.${inputLabelClasses.shrink}`]: {
-              color: "#FF0056",
-            },
-          },
+              color: "#FF0056"
+            }
+          }
         }}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
               <AccountBoxIcon style={{ color: "black" }} />
             </InputAdornment>
-          ),
+          )
         }}
         fullWidth
         variant="standard"
         onChange={onNameChangeHandler}
       />
       <TextField
-        sx={{ mb: 2, "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" } }}
+        sx={{
+          mb: 2,
+          "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" }
+        }}
         id="input-with-icon-textfield"
         label="Email Address"
         type="email"
         InputLabelProps={{
           sx: {
             [`&.${inputLabelClasses.shrink}`]: {
-              color: "#FF0056",
-            },
-          },
+              color: "#FF0056"
+            }
+          }
         }}
         InputProps={{
           endAdornment: (
             <MailIcon position="end">
               <AccountBoxIcon style={{ color: "black" }} />
             </MailIcon>
-          ),
+          )
         }}
         fullWidth
         variant="standard"
@@ -161,7 +171,7 @@ const Signup = ({ setHeader, setNavbar }) => {
       <TextField
         sx={{
           mb: 2,
-          "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" },
+          "& .MuiInput-underline:after": { borderBottomColor: "#FF0056" }
         }}
         id="input-with-icon-textfield"
         label="Password"
@@ -169,16 +179,16 @@ const Signup = ({ setHeader, setNavbar }) => {
         InputLabelProps={{
           sx: {
             [`&.${inputLabelClasses.shrink}`]: {
-              color: "#FF0056",
-            },
-          },
+              color: "#FF0056"
+            }
+          }
         }}
         InputProps={{
           endAdornment: (
             <LockIcon position="end">
               <AccountBoxIcon style={{ color: "black" }} />
             </LockIcon>
-          ),
+          )
         }}
         fullWidth
         variant="standard"
@@ -191,7 +201,7 @@ const Signup = ({ setHeader, setNavbar }) => {
           mb: 2,
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
+          alignItems: "center"
         }}
       >
         <Checkbox
@@ -199,8 +209,8 @@ const Signup = ({ setHeader, setNavbar }) => {
           onChange={(e) => setChecked(e.target.checked)}
           sx={{
             [`&, &.${checkboxClasses.checked}`]: {
-              color: "#ff0056",
-            },
+              color: "#ff0056"
+            }
           }}
         />
         <Typography
@@ -228,8 +238,8 @@ const Signup = ({ setHeader, setNavbar }) => {
               display: "flex",
               justifyContent: "flex-end",
               color: "#ff0056",
-              mb: 4,
-              fontWeight: "500",
+
+              fontWeight: "500"
             }}
             variant="h7"
           >
