@@ -208,7 +208,7 @@ const Messages = ({
         )}
         {messageArray.length < 1 && (
           <Message profilePic={"/images/lawyers/bot_icon_still_2x.jpg"}>
-            Welcome to Phoenix Chat! Please feel free to start the conversation!
+            Welcome to Law Aid Chat! Please feel free to start the conversation!
           </Message>
         )}
       </div>
