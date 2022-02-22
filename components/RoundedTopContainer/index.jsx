@@ -24,7 +24,7 @@ const RoundedTopContainer = ({ children, image, alt, height, padBottom }) => {
       <div className={styles.pane}>
         <Stack
           direction="row"
-          sx={{ position: "fixed", top: "1rem", left: "1rem" }}
+          sx={{ position: "fixed", top: "1rem", left: "1rem", zIndex: "11" }}
         >
           <Button
             back={true}

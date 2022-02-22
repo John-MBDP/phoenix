@@ -1,25 +1,37 @@
-import { prisma } from "../../lib/prisma";
 import { useEffect, useState } from "react";
-import RoundedTopContainer from "../../components/RoundedTopContainer";
-import UserStatsCard from "../../components/UserStatsCard";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import PhoneIcon from "@mui/icons-material/Phone";
-import Button from "../../components/Button";
-import AnnouncementIcon from "@mui/icons-material/Announcement";
-import EmailIcon from "@mui/icons-material/Email";
-import Widebutton from "../../components/WideButton";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useRouter } from "next/router";
-import ViewLikesCounter from "../../components/ViewLikesCounter";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
+
+import { prisma } from "../../lib/prisma";
+import RoundedTopContainer from "../../components/RoundedTopContainer";
+import UserStatsCard from "../../components/UserStatsCard";
+import Button from "../../components/Button";
+import ViewLikesCounter from "../../components/ViewLikesCounter";
+import Widebutton from "../../components/WideButton";
 import PaymentButton from "../../components/PaymentButton";
+import { saveFavourite, destroyFavourite } from "../../lib/lawyerFavourites";
+import {
+  sendConnectionRequest,
+  destroyConnectionRequest
+} from "../../lib/lawyerConnections";
+import CustomAccordion from "../../components/Accordion";
+
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import PhoneIcon from "@mui/icons-material/Phone";
+import AnnouncementIcon from "@mui/icons-material/Announcement";
+import EmailIcon from "@mui/icons-material/Email";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+
+import {
+  Typography,
+  AccordionSummary,
+  Accordion,
+  AccordionDetails
+} from "@mui/material";
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {
@@ -40,7 +52,6 @@ export const getServerSideProps = withIronSessionSsr(
         fields_of_law: true
       }
     });
-    console.log(lawyerFields);
 
     const lawyerFavourite = await prisma.lawyer_favourites.findFirst({
       where: {
@@ -120,58 +131,6 @@ const Lawyer = ({
     accepted: lawyerConnection ? lawyerConnection.accepted : false
   });
   const userIds = { client_id: user.id, lawyer_id: lawyer.id };
-
-  const sendConnectionRequest = async (connectionIds) => {
-    const response = await fetch("/api/connections/lawyers/create", {
-      method: "POST",
-      body: JSON.stringify({ ...connectionIds, date_changed: new Date() })
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    console.log("sent connection request!");
-    return await response.json();
-  };
-
-  const destroyConnectionRequest = async (connectionIds) => {
-    const response = await fetch("/api/connections/lawyers/delete", {
-      method: "POST",
-      body: JSON.stringify({ ...connectionIds })
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    console.log("destroyed connection!");
-    return await response.json();
-  };
-
-  const saveFavourite = async (favourite) => {
-    const response = await fetch("/api/favourites/lawyers/create", {
-      method: "POST",
-      body: JSON.stringify({ ...favourite, date_created: new Date() })
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    console.log("saved favourite!");
-    return await response.json();
-  };
-
-  const destroyFavourite = async (favourite) => {
-    const response = await fetch("/api/favourites/lawyers/delete", {
-      method: "POST",
-      body: JSON.stringify(favourite)
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    console.log("destroyed favourite!");
-    return await response.json();
-  };
 
   const handleLawfirmClick = () => {
     if (lawfirmId) {
@@ -325,7 +284,7 @@ const Lawyer = ({
         color="white"
         padding="0.4rem 0"
         strong
-        backgroundColor="#1B4463"
+        backgroundColor="#2E2E2E"
         textAlign="left"
       >
         <div>
@@ -343,7 +302,7 @@ const Lawyer = ({
         color="white"
         padding="0.4rem 0"
         strong
-        backgroundColor="#1B4463"
+        backgroundColor="#2E2E2E"
         textAlign="left"
         onClick={(e) => console.log("potato")}
       >
@@ -356,25 +315,12 @@ const Lawyer = ({
           `}</style>
         </div>
       </Widebutton>
-      <Accordion
-        sx={{
-          backgroundColor: "#1B4463",
-          padding: "0 0.7em",
-          marginTop: "1em",
-          color: "white",
-          textAlign: "center",
-          mb: "2rem"
-        }}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
-        >
-          <Typography>More About {first_name}</Typography>
-        </AccordionSummary>
-        <AccordionDetails sx={{ textAlign: "left" }}>
-          <Typography>{description}</Typography>
-        </AccordionDetails>
-      </Accordion>
+
+      <CustomAccordion
+        header={`More about ${first_name}`}
+        description={description}
+      />
+      <CustomAccordion header={"Case History"} description={description} />
     </RoundedTopContainer>
   );
 };

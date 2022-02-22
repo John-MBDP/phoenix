@@ -1,27 +1,31 @@
-import { prisma } from "../../lib/prisma";
 import { useEffect, useState } from "react";
-import RoundedTopContainer from "../../components/RoundedTopContainer";
-import UserStatsCard from "../../components/UserStatsCard";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import PhoneIcon from "@mui/icons-material/Phone";
-import Button from "../../components/Button";
-import AnnouncementIcon from "@mui/icons-material/Announcement";
-import EmailIcon from "@mui/icons-material/Email";
-import Widebutton from "../../components/WideButton";
 import { useRouter } from "next/router";
-import ViewLikesCounter from "../../components/ViewLikesCounter";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
-import { Rating } from "@mui/material";
+import { prisma } from "../../lib/prisma";
+
+import Button from "../../components/Button";
+import RoundedTopContainer from "../../components/RoundedTopContainer";
+import Widebutton from "../../components/WideButton";
+import UserStatsCard from "../../components/UserStatsCard";
+import sessionOptions from "../../lib/session";
+import ViewLikesCounter from "../../components/ViewLikesCounter";
+import { saveFavourite, destroyFavourite } from "../../lib/lawfirmFavourites";
+import {
+  sendConnectionRequest,
+  destroyConnectionRequest
+} from "../../lib/lawfirmConnections";
 import Image from "next/image";
 import Link from "next/link";
+
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import AnnouncementIcon from "@mui/icons-material/Announcement";
+import PhoneIcon from "@mui/icons-material/Phone";
+import EmailIcon from "@mui/icons-material/Email";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import CustomAccordion from "../../components/Accordion";
+
+import { Rating, Typography } from "@mui/material";
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {
@@ -113,69 +117,12 @@ const Lawyer = ({
   });
   const userIds = { client_id: user.id, lawfirm_id: lawfirm.id };
 
-  const sendConnectionRequest = async (connectionIds) => {
-    const response = await fetch("/api/connections/lawfirms/create", {
-      method: "POST",
-      body: JSON.stringify({ ...connectionIds, date_changed: new Date() })
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    console.log("sent connection request!");
-    return await response.json();
-  };
-
-  const destroyConnectionRequest = async (connectionIds) => {
-    const response = await fetch("/api/connections/lawfirms/delete", {
-      method: "POST",
-      body: JSON.stringify({ ...connectionIds })
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    console.log("destroyed connection!");
-    return await response.json();
-  };
-
-  const saveFavourite = async (favourite) => {
-    const response = await fetch("/api/favourites/lawfirms/create", {
-      method: "POST",
-      body: JSON.stringify({ ...favourite, date_created: new Date() })
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    console.log("saved!");
-    return await response.json();
-  };
-
-  const destroyFavourite = async (favourite) => {
-    const response = await fetch("/api/favourites/lawfirms/delete", {
-      method: "POST",
-      body: JSON.stringify(favourite)
-    });
-
-    if (!response.ok) {
-      throw new Error(response.statusText);
-    }
-    console.log("destroyed!");
-    return await response.json();
-  };
-
   const lawyerArray = lawyers.map((item) => {
     return (
-      <Link href={`/lawyer/${item.id}`}>
-        <Image
-          className="image"
-          height={100}
-          width={100}
-          src={item.image}
-          key={item.id}
-          lawyerId={item.id}
-        />
+      <Link key={item.id} href={`/lawyer/${item.id}`}>
+        <div>
+          <Image className="image" height={100} width={100} src={item.image} />
+        </div>
       </Link>
     );
   });
@@ -303,24 +250,12 @@ const Lawyer = ({
           </Typography>
         </div>
       </Widebutton>
-      <Accordion
-        sx={{
-          backgroundColor: "#1B4463",
-          padding: "0 0.7em",
-          marginTop: "1em",
-          color: "white",
-          textAlign: "center"
-        }}
-      >
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
-        >
-          <Typography variant="body2">More About {name}</Typography>
-        </AccordionSummary>
-        <AccordionDetails sx={{ textAlign: "left" }}>
-          {description}
-        </AccordionDetails>
-      </Accordion>
+
+      <CustomAccordion
+        header={`More about ${name}`}
+        description={description}
+      />
+
       <RoundedTopContainer.Header text="Lawfirm Members" />
       <div className="lawyers">{lawyerArray}</div>
 
