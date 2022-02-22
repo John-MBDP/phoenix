@@ -36,7 +36,7 @@ const PaymentButton = ({ header, amount, paymentType, lawyerId }) => {
   return (
     <Widebutton
       color="black"
-      outLineColor="#1B4463"
+      outLineColor={paymentType === "subscription" ? "#1D1F37" : "#1B4463"}
       padding=" 0.3rem 0"
       outline
       strong
