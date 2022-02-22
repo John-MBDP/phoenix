@@ -48,7 +48,7 @@ const MessageCard = ({
             >
               {dateSent}
             </Typography>
-            {pings > 0 && <div className={styles.messages_ping}>{pings}</div>}
+            {pings > 0 && <div className={styles.messages_ping}>{''}</div>}
           </div>
         </div>
       </Card>

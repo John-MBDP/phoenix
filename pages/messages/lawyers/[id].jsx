@@ -74,7 +74,6 @@ const Messages = ({
     clearNotifications();
     const closeSocket = () => {
       socket.emit("input-change", false);
-      // socket.emit("client-present", false);
       socket.disconnect();
       console.log("Socket closed");
       clearNotifications();
@@ -95,7 +94,6 @@ const Messages = ({
         }));
         return updatedMessages;
       });
-      // socket.emit("client-present", true);
       clearNotifications();
     } catch (err) {
       console.log(err);
@@ -214,7 +212,7 @@ const Messages = ({
         )}
         {messageArray.length < 1 && (
           <Message profilePic={"/images/lawyers/bot_icon_still_2x.jpg"}>
-            Welcome to Law Aid Chat! Please feel free to start the conversation!
+            Welcome to Phoenix Chat! Please feel free to start the conversation!
           </Message>
         )}
       </div>

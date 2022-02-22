@@ -7,27 +7,28 @@ export default function NotificationsProvider({ children }) {
     initialSender: { id: "initial sender", pings: 0 },
   });
 
-  let pings = 0;
+  const pings = { total: 0 };
 
   const addNotification = senderId => {
-    pings += 1;
+    console.log(pings.total);
+    pings.total += 1;
     setNotifications(prev => {
       if (prev[senderId] && prev[senderId].id === senderId) {
-        prev[senderId].pings = pings;
+        prev[senderId].pings = pings.total;
         return prev;
       } else {
-        return { ...prev, [senderId]: { id: senderId, pings: pings } };
+        return { ...prev, [senderId]: { id: senderId, pings: pings.total } };
       }
     });
   };
 
   const clearNotifications = senderId => {
-    pings = 0;
+    pings.total = 0;
     if (!senderId) {
       setNotifications(prev => {
         for (const key in prev) {
           if (prev[key]) {
-            prev[key].pings = pings;
+            prev[key].pings = pings.total;
           }
         }
         return prev;
@@ -35,7 +36,7 @@ export default function NotificationsProvider({ children }) {
     } else {
       setNotifications(prev => ({
         ...prev,
-        [senderId]: { id: senderId, pings: pings },
+        [senderId]: { id: senderId, pings: pings.total },
       }));
     }
   };

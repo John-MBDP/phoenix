@@ -81,7 +81,6 @@ const TopNavBar = ({ header, lawyerMessages, lawfirmMessages }) => {
           }
         }
       });
-      console.log(allMessages[0]);
     } catch (err) {
       console.log(err);
     }
