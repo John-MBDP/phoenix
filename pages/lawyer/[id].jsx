@@ -325,7 +325,7 @@ const Lawyer = ({
         color="white"
         padding="0.4rem 0"
         strong
-        backgroundColor="#1B4463"
+        backgroundColor="#2E2E2E"
         textAlign="left"
       >
         <div>
@@ -343,7 +343,7 @@ const Lawyer = ({
         color="white"
         padding="0.4rem 0"
         strong
-        backgroundColor="#1B4463"
+        backgroundColor="#2E2E2E"
         textAlign="left"
         onClick={(e) => console.log("potato")}
       >
@@ -358,18 +358,37 @@ const Lawyer = ({
       </Widebutton>
       <Accordion
         sx={{
-          backgroundColor: "#1B4463",
+          backgroundColor: "#2E2E2E",
           padding: "0 0.7em",
           marginTop: "1em",
           color: "white",
           textAlign: "center",
-          mb: "2rem"
+          mb: "1rem"
         }}
       >
         <AccordionSummary
           expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
         >
           <Typography>More About {first_name}</Typography>
+        </AccordionSummary>
+        <AccordionDetails sx={{ textAlign: "left" }}>
+          <Typography>{description}</Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion
+        sx={{
+          backgroundColor: "#2E2E2E",
+          padding: "0 0.7em",
+          marginTop: "1em",
+          color: "white",
+          textAlign: "center",
+          mb: "4rem"
+        }}
+      >
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon sx={{ color: "white" }} />}
+        >
+          <Typography>Case History</Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ textAlign: "left" }}>
           <Typography>{description}</Typography>
