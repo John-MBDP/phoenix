@@ -10,6 +10,7 @@ import io from "socket.io-client";
 import sessionOptions from "../../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import { notificationsContext } from "../../../provider/NotificationsProvider";
+import filterBadWords from "../../../lib/filter";
 let socket;
 
 export const getServerSideProps = withIronSessionSsr(
@@ -158,7 +159,7 @@ const Messages = ({
   const saveMessage = async message => {
     const response = await fetch("/api/messages/create", {
       method: "POST",
-      body: JSON.stringify(message),
+      body: JSON.stringify({...message, body: filterBadWords(message.body)}),
     });
 
     if (!response.ok) {
@@ -208,7 +209,7 @@ const Messages = ({
         )}
         {messageArray.length < 1 && (
           <Message profilePic={"/images/lawyers/bot_icon_still_2x.jpg"}>
-            Welcome to Phoenix Chat! Please feel free to start the conversation!
+            Welcome to Law Aid Chat! Please feel free to start the conversation!
           </Message>
         )}
       </div>

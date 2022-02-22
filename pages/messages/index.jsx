@@ -186,7 +186,7 @@ const MessagesIndex = ({
       {parseMessageCards(messageCards)}
       <div style={{ margin: "0 2rem" }}>
         {messageCards.length === 0 && (
-          <Alert message="Nothing to see here. You have no messages yet!" />
+          <Alert message="Nothing to see here! You have no messages yet." />
         )}
       </div>
     </div>

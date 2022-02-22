@@ -10,6 +10,7 @@ import io from "socket.io-client";
 import sessionOptions from "../../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import { notificationsContext } from "../../../provider/NotificationsProvider";
+import filterBadWords from "../../../lib/filter";
 let socket;
 
 export const getServerSideProps = withIronSessionSsr(
@@ -158,7 +159,7 @@ const Messages = ({
   const saveMessage = async message => {
     const response = await fetch("/api/messages/create", {
       method: "POST",
-      body: JSON.stringify(message),
+      body: JSON.stringify({...message, body: filterBadWords(message.body)}),
     });
 
     if (!response.ok) {
@@ -173,9 +174,13 @@ const Messages = ({
     e.target.value
       ? socket.emit("input-change", true)
       : socket.emit("input-change", false);
+    if (e.nativeEvent.inputType === "insertLineBreak") {
+      messageFormSend.current && messageFormSend.current.click();
+    }
   };
 
   const messagesEndRef = useRef(null);
+  const messageFormSend = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
@@ -208,7 +213,7 @@ const Messages = ({
         )}
         {messageArray.length < 1 && (
           <Message profilePic={"/images/lawyers/bot_icon_still_2x.jpg"}>
-            Welcome to Phoenix Chat! Please feel free to start the conversation!
+            Welcome to Law Aid Chat! Please feel free to start the conversation!
           </Message>
         )}
       </div>
@@ -246,7 +251,7 @@ const Messages = ({
           autoComplete="off"
           multiline
         />
-        <Button type="submit">
+        <Button type="submit" ref={messageFormSend}>
           <SendIcon style={{ color: "#ff0056" }} />
         </Button>
       </form>
