@@ -138,15 +138,15 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
         onChange={handleSearchTypeChange}
         TabIndicatorProps={{
           style: {
-            backgroundColor: "white",
-          },
+            backgroundColor: "white"
+          }
         }}
       >
         <Tab label="Lawyers" />
         <Tab label="Lawfirms" />
       </Tabs>
       <Tabs
-        style={{ marginTop: "-0.5em", marginBottom: '-0.3em' }}
+        style={{ marginTop: "-0.5em", marginBottom: "-0.3em" }}
         variant="scrollable"
         scrollButtons="auto"
         textColor="secondary"
@@ -155,13 +155,13 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
         onChange={handleFieldChange}
         TabIndicatorProps={{
           style: {
-            backgroundColor: "white",
-          },
+            backgroundColor: "white"
+          }
         }}
       >
         {tabs}
       </Tabs>
-      {cardArray}
+      <div style={{ paddingBottom: "3rem" }}>{cardArray}</div>
     </div>
   );
 };
