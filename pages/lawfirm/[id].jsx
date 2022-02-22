@@ -20,6 +20,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import sessionOptions from "../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import { Rating } from "@mui/material";
+import Image from "next/image";
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {
@@ -31,6 +32,21 @@ export const getServerSideProps = withIronSessionSsr(
         id
       }
     });
+
+    const lawfirmMembers = await prisma.lawfirm_members.findMany({
+      where: {
+        lawfirm_id: id
+      },
+      include: {
+        lawyers: true
+      }
+    });
+
+    const parsedMembers = lawfirmMembers.map((member) => ({
+      id: member.lawyers.id,
+      image: member.lawyers.profile_pic
+    }));
+    console.log(parsedMembers);
 
     const lawfirmFavourite = await prisma.lawfirm_favourites.findFirst({
       where: {
@@ -54,7 +70,8 @@ export const getServerSideProps = withIronSessionSsr(
         user,
         lawfirmFavourite,
         lawfirmConnection,
-        lawfirm: lawfirmFromId
+        lawfirm: lawfirmFromId,
+        lawyers: parsedMembers
       }
     };
   },
@@ -67,7 +84,8 @@ const Lawyer = ({
   lawfirm,
   user,
   lawfirmFavourite,
-  lawfirmConnection
+  lawfirmConnection,
+  lawyers
 }) => {
   const router = useRouter();
   const {
@@ -146,6 +164,19 @@ const Lawyer = ({
     console.log("destroyed!");
     return await response.json();
   };
+
+  const lawyerArray = lawyers.map((item) => {
+    return (
+      <Image
+        className="image"
+        height={100}
+        width={100}
+        src={item.image}
+        key={item.id}
+        lawyerId={item.id}
+      />
+    );
+  });
 
   return (
     <RoundedTopContainer
@@ -288,7 +319,16 @@ const Lawyer = ({
           {description}
         </AccordionDetails>
       </Accordion>
+      <div className="lawyers">{lawyerArray}</div>
+
       <style jsx>{`
+        .lawyers {
+          margin: 1rem 0 3rem 0;
+          display: grid;
+          grid-template-columns: 1fr 1fr 1fr;
+          column-gap: 0.5rem;
+          row-gap: 0.5rem;
+        }
         .flex-center {
           display: grid;
           place-items: center;
