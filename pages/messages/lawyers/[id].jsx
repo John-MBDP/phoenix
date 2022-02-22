@@ -71,6 +71,7 @@ const Messages = ({
     setHeader(() => ({ header: headerName, hidden: false }));
     setNavbar({ navbar: "", hidden: false });
     socketInitializer();
+    clearNotifications();
     const closeSocket = () => {
       socket.emit("input-change", false);
       // socket.emit("client-present", false);
