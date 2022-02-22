@@ -19,12 +19,14 @@ const MessageCard = ({
   return (
     <Link href={`/messages/${route}/${id}`} passHref>
       <Card className={styles.message_card}>
+      <div style={{ margin: "0 0.7em 0 0" }}>
         <Avatar
           alt="profile photo"
           src={profilePic || "/images/huTao.png"}
-          sx={{ width: 55, height: 55, mx: 1 }}
           className={styles.avatar}
+          style={{ width: '55px', height: '55px' }}
         />
+        </div>
         <div className={styles.message_card_info}>
           <div className={styles.name_and_body}>
             <Typography

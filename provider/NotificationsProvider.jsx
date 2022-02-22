@@ -10,7 +10,6 @@ export default function NotificationsProvider({ children }) {
   const pings = { total: 0 };
 
   const addNotification = senderId => {
-    console.log(pings.total);
     pings.total += 1;
     setNotifications(prev => {
       if (prev[senderId] && prev[senderId].id === senderId) {

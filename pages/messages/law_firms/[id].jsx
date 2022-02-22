@@ -189,9 +189,11 @@ const Messages = ({
     return (
       <Message
         key={item.id}
+        senderId={lawfirmId}
         fromClient={item.from_client}
         date={timeifyDate(item.date_sent)}
         profilePic={lawfirmProfilePic}
+        route="lawfirm"
       >
         {item.body}
       </Message>
