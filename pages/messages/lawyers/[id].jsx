@@ -173,9 +173,9 @@ const Messages = ({
     e.target.value
       ? socket.emit("input-change", true)
       : socket.emit("input-change", false);
-    if (e.nativeEvent.inputType === "insertLineBreak") {
-      messageFormSend.current && messageFormSend.current.click();
-    }
+    // if (e.nativeEvent.inputType === "insertLineBreak") {
+    //   messageFormSend.current && messageFormSend.current.click();
+    // }
   };
 
   const messagesEndRef = useRef(null);
@@ -249,8 +249,8 @@ const Messages = ({
           onChange={onChangeHandler}
           value={input}
           fullWidth
+          // multiline
           autoComplete="off"
-          multiline
         />
         <Button type="submit" ref={messageFormSend}>
           <SendIcon style={{ color: "#ff0056" }} />
