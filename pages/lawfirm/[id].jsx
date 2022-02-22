@@ -321,6 +321,7 @@ const Lawyer = ({
           {description}
         </AccordionDetails>
       </Accordion>
+      <RoundedTopContainer.Header text="Lawfirm Members" />
       <div className="lawyers">{lawyerArray}</div>
 
       <style jsx>{`
