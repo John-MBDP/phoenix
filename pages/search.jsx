@@ -110,22 +110,6 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
             color="primary"
             sx={{ position: "absolute", top: "12px", right: "12px" }}
           />
-          <style jsx>{`
-            input {
-              font-family: roboto;
-              flex-grow: 40;
-              height: 3rem;
-              padding-left: 1rem;
-              font-size: 1em;
-              border-radius: 5px;
-              border: 1px solid lightgrey;
-            }
-            input:focus {
-              border: 1px solid #5593d1;
-              outline: 1px solid #5593d1;
-              border-radius: 5px;
-            }
-          `}</style>
         </div>
       </form>
       <Tabs
@@ -161,7 +145,39 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
       >
         {tabs}
       </Tabs>
-      <div style={{ paddingBottom: "3rem" }}>{cardArray}</div>
+      <div className="lawyers">{cardArray}</div>
+      <style jsx>{`
+        input {
+          font-family: roboto;
+          flex-grow: 40;
+          height: 3rem;
+          padding-left: 1rem;
+          font-size: 1em;
+          border-radius: 5px;
+          border: 1px solid lightgrey;
+        }
+        input:focus {
+          border: 1px solid #5593d1;
+          outline: 1px solid #5593d1;
+          border-radius: 5px;
+        }
+        @media screen and (min-width: 800px) {
+          .lawyers {
+            padding-bottom: 3rem;
+            display: grid;
+            grid-template-columns: 50% 50%;
+            column-gap: 1rem;
+          }
+        }
+        @media screen and (min-width: 1080px) {
+          .lawyers {
+            padding-bottom: 3rem;
+            display: grid;
+            grid-template-columns: 33% 33% 33%;
+            column-gap: 1rem;
+          }
+        }
+      `}</style>
     </div>
   );
 };
