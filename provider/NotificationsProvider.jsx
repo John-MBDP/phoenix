@@ -22,11 +22,12 @@ export default function NotificationsProvider({ children }) {
   };
 
   const clearNotifications = senderId => {
+    pings = 0;
     if (!senderId) {
       setNotifications(prev => {
         for (const key in prev) {
           if (prev[key]) {
-            prev[key].pings = 0;
+            prev[key].pings = pings;
           }
         }
         return prev;
@@ -34,7 +35,7 @@ export default function NotificationsProvider({ children }) {
     } else {
       setNotifications(prev => ({
         ...prev,
-        [senderId]: { id: senderId, pings: 0 },
+        [senderId]: { id: senderId, pings: pings },
       }));
     }
   };
