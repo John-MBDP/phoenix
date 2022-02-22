@@ -32,7 +32,7 @@ const PaymentButton = ({ header, amount, paymentType, lawyerId }) => {
         .catch((err) => console.log(err, error));
     }
   };
-  console.log(paymentType);
+
   return (
     <Widebutton
       color="black"
