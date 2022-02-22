@@ -120,7 +120,6 @@
   position: relative;
   height: 100vh;
   overflow-x: hidden;
-  padding-bottom: 3.5rem;
 }
 
 @media (max-width: 600px) {
