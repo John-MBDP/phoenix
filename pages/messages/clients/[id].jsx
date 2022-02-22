@@ -11,6 +11,7 @@ import sessionOptions from "../../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import { notificationsContext } from "../../../provider/NotificationsProvider";
 import filterBadWords from "../../../lib/filter";
+import Filter from "bad-words";
 let socket;
 
 const filter = new Filter();
@@ -22,27 +23,27 @@ export const getServerSideProps = withIronSessionSsr(
     const messages = await prisma.messages.findMany({
       where: {
         client_id: {
-          equals: clientId,
+          equals: clientId
         },
         lawyer_id: {
-          equals: lawyerId,
-        },
+          equals: lawyerId
+        }
       },
       include: {
-        clients: true,
+        clients: true
       },
       orderBy: [
         {
-          date_sent: "asc",
-        },
-      ],
+          date_sent: "asc"
+        }
+      ]
     });
     return {
       props: {
         lawyerId,
         clientId,
-        initialMessages: messages,
-      },
+        initialMessages: messages
+      }
     };
   },
   sessionOptions
@@ -53,7 +54,7 @@ const Messages = ({
   lawyerId,
   clientId,
   setHeader,
-  setNavbar,
+  setNavbar
 }) => {
   const [messages, setMessages] = useState(initialMessages);
   const [input, setInput] = useState("");
@@ -102,12 +103,12 @@ const Messages = ({
       console.log("connected");
     });
 
-    socket.on("update-typing-status", bool => {
+    socket.on("update-typing-status", (bool) => {
       setTypingIndicator(bool);
     });
 
-    socket.on("update-lawyer-messages", newMessage => {
-      setMessages(prev => [...prev, newMessage]);
+    socket.on("update-lawyer-messages", (newMessage) => {
+      setMessages((prev) => [...prev, newMessage]);
     });
 
     // socket.on("update-client-presence", bool => {
@@ -116,10 +117,10 @@ const Messages = ({
     // });
   };
 
-  const saveMessage = async message => {
+  const saveMessage = async (message) => {
     const response = await fetch("/api/messages/create", {
       method: "POST",
-      body: JSON.stringify({...message, body: filterBadWords(message.body)}),
+      body: JSON.stringify({ ...message, body: filterBadWords(message.body) })
     });
 
     if (!response.ok) {
@@ -128,7 +129,7 @@ const Messages = ({
     return await response.json();
   };
 
-  const onChangeHandler = e => {
+  const onChangeHandler = (e) => {
     console.log(socket.disconnected);
     setInput(e.target.value);
     e.target.value
@@ -142,7 +143,7 @@ const Messages = ({
     messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
   };
 
-  const messageArray = messages.map(item => {
+  const messageArray = messages.map((item) => {
     return (
       <Message
         key={item.id}
@@ -170,7 +171,7 @@ const Messages = ({
       <div ref={messagesEndRef} />
       <form
         className={styles.messages_input}
-        onSubmit={async e => {
+        onSubmit={async (e) => {
           e.preventDefault();
           const message = {
             body: input,
@@ -178,7 +179,7 @@ const Messages = ({
             lawyer_id: lawyerId,
             date_sent: new Date(),
             from_client: false,
-            seen_client: false,
+            seen_client: false
           };
           try {
             const newMessage = await saveMessage(message);
