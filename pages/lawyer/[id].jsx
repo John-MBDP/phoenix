@@ -40,7 +40,6 @@ export const getServerSideProps = withIronSessionSsr(
         fields_of_law: true
       }
     });
-    console.log(lawyerFields);
 
     const lawyerFavourite = await prisma.lawyer_favourites.findFirst({
       where: {
