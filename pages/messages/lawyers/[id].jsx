@@ -10,7 +10,10 @@ import io from "socket.io-client";
 import sessionOptions from "../../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import { notificationsContext } from "../../../provider/NotificationsProvider";
+import Filter from "bad-words";
 let socket;
+
+const filter = new Filter();
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {
@@ -158,7 +161,7 @@ const Messages = ({
   const saveMessage = async message => {
     const response = await fetch("/api/messages/create", {
       method: "POST",
-      body: JSON.stringify(message),
+      body: JSON.stringify({...message, body: filter.clean(message.body)}),
     });
 
     if (!response.ok) {
@@ -173,9 +176,13 @@ const Messages = ({
     e.target.value
       ? socket.emit("input-change", true)
       : socket.emit("input-change", false);
+    if (e.nativeEvent.inputType === "insertLineBreak") {
+      messageFormSend.current && messageFormSend.current.click();
+    }
   };
 
   const messagesEndRef = useRef(null);
+  const messageFormSend = useRef(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behaviour: "smooth" });
@@ -246,7 +253,7 @@ const Messages = ({
           autoComplete="off"
           multiline
         />
-        <Button type="submit">
+        <Button type="submit" ref={messageFormSend}>
           <SendIcon style={{ color: "#ff0056" }} />
         </Button>
       </form>
