@@ -10,10 +10,8 @@ import io from "socket.io-client";
 import sessionOptions from "../../../lib/session";
 import { withIronSessionSsr } from "iron-session/next";
 import { notificationsContext } from "../../../provider/NotificationsProvider";
-import Filter from "bad-words";
+import filterBadWords from "../../../lib/filter";
 let socket;
-
-const filter = new Filter();
 
 export const getServerSideProps = withIronSessionSsr(
   async ({ req, res, params }) => {
@@ -161,7 +159,7 @@ const Messages = ({
   const saveMessage = async message => {
     const response = await fetch("/api/messages/create", {
       method: "POST",
-      body: JSON.stringify({...message, body: filter.clean(message.body)}),
+      body: JSON.stringify({...message, body: filterBadWords(message.body)}),
     });
 
     if (!response.ok) {
