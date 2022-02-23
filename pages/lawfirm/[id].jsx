@@ -267,6 +267,11 @@ const Lawyer = ({
           column-gap: 0.5rem;
           row-gap: 0.5rem;
         }
+        @media screen and (min-width: 600px) {
+          .lawyers {
+            grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+          }
+        }
         .flex-center {
           display: grid;
           place-items: center;
