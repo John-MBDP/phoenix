@@ -85,7 +85,7 @@ const TopNavBar = ({ header }) => {
             }
           }
         });
-      }, 3000);
+      }, 1000);
       return () => clearTimeout(delayGrabMessages);
     } catch (err) {
       console.log(err);
