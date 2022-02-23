@@ -161,6 +161,9 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
           outline: 1px solid #5593d1;
           border-radius: 5px;
         }
+        .lawyers {
+          padding-bottom: 4rem;
+        }
         @media screen and (min-width: 800px) {
           .lawyers {
             padding-bottom: 3rem;
