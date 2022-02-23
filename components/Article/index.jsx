@@ -13,15 +13,15 @@ const Article = ({
   body,
   date,
   userId,
-  articleFavourite,
+  articleFavourite
 }) => {
   const [favourited, setFavourited] = useState(articleFavourite ? true : false);
   const favourite = { client_id: userId, article_id: articleId };
 
-  const saveFavourite = async favourite => {
+  const saveFavourite = async (favourite) => {
     const response = await fetch("/api/favourites/articles/create", {
       method: "POST",
-      body: JSON.stringify({ ...favourite, date_created: new Date() }),
+      body: JSON.stringify({ ...favourite, date_created: new Date() })
     });
 
     if (!response.ok) {
@@ -31,10 +31,10 @@ const Article = ({
     return await response.json();
   };
 
-  const destroyFavourite = async favourite => {
+  const destroyFavourite = async (favourite) => {
     const response = await fetch("/api/favourites/articles/delete", {
       method: "POST",
-      body: JSON.stringify(favourite),
+      body: JSON.stringify(favourite)
     });
 
     if (!response.ok) {
@@ -89,20 +89,29 @@ const Article = ({
           )}
         </header>
         <Typography
-          style={{ fontWeight: "bold", marginBottom: '0.5em' }}
+          style={{ fontWeight: "bold", marginBottom: "0.5em" }}
           variant="h4"
           component="div"
           gutterBottom
         >
           {title}
         </Typography>
-        <Typography style={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+        <Typography
+          style={{ fontSize: 14 }}
+          color="text.secondary"
+          gutterBottom
+        >
           {date} - 5 min read
         </Typography>
-        <Typography style={{ marginBottom: '2em', fontSize: 14, fontWeight: "bold" }}>
+        <Typography
+          style={{ marginBottom: "2em", fontSize: 14, fontWeight: "bold" }}
+        >
           {author}
         </Typography>
-        <Typography variant="body1" style={{ lineHeight: '2rem', marginBottom: '3em', fontSize: 14 }}>
+        <Typography
+          variant="body1"
+          style={{ lineHeight: "2rem", marginBottom: "3em", fontSize: 14 }}
+        >
           {body}
           <br />
         </Typography>
