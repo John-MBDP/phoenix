@@ -204,7 +204,7 @@ async function main() {
         phone_number: "705-739-5555",
         address: "55 Yonge St, Toronto, ON M6E 5A5",
         rating: 38,
-        profile_pic: "/images/lawyers/dusty_profile_1.png"
+        profile_pic: "/images/lawyers/dusty_profile_1.jpg"
       },
       {
         first_name: "John",
