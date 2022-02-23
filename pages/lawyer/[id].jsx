@@ -55,13 +55,15 @@ export const getServerSideProps = withIronSessionSsr(
 
     const lawyerFavourite = await prisma.lawyer_favourites.findFirst({
       where: {
-        lawyer_id: id
+        lawyer_id: id,
+        client_id: user.id,
       }
     });
 
     const lawyerConnection = await prisma.lawyer_connections.findFirst({
       where: {
-        lawyer_id: id
+        lawyer_id: id,
+        client_id: user.id
       },
       orderBy: [
         {

@@ -19,7 +19,8 @@ export const getServerSideProps = withIronSessionSsr(
     });
     const articleFavourite = await prisma.article_favourites.findFirst({
       where: {
-        article_id: id
+        article_id: id,
+        client_id: user.id
       }
     });
     return {
