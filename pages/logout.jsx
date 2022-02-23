@@ -16,7 +16,7 @@ const Logout = ({ setHeader, setNavbar }) => {
     }, 2000);
   }, []);
   return (
-    <RoundedTopContainer image={"/Logout-2.png"} alt={"signup-image"} height={"300px"}>
+    <RoundedTopContainer image={"/images/backgrounds/hammer-g5e0aea877_1920.jpg"} alt={"signup-image"} height={"300px"}>
       <Typography
         variant="h5"
         sx={{
