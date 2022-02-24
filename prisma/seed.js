@@ -227,7 +227,7 @@ async function main() {
           "Serving North America for 50 years, from Toronto to Anchorage.",
         location: "Toronto",
         education: "Berkalay",
-        date_certified: "1972-05-12T04:00:00.000Z",
+        date_certified: "2017-05-12T04:00:00.000Z",
         phone_number: "416-090-0546",
         address: "841 Adelaide St W, Toronto, ON M5N 4R2",
         rating: 42,
