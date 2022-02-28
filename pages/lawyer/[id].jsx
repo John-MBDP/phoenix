@@ -64,12 +64,7 @@ export const getServerSideProps = withIronSessionSsr(
       where: {
         lawyer_id: id,
         client_id: user.id
-      },
-      orderBy: [
-        {
-          date_changed: "desc"
-        }
-      ]
+      }
     });
 
     const lawyer = await prisma.lawyers.findUnique({

@@ -64,11 +64,6 @@ export const getServerSideProps = withIronSessionSsr(
         lawfirm_id: id,
         client_id: user.id
       },
-      orderBy: [
-        {
-          date_changed: "desc"
-        }
-      ]
     });
 
     return {
