@@ -1,34 +1,29 @@
+# Phoenix
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+You can check out the currently deployed version [`here`](https://phoenix-law-app.herokuapp.com).
 
-First, run the development server:
+### News Feed and Nav Bar
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+!["News feed and nav bar"](https://github.com/John-MBDP/phoenix/blob/main/public/screenshots/news-feed-nav.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+_User can read legal articles and navigate the app through the drop down nav bar_
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### Searching for lawyers
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+!["Searching for lawyers"](https://github.com/John-MBDP/phoenix/blob/main/public/screenshots/lawyers-index.png)
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+_User can search for lawyers/lawfirms according to their field(s) of law and location_
 
-## Learn More
+### Lawyer profile
 
-To learn more about Next.js, take a look at the following resources:
+!["Lawyer profile"](https://github.com/John-MBDP/phoenix/blob/main/public/screenshots/lawyer-profile.png)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+_User can favourite, connect with, or message a lawyer, pay initial or monthly fees, go to their firm affiliation, and read about their case history_
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### Messages
 
-## Deploy on Vercel
+!["Messages"](https://github.com/John-MBDP/phoenix/blob/main/public/screenshots/messages.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+_User can live chat with a lawyer/lawfirm, see when the other is typing, and are notified when they have unread messages_
