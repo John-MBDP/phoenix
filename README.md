@@ -6,24 +6,24 @@ You can check out the currently deployed version [`here`](https://phoenix-law-ap
 
 ### News Feed and Nav Bar
 
-!["News feed and nav bar"](https://github.com/John-MBDP/phoenix/blob/main/public/screenshots/news-feed-nav.png)
+!["News feed and nav bar"](https://github.com/John-MBDP/phoenix/blob/main/public/screenshots/news-feed-nav.gif)
 
 _User can read legal articles and navigate the app through the drop down nav bar_
 
 ### Searching for lawyers
 
-!["Searching for lawyers"](https://github.com/John-MBDP/phoenix/blob/main/public/screenshots/lawyers-index.png)
+!["Searching for lawyers"](https://github.com/John-MBDP/phoenix/blob/main/public/screenshots/lawyers-index.gif)
 
 _User can search for lawyers/lawfirms according to their field(s) of law and location_
 
 ### Lawyer profile
 
-!["Lawyer profile"](https://github.com/John-MBDP/phoenix/blob/main/public/screenshots/lawyer-profile.png)
+!["Lawyer profile"](https://github.com/John-MBDP/phoenix/blob/main/public/screenshots/lawyer-profile.gif)
 
 _User can favourite, connect with, or message a lawyer, pay initial or monthly fees, go to their firm affiliation, and read about their case history_
 
 ### Messages
 
-!["Messages"](https://github.com/John-MBDP/phoenix/blob/main/public/screenshots/messages.png)
+!["Messages"](https://github.com/John-MBDP/phoenix/blob/main/public/screenshots/messages.gif)
 
 _User can live chat with a lawyer/lawfirm, see when the other is typing, and are notified when they have unread messages_
