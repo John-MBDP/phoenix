@@ -39,7 +39,7 @@ const LoginCard = ({ setHeader, errorMessage, handleSubmit }) => {
   };
 
   return (
-    <RoundedTopContainer image={"/login-1.png"} alt={"signup-image"} height="350px">
+    <RoundedTopContainer image={"/images/backgrounds/newfountainpen.jpg"} alt={"signup-image"} height="350px">
       <Typography variant="h4" component="h1">
         Login
       </Typography>

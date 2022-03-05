@@ -18,7 +18,7 @@ const Payments = ({ setHeader, setNavbar }) => {
     setNavbar({ navbar: "", hidden: false });
   }, []);
   return (
-    <RoundedTopContainer image="/images/paint.jpeg" alt="paint" height="600px">
+    <RoundedTopContainer image="/images/backgrounds/paint.jpeg" alt="paint" height="600px">
       <UserStatsCard />
       <RoundedTopContainer.Header text="Choose Payment Option" />
       <Widebutton color="black" outLineColor="#00589B" padding=" 1rem 0" outline strong>
