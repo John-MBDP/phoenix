@@ -26,4 +26,10 @@ _User can favourite, connect with, or message a lawyer, pay initial or monthly f
 
 !["Messages"](https://github.com/John-MBDP/phoenix/blob/main/public/screenshots/messages.gif)
 
-_User can live chat with a lawyer/lawfirm, see when the other is typing, and are notified when they have unread messages_
+_User can live chat (Socket.IO) with a lawyer/lawfirm through, see when the other is typing, and are notified when they have unread messages_
+
+### Payments
+
+!["Stripe payments"](https://github.com/John-MBDP/phoenix/blob/main/public/screenshots/stripe.gif)
+
+_User can pay initial or monthly subscription fee (Stripe) and confirm the payment status_
