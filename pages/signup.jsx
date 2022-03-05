@@ -108,7 +108,7 @@ const Signup = ({ setHeader, setNavbar }) => {
   };
 
   return (
-    <RoundedTopContainer image={"/SignUp.png"} alt={"signup-image"} height={"430px"}>
+    <RoundedTopContainer image={"/images/backgrounds/justitia-gd80f5a6fa_1920.jpg"} alt={"signup-image"} height={"430px"}>
       <Typography variant="h4" component="h1">
         Signup
       </Typography>

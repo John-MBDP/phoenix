@@ -40,7 +40,7 @@ export const getServerSideProps = withIronSessionSsr(
 
     const lawfirmMembers = await prisma.lawfirm_members.findMany({
       where: {
-        lawfirm_id: id
+        lawfirm_id: id,
       },
       include: {
         lawyers: true
@@ -54,19 +54,16 @@ export const getServerSideProps = withIronSessionSsr(
 
     const lawfirmFavourite = await prisma.lawfirm_favourites.findFirst({
       where: {
-        lawfirm_id: id
+        lawfirm_id: id,
+        client_id: user.id
       }
     });
 
     const lawfirmConnection = await prisma.lawfirm_connections.findFirst({
       where: {
-        lawfirm_id: id
+        lawfirm_id: id,
+        client_id: user.id
       },
-      orderBy: [
-        {
-          date_changed: "desc"
-        }
-      ]
     });
 
     return {

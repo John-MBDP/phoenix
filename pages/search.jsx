@@ -129,7 +129,7 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
         </div>
       </form>
       <Tabs
-        style={{ marginTop: "0.3em" }}
+        style={{ marginTop: "0.3em", color: 'grey' }}
         variant="scrollable"
         scrollButtons="auto"
         textColor="secondary"
@@ -146,7 +146,7 @@ const Search = ({ setHeader, lawyers, setNavbar }) => {
         <Tab label="Lawfirms" />
       </Tabs>
       <Tabs
-        style={{ marginTop: "-0.5em", marginBottom: '-0.3em' }}
+        style={{ marginTop: "-0.5em", marginBottom: '-0.3em', color: 'grey' }}
         variant="scrollable"
         scrollButtons="auto"
         textColor="secondary"
