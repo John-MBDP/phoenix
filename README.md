@@ -2,7 +2,7 @@
 
 Phoenix is a [Next.js](https://nextjs.org/) powered app to connect users who are seeking legal representation with lawyers and law firms in their area.
 
-You can check out the currently deployed mobile version [`here`](https://phoenix-law-app.herokuapp.com).
+You can check out the currently deployed mobile version [here](https://phoenix-law-app.herokuapp.com).
 
 ### News Feed and Nav Bar
 
