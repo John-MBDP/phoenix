@@ -1,8 +1,8 @@
 # Phoenix
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Phoenix is a [Next.js](https://nextjs.org/) powered app to connect users who are seeking legal representation with lawyers and law firms in their area.
 
-You can check out the currently deployed version [`here`](https://phoenix-law-app.herokuapp.com).
+You can check out the currently deployed mobile version [`here`](https://phoenix-law-app.herokuapp.com).
 
 ### News Feed and Nav Bar
 
